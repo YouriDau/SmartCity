@@ -2,6 +2,7 @@ import { useState } from "react";
 import { View, Text, StyleSheet, TextInput } from "react-native";
 import Title from "../../components/Title";
 import Button from "../../components/Button";
+import Header from "../../components/Header";
 
 const PLACEHOLDERS = {
   pseudo: "Your pseudo here",
@@ -11,12 +12,17 @@ const PLACEHOLDERS = {
   email: "Your email here",
 };
 
-const LoginForm = () => {
+const LoginForm = ({navigation}) => {
   const [pseudo, setPseudo] = useState("");
   const [password, setPassword] = useState("");
 
+  const handlePressCancel = () => {
+    navigation.navigate("Maps");
+  };
+
   return (
     <View style={styles.container}>
+      <Header navigation={navigation} />
       <Title text={"Login"} />
       <View style={styles.form}>
         <Text style={styles.inputText}>Pseudo</Text>
@@ -35,7 +41,7 @@ const LoginForm = () => {
         />
       </View>
       <View style={styles.buttons}>
-        <Button text={"cancel"} textColor={"white"} btnColor={"grey"} />
+        <Button text={"cancel"} textColor={"white"} btnColor={"grey"} handlePress={handlePressCancel} />
         <Button text={"login"} />
       </View>
     </View>

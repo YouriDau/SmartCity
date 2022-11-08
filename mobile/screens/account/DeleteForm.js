@@ -3,13 +3,19 @@ import CheckBox from "expo-checkbox";
 import { useState } from "react";
 import Title from "../../components/Title";
 import Button from "../../components/Button";
+import Header from "../../components/Header";
 
-const DeleteForm = () => {
+const DeleteForm = ({navigation}) => {
   const [password, setPassword] = useState("");
   const [isChecked, setIsChecked] = useState(false);
 
+  const handlePressCancel = () => {
+    navigation.navigate("Maps");
+  };
+
   return (
     <View style={styles.container}>
+      <Header navigation={navigation} />
       <Title text={"Delete form"} />
       <View style={styles.passwordContainer}>
         <Text>Password</Text>
@@ -31,7 +37,7 @@ const DeleteForm = () => {
       </View>
 
       <View style={styles.buttons}>
-        <Button text={"Cancel"} textColor={"white"} btnColor={"grey"} />
+        <Button text={"Cancel"} textColor={"white"} btnColor={"grey"} handlePress={handlePressCancel} />
         <Button text={"Delete"} btnColor={"#D42929"} />
       </View>
     </View>

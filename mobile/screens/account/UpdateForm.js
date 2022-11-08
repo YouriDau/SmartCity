@@ -2,16 +2,22 @@ import { View, Text, TextInput, StyleSheet } from "react-native";
 import { useState } from "react";
 import Button from "../../components/Button";
 import Title from "../../components/Title";
+import Header from "../../components/Header";
 
-const UpdateForm = () => {
+const UpdateForm = ({navigation}) => {
   const [pseudo, setPseudo] = useState("");
   const [lastname, setLastname] = useState("");
   const [firstname, setFirstname] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
+  const handlePressCancel = () => {
+    navigation.navigate("Maps");
+  };
+
   return (
     <View style={styles.container}>
+      <Header navigation={navigation} />
       <Title text={"Modify account"} />
       <View style={styles.form}>
         <Text style={styles.inputText}>Pseudo</Text>
@@ -38,7 +44,7 @@ const UpdateForm = () => {
         />
       </View>
       <View style={styles.buttons}>
-        <Button text={"cancel"} textColor={"white"} btnColor={"grey"} />
+        <Button text={"cancel"} textColor={"white"} btnColor={"grey"} handlePress={handlePressCancel} />
         <Button text={"Update"} btnColor={"#E2E52B"} />
       </View>
     </View>

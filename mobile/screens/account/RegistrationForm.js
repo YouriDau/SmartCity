@@ -2,6 +2,7 @@ import { useState } from "react";
 import { View, Text, StyleSheet, TextInput, Pressable } from "react-native";
 import Title from "../../components/Title";
 import Button from "../../components/Button";
+import Header from "../../components/Header";
 
 const PLACEHOLDERS = {
   pseudo: "Your pseudo here",
@@ -24,6 +25,7 @@ const RegistrationForm = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <Header navigation={navigation} />
       <Title text="Registration" />
       <View style={styles.form}>
         <Text style={styles.inputText}>Pseudo</Text>

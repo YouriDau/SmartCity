@@ -1,6 +1,9 @@
+import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
-import MapView, { Marker, LatLng } from "react-native-maps";
+import { StyleSheet, View } from "react-native";
+import MapView, { Marker } from "react-native-maps";
+import Header from "../components/Header";
+import Button from "../components/Button";
 
 const Maps = ({ navigation, route }) => {
   const [toilets, setToilets] = useState([
@@ -22,15 +25,6 @@ const Maps = ({ navigation, route }) => {
         longitude: 4.85807,
       },
     },
-    {
-      id: 2,
-      title: "3 toilet",
-      description: "Toilet 3 Description",
-      location: {
-        latitude: 50.46822,
-        longitude: 4.8633,
-      },
-    },
   ]);
 
   function addMarker(coordinate) {
@@ -50,8 +44,13 @@ const Maps = ({ navigation, route }) => {
     setToilets(newToilets);
   }
 
+  const handlePressAddToilet = () => {
+      console.log("test");
+  }
+
   return (
     <View style={styles.container}>
+      <Header navigation={navigation} />
       <MapView
         style={styles.map}
         initialRegion={{
@@ -59,8 +58,8 @@ const Maps = ({ navigation, route }) => {
           latitude: 50.46535,
           longitude: 4.86461,
           // LatitudeDelta and LongitudeDelta to the size of the map
-          latitudeDelta: 0.5,
-          longitudeDelta: 0.5,
+          latitudeDelta: 0.02,
+          longitudeDelta: 0.02,
         }}
         // e.nativeEvent renvoie toutes les informations concernant le click:
         // action="press", coordinates: {latitude: XXX, ...}, ...
@@ -75,8 +74,10 @@ const Maps = ({ navigation, route }) => {
           />
         ))}
       </MapView>
-      <View style={{ position: "absolute", bottom: 25, left: 30 }}>
-        <Button title={"Add toilet"} />
+      <View style={styles.buttons}>
+        <Button text={"Add toilet"} textColor={"white"} btnColor={"grey"} handlePress={handlePressAddToilet} />
+        <Button text={"?"} textColor={"white"} btnColor={"grey"} />
+        <Button text={"?"} textColor={"white"} btnColor={"grey"} />
       </View>
     </View>
   );
@@ -88,11 +89,14 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: "black",
     alignItems: "center",
-    justifyContent: "center",
   },
   map: {
-    height: "100%",
+    flex: 1,
     width: "100%",
+  },
+  buttons: {
+    flexDirection: "row",
+    justifyContent: "space-around",
   },
 });
 

@@ -27,43 +27,20 @@ const Tab = createBottomTabNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-      <Tab.Navigator
+      <Tab.Navigator 
         initialRouteName="Registration"
         screenOptions={{
-          tabBarStyle: { alignItems: "center", display:  },
+          tabBarStyle: { alignItems: "center", display: "none" },
           tabBarActiveTintColor: "#e91e63",
+          headerShown: false,
         }}
       >
-        <Tab.Screen
-          name="Registration"
-          component={Registration}
-          Header={Header}
-          options={({ navigation }) => ({
-            tabBarButton: () => (
-              <Pressable
-                style={styles.pressable}
-                onPress={() => navigation.navigate("Registration")}
-              >
-                <Text style={styles.pressableText}>Register</Text>
-              </Pressable>
-            ),
-          })}
-        />
-        <Tab.Screen
-          name="Maps"
-          component={Maps}
-          Header={Header}
-          options={({ navigation }) => ({
-            tabBarButton: () => (
-              <Pressable
-                style={styles.pressable}
-                onPress={() => navigation.navigate("Maps")}
-              >
-                <Text style={styles.pressableText}>Maps</Text>
-              </Pressable>
-            ),
-          })}
-        />
+        <Tab.Screen name="Registration" component={Registration} />
+        <Tab.Screen name="Login" component={Login} />
+        <Tab.Screen name="DeleteAccount" component={DeleteAccount} />
+        <Tab.Screen name="UpdateAccount" component={UpdateAccount} />
+
+        <Tab.Screen name="Maps" component={Maps} />
       </Tab.Navigator>
     </NavigationContainer>
   );
