@@ -5,17 +5,16 @@ import Title from "../../components/Title";
 import Button from "../../components/Button";
 import Header from "../../components/Header";
 
-const DeleteForm = ({navigation}) => {
+const DeleteForm = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [isChecked, setIsChecked] = useState(false);
 
   const handlePressCancel = () => {
-    navigation.navigate("Maps");
+    navigation.goBack();
   };
 
   return (
     <View style={styles.container}>
-      <Header navigation={navigation} />
       <Title text={"Delete form"} />
       <View style={styles.passwordContainer}>
         <Text>Password</Text>
@@ -37,7 +36,12 @@ const DeleteForm = ({navigation}) => {
       </View>
 
       <View style={styles.buttons}>
-        <Button text={"Cancel"} textColor={"white"} btnColor={"grey"} handlePress={handlePressCancel} />
+        <Button
+          text={"Cancel"}
+          textColor={"white"}
+          btnColor={"grey"}
+          handlePress={handlePressCancel}
+        />
         <Button text={"Delete"} btnColor={"#D42929"} />
       </View>
     </View>

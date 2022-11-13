@@ -1,10 +1,13 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import Constants from "expo-constants";
 import { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 
-const Header = ({navigation}) => {
+const Header = () => {
   const [isMenuVisible, setMenuVisible] = useState(false);
   const isAdmin = false;
+
+  const navigation = useNavigation();
 
   const showMenu = () => {
     if (isAdmin) {
@@ -17,66 +20,63 @@ const Header = ({navigation}) => {
         >
           <Pressable
             onPress={() => {
-              navigation.navigate("Login")
+              navigation.navigate("Login");
             }}
           >
             <Text style={styles.accountMenuItem}>Sign in</Text>
           </Pressable>
           <Pressable
-          onPress={() => {
-            navigation.navigate("Registration")
-          }}>
+            onPress={() => {
+              navigation.navigate("Registration");
+            }}
+          >
             <Text style={styles.accountMenuItem}>Sign up</Text>
           </Pressable>
         </View>
-        );
+      );
     } else {
-       return (
-          <View
-            style={[
-              { display: isMenuVisible ? "flex" : "none" },
-              styles.accountMenu,
-            ]}
+      return (
+        <View
+          style={[
+            { display: isMenuVisible ? "flex" : "none" },
+            styles.accountMenu,
+          ]}
+        >
+          <Pressable onPress={() => {}}>
+            <Text style={styles.accountMenuItem}>Sign out</Text>
+          </Pressable>
+          <Pressable
+            onPress={() => {
+              navigation.navigate("DeleteAccount");
+            }}
           >
-            <Pressable
-              onPress={() => {
-                
-              }}
-            >
-              <Text style={styles.accountMenuItem}>Sign out</Text>
-            </Pressable>
-            <Pressable
-              onPress={() => {
-                navigation.navigate("DeleteAccount")
-              }}
-            >
-              <Text style={styles.accountMenuItem}>Delete</Text>
-            </Pressable>
-            <Pressable
-              onPress={() => {
-                navigation.navigate("UpdateAccount")
-              }}
-            >
-              <Text style={styles.accountMenuItem}>Modify</Text>
-            </Pressable>
-            <Pressable
-              onPress={() => {
-                navigation.navigate("Registration")
-              }}
-            >
-              <Text style={styles.accountMenuItem}>My reviews</Text>
-            </Pressable>
-            <Pressable
-              onPress={() => {
-                navigation.navigate("Registration")
-              }}
-            >
-              <Text style={styles.accountMenuItem}>My reports</Text>
-            </Pressable>
-          </View>
-       );
+            <Text style={styles.accountMenuItem}>Delete</Text>
+          </Pressable>
+          <Pressable
+            onPress={() => {
+              navigation.navigate("UpdateAccount");
+            }}
+          >
+            <Text style={styles.accountMenuItem}>Modify</Text>
+          </Pressable>
+          <Pressable
+            onPress={() => {
+              navigation.navigate("Registration");
+            }}
+          >
+            <Text style={styles.accountMenuItem}>My reviews</Text>
+          </Pressable>
+          <Pressable
+            onPress={() => {
+              navigation.navigate("Registration");
+            }}
+          >
+            <Text style={styles.accountMenuItem}>My reports</Text>
+          </Pressable>
+        </View>
+      );
     }
-  }
+  };
 
   return (
     <View style={styles.container}>
@@ -113,8 +113,7 @@ const Header = ({navigation}) => {
           <Text style={styles.text}>Account</Text>
         </Pressable>
 
-          {showMenu()}
-        
+        {showMenu()}
       </View>
     </View>
   );

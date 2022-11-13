@@ -2,10 +2,16 @@ import { View, Text, StyleSheet } from "react-native";
 import Title from "../../components/Title";
 import Button from "../../components/Button";
 
-const DeleteForm = () => {
+const DeleteForm = ({ navigation, route }) => {
+  const id = route.params.id;
+
+  const handlePressCancel = () => {
+    navigation.goBack();
+  };
+
   return (
     <View style={styles.container}>
-      <Title text={"Delete review"} />
+      <Title text={"Delete review " + id} />
       <View style={styles.content}>
         <Text style={styles.text}>
           Are you sure you want to delete this review?
@@ -13,7 +19,12 @@ const DeleteForm = () => {
       </View>
 
       <View style={styles.buttons}>
-        <Button text={"Cancel"} textColor={"white"} btnColor={"grey"} />
+        <Button
+          text={"Cancel"}
+          textColor={"white"}
+          btnColor={"grey"}
+          handlePress={handlePressCancel}
+        />
         <Button text={"Yes"} btnColor={"red"} />
       </View>
     </View>

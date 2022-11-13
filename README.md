@@ -1,10 +1,11 @@
 // ---------- API ----------
-    // Creation
+// Creation
 
     // Installation dépendances
+
 // ---------- MOBILE ----------
-    // Creation
-        npx create-expo-app mobile
+// Creation
+npx create-expo-app mobile
 
     // Installation dépendances
         npm install redux
@@ -14,18 +15,21 @@
             // => Store.js
         npm install react-redux
 
-	  npm install react-native-maps
-		// Afficher les cartes, marqueurs, etc
+      npm install react-native-maps
+    	// Afficher les cartes, marqueurs, etc
 
-	  npm install @react-native-community/slider
-		// Slider pour les reviews
+      npm install @react-native-community/slider
+    	// Slider pour les reviews
 
-	  npx expo install expo-checkbox
-		// Check box
+      npx expo install expo-checkbox
+    	// Check box
 
-	  npm install @react-navigation/native @react-navigation/native-stack
-  	  npm install react-native-screens react-native-safe-area-context
-		// Navigation
+      npm install @react-navigation/native @react-navigation/native-stack
+
+npm install react-native-screens react-native-safe-area-context
+// Navigation
 
         npm install axios
-		// A voir
+    	// A voir
+
+    npx expo install react-native-reanimated@~2.9.1

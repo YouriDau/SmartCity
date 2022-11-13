@@ -12,17 +12,16 @@ const PLACEHOLDERS = {
   email: "Your email here",
 };
 
-const LoginForm = ({navigation}) => {
+const LoginForm = ({ navigation }) => {
   const [pseudo, setPseudo] = useState("");
   const [password, setPassword] = useState("");
 
   const handlePressCancel = () => {
-    navigation.navigate("Maps");
+    navigation.goBack();
   };
 
   return (
     <View style={styles.container}>
-      <Header navigation={navigation} />
       <Title text={"Login"} />
       <View style={styles.form}>
         <Text style={styles.inputText}>Pseudo</Text>
@@ -41,7 +40,12 @@ const LoginForm = ({navigation}) => {
         />
       </View>
       <View style={styles.buttons}>
-        <Button text={"cancel"} textColor={"white"} btnColor={"grey"} handlePress={handlePressCancel} />
+        <Button
+          text={"cancel"}
+          textColor={"white"}
+          btnColor={"grey"}
+          handlePress={handlePressCancel}
+        />
         <Button text={"login"} />
       </View>
     </View>

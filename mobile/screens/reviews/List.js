@@ -1,6 +1,8 @@
 import { View, Text, Pressable, StyleSheet, FlatList } from "react-native";
 import Title from "../../components/Title";
 import Button from "../../components/Button";
+import DeleteForm from "./DeleteForm";
+
 const DATA = [
   {
     id: 3645654444444445,
@@ -32,7 +34,7 @@ const DATA = [
   },
 ];
 
-const Item = ({ id, date }) => {
+const Item = ({ navigation, id, date }) => {
   return (
     <View style={styles.item}>
       <View style={styles.leftPart}>
@@ -45,7 +47,7 @@ const Item = ({ id, date }) => {
         <Pressable
           style={styles.pressable}
           onPress={() => {
-            console.log("See more");
+            navigation.navigate("UpdateForm");
           }}
         >
           <Text style={styles.button}>See more</Text>
@@ -53,7 +55,7 @@ const Item = ({ id, date }) => {
         <Pressable
           style={styles.pressable}
           onPress={() => {
-            console.log("Delete");
+            navigation.navigate("DeleteReview", { id });
           }}
         >
           <Text style={styles.button}>Delete</Text>
@@ -63,9 +65,13 @@ const Item = ({ id, date }) => {
   );
 };
 
-const List = () => {
+const List = ({ navigation }) => {
   const renderItem = ({ item }) => {
-    return <Item id={item.id} date={item.date} />;
+    return <Item navigation={navigation} id={item.id} date={item.date} />;
+  };
+
+  const handlePressCancel = () => {
+    navigation.goBack();
   };
 
   return (
@@ -79,7 +85,12 @@ const List = () => {
         />
       </View>
       <View style={styles.buttons}>
-        <Button text={"Cancel"} textColor={"white"} btnColor={"grey"} />
+        <Button
+          text={"Cancel"}
+          textColor={"white"}
+          btnColor={"grey"}
+          handlePress={handlePressCancel}
+        />
         <Button />
       </View>
     </View>

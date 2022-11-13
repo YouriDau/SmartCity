@@ -5,8 +5,8 @@ import { useState } from "react";
 import Button from "../../components/Button";
 import ReviewForm from "../../components/ReviewForm";
 
-const AddForm = () => {
-  return <ReviewForm isUpdate={false} />;
+const AddForm = ({ navigation }) => {
+  return <ReviewForm isUpdate={false} navigation={navigation} />;
 };
 
 export default AddForm;

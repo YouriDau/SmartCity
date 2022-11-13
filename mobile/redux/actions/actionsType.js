@@ -1,0 +1,6 @@
+export const ADD_USER = "ADD_USER";
+export const DELETE_USER = "DELETE_USER";
+
+export const DELETE_REVIEW = "DELETE_REVIEW";
+
+export const ADD_MAP_MARKER = "ADD_MAP_MARKER";

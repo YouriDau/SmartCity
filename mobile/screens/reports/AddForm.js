@@ -5,8 +5,12 @@ import Title from "../../components/Title";
 
 const PLACEHOLDER = "Enter your problem here";
 
-const AddForm = () => {
+const AddForm = ({ navigation }) => {
   const [report, setReport] = useState("");
+
+  const handlePressCancel = () => {
+    navigation.goBack();
+  };
 
   return (
     <View style={styles.container}>
@@ -24,7 +28,12 @@ const AddForm = () => {
       </View>
 
       <View style={styles.buttons}>
-        <Button text={"Cancel"} textColor={"white"} btnColor={"grey"} />
+        <Button
+          text={"Cancel"}
+          textColor={"white"}
+          btnColor={"grey"}
+          handlePress={handlePressCancel}
+        />
         <Button text={"Report"} />
       </View>
     </View>

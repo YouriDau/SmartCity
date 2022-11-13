@@ -12,9 +12,14 @@ const ReviewForm = (props) => {
   const userNote = props.note || "";
   const userComment = props.comment || "";
   const isUpdate = props.isUpdate;
+  const navigation = props.navigation;
 
   const [note, setNote] = useState(NOTE_MIN);
   const [comment, setComment] = useState("");
+
+  const handlePressCancel = () => {
+    navigation.goBack();
+  };
 
   return (
     <View style={styles.container}>
@@ -44,7 +49,12 @@ const ReviewForm = (props) => {
         </View>
       </View>
       <View style={styles.buttons}>
-        <Button text={"Cancel"} textColor={"white"} btnColor={"grey"} />
+        <Button
+          text={"Cancel"}
+          textColor={"white"}
+          btnColor={"grey"}
+          handlePress={handlePressCancel}
+        />
         {isUpdate ? (
           <Button text={"Update"} btnColor={"#E2E52B"} />
         ) : (

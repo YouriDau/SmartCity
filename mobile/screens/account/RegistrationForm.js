@@ -2,7 +2,8 @@ import { useState } from "react";
 import { View, Text, StyleSheet, TextInput, Pressable } from "react-native";
 import Title from "../../components/Title";
 import Button from "../../components/Button";
-import Header from "../../components/Header";
+import { useDispatch } from "react-redux";
+import { addUser } from "../../redux/actions/account";
 
 const PLACEHOLDERS = {
   pseudo: "Your pseudo here",
@@ -13,19 +14,39 @@ const PLACEHOLDERS = {
 };
 
 const RegistrationForm = ({ navigation }) => {
-  const [pseudo, setPseudo] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [firstname, setFirstame] = useState("");
-  const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
+  const dispatch = useDispatch();
+
+  const [pseudo, setPseudo] = useState();
+  const [lastname, setLastname] = useState();
+  const [firstname, setFirstame] = useState();
+  const [password, setPassword] = useState();
+  const [email, setEmail] = useState();
+
+  const handlePressRegister = () => {
+    if (
+      pseudo === "" ||
+      lastname === "" ||
+      firstname === "" ||
+      password === "" ||
+      email === ""
+    ) {
+      return;
+    } else {
+      //dispatch(addUser(pseudo, lastname, firstname, email, password));
+      setPseudo("");
+      setLastname("");
+      setFirstame("");
+      setPassword("");
+      setEmail("");
+    }
+  };
 
   const handlePressCancel = () => {
-    navigation.navigate("Maps");
+    navigation.goBack();
   };
 
   return (
     <View style={styles.container}>
-      <Header navigation={navigation} />
       <Title text="Registration" />
       <View style={styles.form}>
         <Text style={styles.inputText}>Pseudo</Text>
@@ -72,7 +93,7 @@ const RegistrationForm = ({ navigation }) => {
           btnColor={"grey"}
           handlePress={handlePressCancel}
         />
-        <Button text={"register"} />
+        <Button text={"register"} handlePress={handlePressRegister} />
       </View>
     </View>
   );

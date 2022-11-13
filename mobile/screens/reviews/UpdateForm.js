@@ -8,9 +8,14 @@ import ReviewForm from "../../components/ReviewForm";
 const CURRENT_NOTE = 3;
 const CURRENT_COMMENT = "My current comment";
 
-const UpdateForm = () => {
+const UpdateForm = ({ navigation }) => {
   return (
-    <ReviewForm isUpdate={true} note={CURRENT_NOTE} comment={CURRENT_COMMENT} />
+    <ReviewForm
+      isUpdate={true}
+      note={CURRENT_NOTE}
+      comment={CURRENT_COMMENT}
+      navigation={navigation}
+    />
   );
 };
 
