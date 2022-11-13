@@ -1,38 +1,8 @@
 import { View, Text, Pressable, StyleSheet, FlatList } from "react-native";
 import Title from "../../components/Title";
 import Button from "../../components/Button";
-import DeleteForm from "./DeleteForm";
-
-const DATA = [
-  {
-    id: 3645654444444445,
-    date: "04/11/2022",
-  },
-  {
-    id: 0,
-    date: "28/12/2022",
-  },
-  {
-    id: 1,
-    date: "05/11/2022",
-  },
-  {
-    id: 2,
-    date: "05/11/2022",
-  },
-  {
-    id: 3,
-    date: "05/11/2022",
-  },
-  {
-    id: 4,
-    date: "05/11/2022",
-  },
-  {
-    id: 5,
-    date: "05/11/2022",
-  },
-];
+import { useSelector } from "react-redux";
+import { getReviews } from "../../redux/selectors";
 
 const Item = ({ navigation, id, date }) => {
   return (
@@ -47,7 +17,7 @@ const Item = ({ navigation, id, date }) => {
         <Pressable
           style={styles.pressable}
           onPress={() => {
-            navigation.navigate("UpdateForm");
+            navigation.navigate("UpdateReview", { id });
           }}
         >
           <Text style={styles.button}>See more</Text>
@@ -66,6 +36,8 @@ const Item = ({ navigation, id, date }) => {
 };
 
 const List = ({ navigation }) => {
+  const reviews = useSelector(getReviews);
+  
   const renderItem = ({ item }) => {
     return <Item navigation={navigation} id={item.id} date={item.date} />;
   };
@@ -79,7 +51,7 @@ const List = ({ navigation }) => {
       <Title text={"Reviews"} />
       <View style={styles.content}>
         <FlatList
-          data={DATA}
+          data={reviews}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
         />

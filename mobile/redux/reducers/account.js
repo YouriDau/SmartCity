@@ -1,7 +1,6 @@
 import {
   ADD_USER,
   DELETE_USER,
-  VERIFY_USER_EXISTING,
 } from "../actions/actionsType";
 
 initialState = [

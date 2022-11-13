@@ -1,10 +1,10 @@
 import { combineReducers } from "redux";
 import { account } from "./account";
-import { reviews } from "./reviews";
+import { review } from "./review";
 import { map } from "./map";
 
 export const rootReducers = combineReducers({
   account,
-  reviews,
+  review,
   map,
 });

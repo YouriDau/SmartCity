@@ -1,11 +1,19 @@
 import { View, Text, StyleSheet } from "react-native";
 import Title from "../../components/Title";
 import Button from "../../components/Button";
+import { useDispatch } from "react-redux";
+import { deleteReview } from "../../redux/actions/review";
 
 const DeleteForm = ({ navigation, route }) => {
   const id = route.params.id;
+  const dispatch = useDispatch();
 
   const handlePressCancel = () => {
+    navigation.goBack();
+  };
+
+  const handlePressDelete = () => {
+    dispatch(deleteReview(id))
     navigation.goBack();
   };
 
@@ -25,7 +33,7 @@ const DeleteForm = ({ navigation, route }) => {
           btnColor={"grey"}
           handlePress={handlePressCancel}
         />
-        <Button text={"Yes"} btnColor={"red"} />
+        <Button text={"Yes"} btnColor={"red"} handlePress={handlePressDelete} />
       </View>
     </View>
   );

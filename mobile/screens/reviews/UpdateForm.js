@@ -5,16 +5,15 @@ import { useState } from "react";
 import Button from "../../components/Button";
 import ReviewForm from "../../components/ReviewForm";
 
-const CURRENT_NOTE = 3;
-const CURRENT_COMMENT = "My current comment";
 
-const UpdateForm = ({ navigation }) => {
+const UpdateForm = ({ navigation, route }) => {
+  const id = route.params.id;
+  
   return (
     <ReviewForm
       isUpdate={true}
-      note={CURRENT_NOTE}
-      comment={CURRENT_COMMENT}
       navigation={navigation}
+      id={id}
     />
   );
 };

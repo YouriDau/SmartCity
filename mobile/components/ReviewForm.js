@@ -3,28 +3,46 @@ import Title from "./Title";
 import Slider from "@react-native-community/slider";
 import { useState } from "react";
 import Button from "./Button";
+import { useDispatch, useSelector } from "react-redux";
+import { getReviews } from "../redux/selectors";
+import { addReview } from "../redux/actions/review";
 
 const PLACEHOLDER = "Enter your review here";
 const NOTE_MIN = 1;
 const NOTE_MAX = 5;
 
-const ReviewForm = (props) => {
-  const userNote = props.note || "";
-  const userComment = props.comment || "";
-  const isUpdate = props.isUpdate;
-  const navigation = props.navigation;
+const ReviewForm = ({navigation, isUpdate, id}) => {
+  const [note, setNote] = useState();
+  const [comment, setComment] = useState();
 
-  const [note, setNote] = useState(NOTE_MIN);
-  const [comment, setComment] = useState("");
+  const dispatch = useDispatch();
+
+  const title = (isUpdate ? "Update review " + id : "Add Review");
+  const showButton = () => {
+    if (isUpdate) {
+      return <Button text={"Update"} btnColor={"#E2E52B"} />;
+    } else {
+      return <Button text={"Submit"} handlePress={handlePressAdd} />;
+    }
+  }
 
   const handlePressCancel = () => {
     navigation.goBack();
   };
 
+  const handlePressAdd = () => {
+    dispatch(addReview(note, comment));
+    navigation.goBack();
+  };
+
+  const handlePressUpdate = () => {
+
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <Title text={(isUpdate ? "Update" : "Add") + " review"} />
+        <Title text={title} />
         <View style={styles.slideContainer}>
           <Text>{note}</Text>
           <Slider
@@ -55,11 +73,7 @@ const ReviewForm = (props) => {
           btnColor={"grey"}
           handlePress={handlePressCancel}
         />
-        {isUpdate ? (
-          <Button text={"Update"} btnColor={"#E2E52B"} />
-        ) : (
-          <Button text={"Submit"} />
-        )}
+        {showButton()}
       </View>
     </View>
   );
