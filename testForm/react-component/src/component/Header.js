@@ -8,9 +8,12 @@ class Header extends React.Component {
 
     render() {
         return (
-            <div id="divHeader">
-                <p id="textHeader">Pose ta crotte</p>
-                
+            <div id="header">
+                <p>Pose ta crotte</p>
+                <div id="btnsHeader">
+                    <button id="btnHeader1">maps</button>
+                    <button id="btnHeader2">home</button>
+                </div>
             </div>
         );
     }

@@ -2,8 +2,8 @@ import React from 'react';
 import './App.css';
 import Header from './component/Header';
 
-import ChangeUserForm from './component/ChangeUserForm';
-import LoginForm from './component/LoginForm';
+import RegistrationForm from './component/RegistrationForm';
+import LoginForm from './screen/LoginForm';
 import DeleteUser from './component/DeleteUser';
 import DeleteReport from './component/DeleteReport';
 import DeleteToiletSecondStep from './component/DeleteToiletSecondStep';
@@ -12,10 +12,12 @@ import ReadReports from './component/ReadReports';
 import UpdateReport from './component/UpdateReport';
 import UpdateToilet from './component/UpdateToilet';
 
+//const internalIp = require('internal-ip');
+
 function App() {
   return (
     <div className="App">
-      <LoginForm/>
+      <RegistrationForm/>
     </div>
   );
 }

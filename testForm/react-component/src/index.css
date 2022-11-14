@@ -26,25 +26,50 @@ h1 {
   background-color: lightskyblue;
 }*/
 
-#divHeader {
+/*#divHeader {
   position: relative;
   top: -35px;
   height: 75px;
   background-color: lightblue;
-}
+}*/
 
-#textHeader {
-  line-height: 75px;
+#header {
+  flex: 1;
+  background-color: deepskyblue;
+  margin-top: 0%;
+  width: 100%;
+  font-size: 30px;
   font-weight: bold;
-  font-size: 35px;
 }
 
-.divForm {
-  padding-bottom: 20px;
-  justify-content: flex-start;
-  border: 2px solid black;
+#btnsHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
 }
+
+#btnHeader1, #btnHeader2 {
+  margin-right: 50px;
+}
+
+/*
+#btnHeader1 {
+  display: flex;
+  margin-left: auto;
+  margin-top: 0;
+}
+*/
+
+
 
 form {
-  align-items: flex-start;
+  text-align: left;
+  width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.header {
+  height: ;
 }
