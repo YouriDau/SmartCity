@@ -8,7 +8,7 @@ initialState = [
     comment: "test",
   },
   {
-    id: 0,
+    id: 0, 
     date: "28/12/2022",
     note: 4,
     comment: "test",
