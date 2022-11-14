@@ -3,6 +3,7 @@ import Title from "../../components/Title";
 import Button from "../../components/Button";
 import { useSelector } from "react-redux";
 import { getReviews } from "../../redux/selectors";
+import { useNavigation } from "@react-navigation/native";
 
 const Item = ({ navigation, id, date }) => {
   return (
@@ -35,8 +36,9 @@ const Item = ({ navigation, id, date }) => {
   );
 };
 
-const List = ({ navigation }) => {
+const List = () => {
   const reviews = useSelector(getReviews);
+  const navigation = useNavigation();
   
   const renderItem = ({ item }) => {
     return <Item navigation={navigation} id={item.id} date={item.date} />;
@@ -72,11 +74,13 @@ const List = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
   },
   content: {
-    height: 500,
+    flex: 1,
+    height: "50%",
     width: "80%",
+    marginLeft: "auto",
+    marginRight: "auto",
   },
   item: {
     backgroundColor: "lightgrey",
@@ -96,10 +100,9 @@ const styles = StyleSheet.create({
     color: "blue",
   },
   buttons: {
+    marginTop: 50,
     flexDirection: "row",
-    justifyContent: "space-around",
-    marginTop: 30,
-    width: "100%",
+    justifyContent: "space-evenly",
   },
 });
 

@@ -43,6 +43,24 @@ initialState = [
     note: 4,
     comment: "test",
   },
+  {
+    id: 6,
+    date: "05/11/2022",
+    note: 4,
+    comment: "test",
+  },
+  {
+    id: 7,
+    date: "05/11/2022",
+    note: 4,
+    comment: "test",
+  },
+  {
+    id: 8,
+    date: "05/11/2022",
+    note: 4,
+    comment: "test",
+  },
 ];
 
 export const review = (state = initialState, action) => {

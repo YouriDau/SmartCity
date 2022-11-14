@@ -3,8 +3,8 @@ const express = require('express');
 const app = express();
 const port = 3001;
 
-const internalIp = require('internal-ip');
-const internalIP = internalIp.v4.sync();
+const InternalIp = require('internal-ip');
+const internalIP = InternalIp.v4.sync();
 
 app.use(express.json());
 app.use(Router);

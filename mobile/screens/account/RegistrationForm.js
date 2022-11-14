@@ -4,6 +4,7 @@ import Title from "../../components/Title";
 import Button from "../../components/Button";
 import { useDispatch } from "react-redux";
 import { addUser } from "../../redux/actions/account";
+import { ScrollView } from "react-native-gesture-handler";
 
 const PLACEHOLDERS = {
   pseudo: "Your pseudo here",
@@ -29,16 +30,14 @@ const RegistrationForm = ({ navigation }) => {
       firstname === "" ||
       password === "" ||
       email === ""
-    ) {
-      return;
-    } else {
+    ) return;
+
       //dispatch(addUser(pseudo, lastname, firstname, email, password));
       setPseudo("");
       setLastname("");
       setFirstame("");
       setPassword("");
       setEmail("");
-    }
   };
 
   const handlePressCancel = () => {
@@ -48,12 +47,13 @@ const RegistrationForm = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Title text="Registration" />
-      <View style={styles.form}>
+      <ScrollView style={styles.form}>
         <Text style={styles.inputText}>Pseudo</Text>
         <TextInput
           style={styles.input}
           placeholder={PLACEHOLDERS.pseudo}
           onChangeText={setPseudo}
+          value={pseudo}
         />
 
         <Text style={styles.inputText}>Lastname</Text>
@@ -61,6 +61,7 @@ const RegistrationForm = ({ navigation }) => {
           style={styles.input}
           placeholder={PLACEHOLDERS.lastname}
           onChangeText={setLastname}
+          value={lastname}
         />
 
         <Text style={styles.inputText}>Firstname</Text>
@@ -68,6 +69,7 @@ const RegistrationForm = ({ navigation }) => {
           style={styles.input}
           placeholder={PLACEHOLDERS.firstname}
           onChangeText={setFirstame}
+          value={firstname}
         />
 
         <Text style={styles.inputText}>Password</Text>
@@ -76,6 +78,7 @@ const RegistrationForm = ({ navigation }) => {
           placeholder={PLACEHOLDERS.password}
           secureTextEntry
           onChangeText={setPassword}
+          value={password}
         />
 
         <Text style={styles.inputText}>Email</Text>
@@ -84,8 +87,9 @@ const RegistrationForm = ({ navigation }) => {
           placeholder={PLACEHOLDERS.email}
           textContentType={"emailAddress"}
           onChangeText={setEmail}
+          value={email}
         />
-      </View>
+      </ScrollView>
       <View style={styles.buttons}>
         <Button
           text={"cancel"}
