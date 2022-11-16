@@ -1,5 +1,8 @@
+/* ----- INITIALISATION ----- */
+
 DROP TABLE IF EXISTS person CASCADE;
 CREATE TABLE person(
+    id serial primary key,
     pseudo varchar(250) primary key,
     last_name varchar(250) not null,
     first_name varchar(250) not null,
@@ -32,7 +35,7 @@ CREATE TABLE review
     id serial primary key,
     note int not null,
     comment varchar(250) not null,
-    user_pseudo varchar(250) not null,
+    user_id int not null,
     toilet_id int not null,
     foreign KEY(user_pseudo) references person(pseudo),
     foreign KEY(toilet_id) references toilet(id)
@@ -48,5 +51,16 @@ CREATE TABLE locationToilet
     foreign KEY(toilet_id) references toilet(id)
     );
 
+
+/* ----- REMPLISSAGE ----- */
+
+INSERT INTO person (pseudo, last_name, first_name, email, is_admin)
+(
+    "youyou",
+    "youri",
+    "Dautrebande",
+    "ydautrebande@gmail.com",
+    TRUE,
+)
 
 
