@@ -1,4 +1,7 @@
 import { ADD_REVIEW, DELETE_REVIEW } from "../actions/actionsType";
+import useFetchReviews from "../../services/useFetchReviews";
+
+const { deleteReview } = useFetchReviews();
 
 initialState = [
   {
@@ -8,7 +11,7 @@ initialState = [
     comment: "test",
   },
   {
-    id: 0, 
+    id: 0,
     date: "28/12/2022",
     note: 4,
     comment: "test",
@@ -70,7 +73,7 @@ export const review = (state = initialState, action) => {
   const year = date.getFullYear();
   const formatedDate = `${day}/${month}/${year}`;
 
-  switch(action.type) {
+  switch (action.type) {
     case ADD_REVIEW:
       return [
         ...state,
@@ -79,10 +82,11 @@ export const review = (state = initialState, action) => {
           date: formatedDate,
           note: action.payload.note,
           comment: action.payload.comment,
-        }
+        },
       ];
     case DELETE_REVIEW:
-      return state.filter(review => review.id != action.payload.id);
+      deleteReview(action.payload.id);
+      return state.filter((review) => review.id != action.payload.id);
     default:
       return initialState;
   }

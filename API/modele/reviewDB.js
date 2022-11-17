@@ -1,6 +1,6 @@
-module.exports.getReview = async (idToilet, client) => {
+module.exports.getReviews = async (toiletId, client) => {
   return await client.query("SELECT * FROM review WHERE toilet_id=$1", [
-    idToilet,
+    toiletId,
   ]);
 };
 
