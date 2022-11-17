@@ -45,7 +45,7 @@ module.exports.postPerson = async (req, res) => {
   console.log(pseudo);
   const client = await pool.connect();
   try {
-     await PersonModele.postPerson(
+    await PersonModele.postPerson(
       pseudo,
       last_name,
       first_name,
@@ -62,10 +62,38 @@ module.exports.postPerson = async (req, res) => {
   }
 };
 
+module.exports.updatePerson = async (req, res) => {
+  const { id, pseudo, last_name, first_name, email, is_admin, password } =
+    req.body;
+  const client = await pool.connect();
+  try {
+    if (!isNaN(id)) {
+      await PersonModele.updatePerson(
+        id,
+        pseudo,
+        last_name,
+        first_name,
+        email,
+        is_admin,
+        password,
+        client
+      );
+      res.sendStatus(204);
+    } else {
+      res.sendStatus(401);
+    }
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
+  } finally {
+    client.release();
+  }
+};
+
 module.exports.deletePerson = async (req, res) => {
   const { id } = req.body;
   const client = await pool.connect();
-  
+
   try {
     await PersonModele.deletePerson(id, client);
     res.sendStatus(204);

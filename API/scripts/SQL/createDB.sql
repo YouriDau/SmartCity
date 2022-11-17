@@ -8,7 +8,8 @@ CREATE TABLE person
     last_name varchar(250) not null,
     first_name varchar(250) not null,
     email varchar(250) not null,
-    is_admin boolean not null
+    is_admin boolean not null,
+    password varchar(250) not null
     );
 
 DROP TABLE IF EXISTS toilet CASCADE;
@@ -58,11 +59,11 @@ CREATE TABLE review
 /* ----- REMPLISSAGE ----- */
 
 -- PERSON
-INSERT INTO person (pseudo, last_name, first_name, email, is_admin)
+INSERT INTO person (pseudo, last_name, first_name, email, is_admin, password)
 VALUES 
-    ( 'youyou', 'Dautrebande', 'Youri', 'ydautrebande@gmail.com', TRUE),
-    ( 'tim', 'Ciciotti', 'Timothé', 'timothecicio@gmail.com', TRUE),
-    ( 'tom', 'Gedusor', 'Tom', 'tomgedusore@gmail.com', FALSE);
+    ( 'youyou', 'Dautrebande', 'Youri', 'ydautrebande@gmail.com', TRUE, 'password'),
+    ( 'tim', 'Ciciotti', 'Timothé', 'timothecicio@gmail.com', TRUE, 'motdepasse'),
+    ( 'tom', 'Gedusor', 'Tom', 'tomgedusore@gmail.com', FALSE, 'test');
 
 -- TOILET
 INSERT INTO toilet (is_reduced_mobility, is_paid)
