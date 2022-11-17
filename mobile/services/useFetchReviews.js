@@ -5,26 +5,39 @@ const BASE_URL_API = "http://192.168.1.53:3001/review";
 export default function useFetchReviews() {
   const getReviewByToiletId = async (idToilet) => {
     try {
-      const response = await axios.get(BASE_URL_API, {
+      const response = await axios({
+        method: "get",
+        url: BASE_URL_API,
         params: { toiletId: idToilet },
       });
       return response.data;
     } catch (error) {
-      console.error("getReviewError", e);
+      console.error("getReviewError", error);
+    }
+  };
+
+  const addReview = async (note, comment, user_id = 1, toilet_id = 1) => {
+    try {
+      await axios({
+        method: "post",
+        url: BASE_URL_API,
+        params: { note, comment, user_id, toilet_id },
+      });
+    } catch (error) {
+      console.error("addReviewError", error);
     }
   };
 
   const deleteReview = async (id) => {
     try {
       console.log(id);
-      const response = await axios({
+      await axios({
         method: "delete",
         url: BASE_URL_API,
         data: {
-          id: id,
+          id,
         },
       });
-      console.log(response.data);
     } catch (error) {
       console.error("deleteReviewError", e);
     }
@@ -32,6 +45,7 @@ export default function useFetchReviews() {
 
   return {
     getReviewByToiletId,
+    addReview,
     deleteReview,
   };
 }

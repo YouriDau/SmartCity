@@ -1,29 +1,29 @@
-import {
-  ADD_USER,
-  DELETE_USER,
-} from "../actions/actionsType";
+import { ADD_USER, DELETE_USER } from "../actions/actionsType";
+import useFetchPerson from "../../services/useFetchPerson";
 
-initialState = [
-  {
-    pseudo: "pseudo",
-    lastname: "lastname",
-    firstname: "firstname",
-    password: "password",
-    email: "email",
-  },
-];
+const { addPerson } = useFetchPerson();
+
+initialState = [];
 
 export const account = (state = initialState, action) => {
   switch (action.type) {
     case ADD_USER:
+      const pseudo = action.payload.pseudo;
+      const lastname = action.payload.lastname;
+      const firstname = action.payload.firstname;
+      const email = action.payload.email;
+      const password = action.payload.password;
+
+      addPerson(pseudo, lastname, firstname, email, password);
+
       return [
         ...state,
         {
-          pseudo: action.payload.pseudo,
-          lastname: action.payload.lastname,
-          firstname: action.payload.firstname,
-          password: action.payload.password,
-          email: action.payload.email,
+          pseudo,
+          lastname,
+          firstname,
+          email,
+          password,
         },
       ];
     case DELETE_USER:

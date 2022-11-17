@@ -8,7 +8,6 @@ import Button from "../components/Button";
 import { addMapMarker } from "../redux/actions/maps";
 
 const Maps = ({ navigation }) => {
-  const [newMarker, setNewMarker] = useState();
   const dispatch = useDispatch();
   const toilets = useSelector(getMarkers);
 

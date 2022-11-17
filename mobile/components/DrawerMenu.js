@@ -42,7 +42,7 @@ const DrawerMenu = () => {
 
   return (
     <Drawer.Navigator
-      initialRouteName="Registration"
+      initialRouteName="Register"
       // Pour l'ordre du retour en arrière
       backBehavior="history"
       screenOptions={{ drawerType: "slide", swipeEdgeWidth: 80 }}

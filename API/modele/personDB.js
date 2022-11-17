@@ -12,12 +12,13 @@ module.exports.postPerson = async (
   first_name,
   email,
   is_admin,
+  password,
   client
 ) => {
   return await client.query(
-    `INSERT INTO person(pseudo, last_name, first_name, email, is_admin)
-     VALUES ($1,$2,$3,$4,$5)`,
-    [pseudo, last_name, first_name, email, is_admin]
+    `INSERT INTO person(pseudo, last_name, first_name, email, is_admin, password)
+     VALUES ($1,$2,$3,$4,$5,$6)`,
+    [pseudo, last_name, first_name, email, is_admin, password]
   );
 };
 
@@ -41,4 +42,21 @@ module.exports.updatePerson = async (
 
 module.exports.deletePerson = async (id, client) => {
   return await client.query("DELETE FROM person WHERE id = $1", [id]);
+};
+
+// Check if the pseudo is used
+module.exports.pseudoExist = async (pseudo, client) => {
+  const { rows } = await client.query(
+    `SELECT count(pseudo) AS nbr FROM person WHERE pseudo=$1`,
+    [pseudo]
+  );
+  return rows[0].nbr > 0;
+};
+
+module.exports.emailExist = async (email, client) => {
+  const { rows } = await client.query(
+    `SELECT count(email) AS nbr FROM person WHERE email=$1`,
+    [email]
+  );
+  return rows[0].nbr > 0;
 };

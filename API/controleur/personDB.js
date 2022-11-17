@@ -41,19 +41,26 @@ module.exports.getPerson = async (req, res) => {
 };
 
 module.exports.postPerson = async (req, res) => {
-  const { pseudo, last_name, first_name, email, is_admin } = req.body;
-  console.log(pseudo);
+  const { pseudo, last_name, first_name, email, is_admin, password } = req.body;
   const client = await pool.connect();
   try {
-    await PersonModele.postPerson(
-      pseudo,
-      last_name,
-      first_name,
-      email,
-      is_admin,
-      client
-    );
-    res.sendStatus(201);
+    const pseudoExist = await PersonModele.pseudoExist(pseudo, client);
+    const emailExist = await PersonModele.emailExist(email, client);
+    if (!pseudoExist && !emailExist) {
+      await PersonModele.postPerson(
+        pseudo,
+        last_name,
+        first_name,
+        email,
+        is_admin,
+        password,
+        client
+      );
+      res.sendStatus(201);
+    } else {
+      // 409 = conflict
+      res.sendStatus(409);
+    }
   } catch (error) {
     console.error(error);
     res.sendStatus(500);

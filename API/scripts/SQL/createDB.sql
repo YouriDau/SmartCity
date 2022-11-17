@@ -4,10 +4,10 @@ DROP TABLE IF EXISTS person CASCADE;
 CREATE TABLE person
     (
     id serial primary key,
-    pseudo varchar(250) not null,
+    pseudo varchar(250) unique not null,
     last_name varchar(250) not null,
     first_name varchar(250) not null,
-    email varchar(250) not null,
+    email varchar(250) unique not null,
     is_admin boolean not null,
     password varchar(250) not null
     );

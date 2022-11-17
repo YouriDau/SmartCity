@@ -39,7 +39,7 @@ const Item = ({ navigation, id, date }) => {
 const List = () => {
   const reviews = useSelector(getReviews);
   const navigation = useNavigation();
-  
+
   const renderItem = ({ item }) => {
     return <Item navigation={navigation} id={item.id} date={item.date} />;
   };
@@ -65,7 +65,6 @@ const List = () => {
           btnColor={"grey"}
           handlePress={handlePressCancel}
         />
-        <Button />
       </View>
     </View>
   );

@@ -1,7 +1,7 @@
 import { ADD_REVIEW, DELETE_REVIEW } from "../actions/actionsType";
 import useFetchReviews from "../../services/useFetchReviews";
 
-const { deleteReview } = useFetchReviews();
+const { deleteReview, addReview } = useFetchReviews();
 
 initialState = [
   {
@@ -75,6 +75,7 @@ export const review = (state = initialState, action) => {
 
   switch (action.type) {
     case ADD_REVIEW:
+      addReview(action.payload.note, action.payload.comment);
       return [
         ...state,
         {

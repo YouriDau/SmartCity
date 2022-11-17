@@ -11,20 +11,20 @@ const PLACEHOLDER = "Enter your review here";
 const NOTE_MIN = 1;
 const NOTE_MAX = 5;
 
-const ReviewForm = ({navigation, isUpdate, id}) => {
+const ReviewForm = ({ navigation, isUpdate, id }) => {
   const [note, setNote] = useState();
   const [comment, setComment] = useState();
 
   const dispatch = useDispatch();
 
-  const title = (isUpdate ? "Update review " + id : "Add Review");
+  const title = isUpdate ? "Update review " + id : "Add Review";
   const showButton = () => {
     if (isUpdate) {
       return <Button text={"Update"} btnColor={"#E2E52B"} />;
     } else {
       return <Button text={"Submit"} handlePress={handlePressAdd} />;
     }
-  }
+  };
 
   const handlePressCancel = () => {
     navigation.goBack();
@@ -35,9 +35,7 @@ const ReviewForm = ({navigation, isUpdate, id}) => {
     navigation.goBack();
   };
 
-  const handlePressUpdate = () => {
-
-  };
+  const handlePressUpdate = () => {};
 
   return (
     <View style={styles.container}>

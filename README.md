@@ -24,16 +24,20 @@ npx create-expo-app mobile
             // => Store.js
         npm install react-redux
 
+      // Afficher les cartes, marqueurs, etc
       npm install react-native-maps
-    	// Afficher les cartes, marqueurs, etc
 
+      // Slider pour les reviews
       npm install @react-native-community/slider
-    	// Slider pour les reviews
 
+      // Check box
       npx expo install expo-checkbox
-    	// Check box
 
+      // Navigation
       npm install @react-navigation/native @react-navigation/native-stack
+
+      // Pour afficher infos lors d'un click sur une toilette
+      npm i bootstrap-3-card
 
 npm install react-native-screens react-native-safe-area-context
 // Navigation

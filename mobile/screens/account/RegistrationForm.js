@@ -30,14 +30,15 @@ const RegistrationForm = ({ navigation }) => {
       firstname === "" ||
       password === "" ||
       email === ""
-    ) return;
+    )
+      return;
 
-      //dispatch(addUser(pseudo, lastname, firstname, email, password));
-      setPseudo("");
-      setLastname("");
-      setFirstame("");
-      setPassword("");
-      setEmail("");
+    dispatch(addUser(pseudo, lastname, firstname, email, password));
+    setPseudo("");
+    setLastname("");
+    setFirstame("");
+    setPassword("");
+    setEmail("");
   };
 
   const handlePressCancel = () => {

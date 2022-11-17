@@ -32,7 +32,6 @@ module.exports.deleteReview = async (req, res) => {
   const { id } = req.body;
   const client = await pool.connect();
   try {
-    console.log(id);
     await ReviewModele.deleteReview(id, client);
     res.sendStatus(204);
   } catch (error) {
