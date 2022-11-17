@@ -10,13 +10,54 @@ import { addMapMarker } from "../redux/actions/maps";
 const Maps = ({ navigation }) => {
   const dispatch = useDispatch();
   const toilets = useSelector(getMarkers);
+  const [canAddToilet, setCanAddToilet] = useState(false);
+  const [newCoordinate, setNewCoordinates] = useState();
 
-  function addMarker(coordinate) {
-    dispatch(addMapMarker(coordinate.latitude, coordinate.longitude));
+  function addNewMarker() {
+    if (canAddToilet && newCoordinate) {
+      setCanAddToilet(false);
+      navigation.navigate("AddToilet");
+    }
   }
 
-  const handlePressAddToilet = () => {
-    dispatch(addMarker);
+  const handlePressMap = (coordinate) => {
+    setNewCoordinates(coordinate);
+  };
+
+  const showButtons = () => {
+    if (!canAddToilet) {
+      return (
+        <View style={styles.buttons}>
+          <Button
+            text={"Add toilet"}
+            textColor={"white"}
+            btnColor={"grey"}
+            handlePress={() => {
+              setCanAddToilet(true);
+            }}
+          />
+        </View>
+      );
+    } else {
+      return (
+        <View style={styles.buttons}>
+          <Button
+            text={"Cancel"}
+            textColor={"white"}
+            btnColor={"grey"}
+            handlePress={() => {
+              setCanAddToilet(false);
+            }}
+          />
+          <Button
+            text={"Add toilet here"}
+            textColor={"white"}
+            btnColor={"#44AAFF"}
+            handlePress={addNewMarker}
+          />
+        </View>
+      );
+    }
   };
 
   return (
@@ -34,7 +75,7 @@ const Maps = ({ navigation }) => {
         // e.nativeEvent renvoie toutes les informations concernant le click:
         // action="press", coordinates: {latitude: XXX, ...}, ...
 
-        onPress={(e) => addMarker(e.nativeEvent.coordinate)}
+        onPress={(e) => handlePressMap(e.nativeEvent.coordinate)}
       >
         {toilets.map((toilet) => (
           <Marker
@@ -45,14 +86,7 @@ const Maps = ({ navigation }) => {
           />
         ))}
       </MapView>
-      <View style={styles.buttons}>
-        <Button
-          text={"Add toilet"}
-          textColor={"white"}
-          btnColor={"grey"}
-          handlePress={handlePressAddToilet}
-        />
-      </View>
+      {showButtons()}
     </View>
   );
 };
@@ -67,10 +101,15 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
   },
+  marker: {
+    height: 60,
+    width: 60,
+  },
   buttons: {
+    width: "100%",
     flexDirection: "row",
-    justifyContent: "space-around",
     position: "absolute",
+    justifyContent: "space-around",
     bottom: 0,
     marginHorizontal: "auto",
   },

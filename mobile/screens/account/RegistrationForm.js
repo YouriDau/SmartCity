@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View, Text, StyleSheet, TextInput, Pressable } from "react-native";
+import { View, Text, StyleSheet, TextInput, Alert } from "react-native";
 import Title from "../../components/Title";
 import Button from "../../components/Button";
 import { useDispatch } from "react-redux";
@@ -17,28 +17,46 @@ const PLACEHOLDERS = {
 const RegistrationForm = ({ navigation }) => {
   const dispatch = useDispatch();
 
-  const [pseudo, setPseudo] = useState();
-  const [lastname, setLastname] = useState();
-  const [firstname, setFirstame] = useState();
-  const [password, setPassword] = useState();
-  const [email, setEmail] = useState();
+  const [pseudo, setPseudo] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [firstname, setFirstame] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
 
   const handlePressRegister = () => {
-    if (
-      pseudo === "" ||
-      lastname === "" ||
-      firstname === "" ||
-      password === "" ||
-      email === ""
-    )
-      return;
+    let alert = "Please enter your ";
+    if (pseudo === "") {
+      alert += "pseudo ";
+      Alert.alert(alert);
+    } else {
+      if (lastname === "") {
+        alert += "lastname ";
+        Alert.alert(alert);
+      } else {
+        if (firstname === "") {
+          alert += "firstname ";
+          Alert.alert(alert);
+        } else {
+          if (password === "") {
+            alert += "password ";
+            Alert.alert(alert);
+          } else {
+            if (email === "") {
+              alert += "email";
+              Alert.alert(alert);
+            } else {
+              dispatch(addUser(pseudo, lastname, firstname, email, password));
 
-    dispatch(addUser(pseudo, lastname, firstname, email, password));
-    setPseudo("");
-    setLastname("");
-    setFirstame("");
-    setPassword("");
-    setEmail("");
+              setPseudo("");
+              setLastname("");
+              setFirstame("");
+              setPassword("");
+              setEmail("");
+            }
+          }
+        }
+      }
+    }
   };
 
   const handlePressCancel = () => {

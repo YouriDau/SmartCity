@@ -1,14 +1,27 @@
 const pool = require("../modele/database");
 const ToiletModele = require("../modele/toiletDB");
 
+module.exports.getToiletsLocation = async (req, res) => {
+  const client = await pool.connect();
+  try {
+    const { rows: locations } = await ToiletModele.getToiletsLocation(client);
+    if (locations !== undefined) {
+      res.json(locations);
+    } else {
+      res.sendStatus(404);
+    }
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
+  }
+};
+
 module.exports.getToilet = async (req, res) => {
   const client = await pool.connect();
-  const idTexte = req.params.id; //attention ! Il s'agit de texte !
+  const idTexte = req.params.id;
   const id = parseInt(idTexte);
   try {
-    if (isNaN(id)) {
-      res.sendStatus(400);
-    } else {
+    if (!isNaN(id)) {
       const { rows: toilets } = await ToiletModele.getToilet(id, client);
       const toilet = toilets[0];
       if (toilet !== undefined) {
@@ -16,6 +29,8 @@ module.exports.getToilet = async (req, res) => {
       } else {
         res.sendStatus(404);
       }
+    } else {
+      res.sendStatus(400);
     }
   } catch (error) {
     console.error(error);

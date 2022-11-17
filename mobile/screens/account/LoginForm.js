@@ -2,7 +2,6 @@ import { useState } from "react";
 import { View, Text, StyleSheet, TextInput } from "react-native";
 import Title from "../../components/Title";
 import Button from "../../components/Button";
-import Header from "../../components/Header";
 
 const PLACEHOLDERS = {
   pseudo: "Your pseudo here",
@@ -19,6 +18,8 @@ const LoginForm = ({ navigation }) => {
   const handlePressCancel = () => {
     navigation.goBack();
   };
+
+  const handlePressSubmit = () => {};
 
   return (
     <View style={styles.container}>
@@ -46,7 +47,7 @@ const LoginForm = ({ navigation }) => {
           btnColor={"grey"}
           handlePress={handlePressCancel}
         />
-        <Button text={"login"} />
+        <Button text={"login"} handlePress={handlePressSubmit} />
       </View>
     </View>
   );

@@ -27,7 +27,7 @@ export const map = (state = initialState, action) => {
       return [
         ...state,
         {
-          id: initialState.length,
+          id: state.length,
           title: "test",
           description: "description test",
           location: {

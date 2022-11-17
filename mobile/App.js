@@ -7,7 +7,6 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import DrawerMenu from "./components/DrawerMenu";
 
 import AddReview from "./screens/reviews/AddForm";
-import ListReview from "./screens/reviews/List";
 import UpdateReview from "./screens/reviews/UpdateForm";
 import DeleteReview from "./screens/reviews/DeleteForm";
 
@@ -41,7 +40,7 @@ const App = () => {
     },
     {
       name: "AddReport",
-      component: AddReport, 
+      component: AddReport,
     },
     {
       name: "AddToilet",
@@ -52,13 +51,13 @@ const App = () => {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-          {navigationScreens.map(screen => (
+          {navigationScreens.map((screen) => (
             <Drawer.Screen
-            key={screen.name}
-            name={screen.name}
-            component={screen.component}
-            />)
-          )}
+              key={screen.name}
+              name={screen.name}
+              component={screen.component}
+            />
+          ))}
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
