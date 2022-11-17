@@ -5,7 +5,7 @@ module.exports.getAllPersons = async (req, res) => {
   const client = await pool.connect();
   try {
     const { rows: persons } = await PersonModele.getAllPersons(client);
-    const allPersons = persons[0];
+    const allPersons = persons;
     if (allPersons !== undefined) {
       res.json(allPersons);
     } else {
@@ -41,11 +41,11 @@ module.exports.getPerson = async (req, res) => {
 };
 
 module.exports.postPerson = async (req, res) => {
-  const body = req.body;
-  const { pseudo, last_name, first_name, email, is_admin } = body;
+  const { pseudo, last_name, first_name, email, is_admin } = req.body;
+  console.log(pseudo);
   const client = await pool.connect();
   try {
-    const { rows } = await PersonModele.postPerson(
+     await PersonModele.postPerson(
       pseudo,
       last_name,
       first_name,
@@ -53,7 +53,7 @@ module.exports.postPerson = async (req, res) => {
       is_admin,
       client
     );
-    res.status(201).send(rows[0].pseudo);
+    res.sendStatus(201);
   } catch (error) {
     console.error(error);
     res.sendStatus(500);
@@ -63,10 +63,11 @@ module.exports.postPerson = async (req, res) => {
 };
 
 module.exports.deletePerson = async (req, res) => {
-  const { pseudo } = req.body;
+  const { id } = req.body;
   const client = await pool.connect();
+  
   try {
-    await PersonModele.deletePerson(pseudo, client);
+    await PersonModele.deletePerson(id, client);
     res.sendStatus(204);
   } catch (error) {
     console.error(error);
