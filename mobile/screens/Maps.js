@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { useDispatch, useSelector } from "react-redux";
 import { getMarkers } from "../redux/selectors";
@@ -8,7 +8,6 @@ import Button from "../components/Button";
 import { addMapMarker } from "../redux/actions/maps";
 
 const Maps = ({ navigation }) => {
-  const dispatch = useDispatch();
   const toilets = useSelector(getMarkers);
   const [canAddToilet, setCanAddToilet] = useState(false);
   const [newCoordinate, setNewCoordinates] = useState();
@@ -21,7 +20,20 @@ const Maps = ({ navigation }) => {
   }
 
   const handlePressMap = (coordinate) => {
-    setNewCoordinates(coordinate);
+    if (canAddToilet) {
+      setNewCoordinates(coordinate);
+    }
+  };
+
+  const handlePressCancel = () => {
+    setCanAddToilet(false);
+    setNewCoordinates();
+  };
+
+  const showNewMarker = () => {
+    if (canAddToilet && newCoordinate !== undefined) {
+      return <Marker key={"0"} coordinate={newCoordinate} />;
+    }
   };
 
   const showButtons = () => {
@@ -33,6 +45,7 @@ const Maps = ({ navigation }) => {
             textColor={"white"}
             btnColor={"grey"}
             handlePress={() => {
+              Alert.alert("click on the map to add new marker");
               setCanAddToilet(true);
             }}
           />
@@ -46,7 +59,7 @@ const Maps = ({ navigation }) => {
             textColor={"white"}
             btnColor={"grey"}
             handlePress={() => {
-              setCanAddToilet(false);
+              handlePressCancel();
             }}
           />
           <Button
@@ -75,16 +88,14 @@ const Maps = ({ navigation }) => {
         // e.nativeEvent renvoie toutes les informations concernant le click:
         // action="press", coordinates: {latitude: XXX, ...}, ...
 
-        onPress={(e) => handlePressMap(e.nativeEvent.coordinate)}
+        onPress={(e) => {
+          handlePressMap(e.nativeEvent.coordinate);
+        }}
       >
         {toilets.map((toilet) => (
-          <Marker
-            key={toilet.id}
-            coordinate={toilet.location}
-            title={toilet.title}
-            description={toilet.description}
-          />
+          <Marker key={toilet.id} coordinate={toilet.location} />
         ))}
+        {showNewMarker()}
       </MapView>
       {showButtons()}
     </View>

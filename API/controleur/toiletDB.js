@@ -1,12 +1,20 @@
 const pool = require("../modele/database");
 const ToiletModele = require("../modele/toiletDB");
 
-module.exports.getToiletsLocation = async (req, res) => {
+module.exports.getToilets = async (req, res) => {
   const client = await pool.connect();
   try {
-    const { rows: locations } = await ToiletModele.getToiletsLocation(client);
-    if (locations !== undefined) {
-      res.json(locations);
+    const { rows: toilets } = await ToiletModele.getToilets(client);
+    const { rows: locations } = await ToiletModele.getLocations(client);
+
+    if (toilets !== undefined && locations !== undefined) {
+      toilets.forEach((toilet) => {
+        toilet.location = locations.filter(
+          (location) => location.toilet_id === toilet.id
+        )[0];
+        delete toilet.location.toilet_id;
+      });
+      res.json(toilets);
     } else {
       res.sendStatus(404);
     }
@@ -72,3 +80,21 @@ module.exports.deleteToilet = async (req, res) => {
     client.release();
   }
 };
+
+/*module.exports.updateToilet = async (req, res) => {
+  const { id, isPaid, isReducedMobility } = req.body;
+  const client = await pool.connect();
+  try {
+    if (!isNaN(id)) {
+      await ToiletModele.updateToilet(id, isPaid, isReducedMobility, client);
+      res.sendStatus(204);
+    } else {
+      res.sendStatus(401);
+    }
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
+  } finally {
+    client.release();
+  }
+};*/

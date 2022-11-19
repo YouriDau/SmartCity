@@ -1,25 +1,10 @@
 import { ADD_MAP_MARKER } from "../actions/actionsType";
+import useFetchToilet from "../../services/useFetchToilets";
 
-initialState = [
-  {
-    id: 0,
-    title: "1 toilet",
-    description: "Toilet 1 Description",
-    location: {
-      latitude: 50.46535,
-      longitude: 4.86461,
-    },
-  },
-  {
-    id: 1,
-    title: "2 toilet",
-    description: "Toilet 2 Description",
-    location: {
-      latitude: 50.47104,
-      longitude: 4.85807,
-    },
-  },
-];
+const { getToilets } = useFetchToilet();
+const toilets = getToilets();
+console.log(toilets);
+initialState = [];
 
 export const map = (state = initialState, action) => {
   switch (action.type) {

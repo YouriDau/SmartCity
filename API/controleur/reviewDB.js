@@ -41,3 +41,17 @@ module.exports.deleteReview = async (req, res) => {
     client.release();
   }
 };
+
+module.exports.updateReview = async (req, res) => {
+  const { id, note, comment } = req.body;
+  const client = await pool.connect();
+  try {
+    await ReviewModele.updateReview(id, note, comment, client);
+    res.sendStatus(204);
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
+  } finally {
+    client.release();
+  }
+};

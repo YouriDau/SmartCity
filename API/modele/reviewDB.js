@@ -20,3 +20,9 @@ module.exports.postReview = async (
 module.exports.deleteReview = async (id, client) => {
   return await client.query("DELETE FROM review WHERE id = $1", [id]);
 };
+
+module.exports.updateReview = async (id, note, comment, client) => {
+  return await client.query(
+    "UPDATE client SET note=$1, comment=$2 WHERE id=$3"[(note, comment, id)]
+  );
+};

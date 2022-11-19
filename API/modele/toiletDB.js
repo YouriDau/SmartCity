@@ -1,9 +1,15 @@
-module.exports.getToiletsLocation = async (client) => {
-  return await client.query("SELECT * FROM location_toilet");
+module.exports.getToilets = async (client) => {
+  return await client.query("SELECT * FROM toilet");
+};
+
+module.exports.getLocations = async (client) => {
+  return await client.query(
+    "SELECT latitude, longitude, toilet_id FROM location_toilet"
+  );
 };
 
 module.exports.getToilet = async (id, client) => {
-  return await client.query("SELECT * FROM toilet WHERE id = $1", [id]);
+  return await client.query("SELECT * FROM toilet WHERE id = $1 LIMIT 1", [id]);
 };
 
 module.exports.postToilet = async (is_reduced_mobility, is_paid, client) => {
@@ -15,4 +21,11 @@ module.exports.postToilet = async (is_reduced_mobility, is_paid, client) => {
 
 module.exports.deleteToilet = async (id, client) => {
   return await client.query("DELETE FROM person WHERE id = $1", [id]);
+};
+
+module.exports.updateToilet = async (id, isPaid, isReducedMobility, client) => {
+  return await client.query(
+    "UPDATE toilet SET is_paid=$1, is_reduced_mobility=$2 WHERE id=$3",
+    [isPaid, isReducedMobility, id]
+  );
 };
