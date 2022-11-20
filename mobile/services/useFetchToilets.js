@@ -15,7 +15,21 @@ export default function useFetchToilet() {
       console.error("getToiletsError", error);
     }
   };
+
+  const addToilet = async (latitude, longitude, isPaid, isReducedMobility) => {
+    try {
+      await axios({
+        method: "post",
+        url: BASE_URL_API,
+        data: { latitude, longitude, isPaid, isReducedMobility },
+      });
+    } catch (error) {
+      console.error("addToiletError", error);
+    }
+  };
+
   return {
     getToilets,
+    addToilet,
   };
 }

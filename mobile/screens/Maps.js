@@ -12,13 +12,6 @@ const Maps = ({ navigation }) => {
   const [canAddToilet, setCanAddToilet] = useState(false);
   const [newCoordinate, setNewCoordinates] = useState();
 
-  function addNewMarker() {
-    if (canAddToilet && newCoordinate) {
-      setCanAddToilet(false);
-      navigation.navigate("AddToilet");
-    }
-  }
-
   const handlePressMap = (coordinate) => {
     if (canAddToilet) {
       setNewCoordinates(coordinate);
@@ -28,6 +21,18 @@ const Maps = ({ navigation }) => {
   const handlePressCancel = () => {
     setCanAddToilet(false);
     setNewCoordinates();
+  };
+
+  const handlePressAddToiletFirst = () => {
+    Alert.alert("click on the map to add new marker");
+    setCanAddToilet(true);
+  };
+
+  const handlePressAddToiletSecond = () => {
+    if (canAddToilet && newCoordinate) {
+      setCanAddToilet(false);
+      navigation.navigate("AddToilet", { newCoordinate });
+    }
   };
 
   const showNewMarker = () => {
@@ -44,10 +49,7 @@ const Maps = ({ navigation }) => {
             text={"Add toilet"}
             textColor={"white"}
             btnColor={"grey"}
-            handlePress={() => {
-              Alert.alert("click on the map to add new marker");
-              setCanAddToilet(true);
-            }}
+            handlePress={handlePressAddToiletFirst}
           />
         </View>
       );
@@ -58,15 +60,13 @@ const Maps = ({ navigation }) => {
             text={"Cancel"}
             textColor={"white"}
             btnColor={"grey"}
-            handlePress={() => {
-              handlePressCancel();
-            }}
+            handlePress={handlePressCancel}
           />
           <Button
             text={"Add toilet here"}
             textColor={"white"}
             btnColor={"#44AAFF"}
-            handlePress={addNewMarker}
+            handlePress={handlePressAddToiletSecond}
           />
         </View>
       );

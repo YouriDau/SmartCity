@@ -50,15 +50,24 @@ module.exports.getToilet = async (req, res) => {
 
 module.exports.postToilet = async (req, res) => {
   const body = req.body;
-  const { is_reduced_mobility, is_paid } = body;
+  const { latitude, longitude, isReducedMobility, isPaid } = body;
   const client = await pool.connect();
   try {
-    const { rows } = await ToiletModele.postToilet(
-      is_reduced_mobility,
-      is_paid,
+    const { rows: toilets } = await ToiletModele.postToilet(
+      isReducedMobility,
+      isPaid,
       client
     );
-    res.status(201).send(rows[0].id);
+    const toilet = toilets[0];
+
+    const { rows: location } = await ToiletModele.postLocation(
+      latitude,
+      longitude,
+      toilet.id,
+      client
+    );
+
+    res.sendStatus(201);
   } catch (error) {
     console.error(error);
     res.sendStatus(500);

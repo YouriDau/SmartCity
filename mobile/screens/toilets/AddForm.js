@@ -3,32 +3,49 @@ import CheckBox from "expo-checkbox";
 import Title from "../../components/Title";
 import Button from "../../components/Button";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addMapMarker } from "../../redux/actions/maps";
 
-const AddToilet = ({ navigation }) => {
-  const [isFreeCheck, setIsFreeCheck] = useState(false);
-  const [isMobilityCheck, setIsMobilityCheck] = useState(false);
+const AddToilet = ({ navigation, route }) => {
+  const [isPaid, setIsPaid] = useState(false);
+  const [isReducedMobility, setIsReducedMobility] = useState(false);
+  const { newCoordinate } = route.params;
+
+  const dispatch = useDispatch();
 
   const handlePressCancel = () => {
     navigation.goBack();
   };
 
+  const handlePressSubmit = () => {
+    dispatch(
+      addMapMarker(
+        newCoordinate.latitude,
+        newCoordinate.longitude,
+        isPaid,
+        isReducedMobility
+      )
+    );
+    navigation.navigate("Maps");
+  };
+
   return (
     <View style={styles.container}>
-      <Title text={"Add toilet"} />
+      <Title text={"Add toilet "} />
       <View style={styles.content}>
         <View style={styles.checkBoxContainer}>
           <CheckBox
             style={styles.checkbox}
-            value={isFreeCheck}
-            onValueChange={setIsFreeCheck}
+            value={isPaid}
+            onValueChange={setIsPaid}
           />
-          <Text>The toilet is free</Text>
+          <Text>The toilet is paid</Text>
         </View>
         <View style={styles.checkBoxContainer}>
           <CheckBox
             style={styles.checkbox}
-            value={isMobilityCheck}
-            onValueChange={setIsMobilityCheck}
+            value={isReducedMobility}
+            onValueChange={setIsReducedMobility}
           />
           <Text>The toilet is for reduce mobility people</Text>
         </View>
@@ -40,7 +57,7 @@ const AddToilet = ({ navigation }) => {
           btnColor={"grey"}
           handlePress={handlePressCancel}
         />
-        <Button />
+        <Button handlePress={handlePressSubmit} />
       </View>
     </View>
   );
