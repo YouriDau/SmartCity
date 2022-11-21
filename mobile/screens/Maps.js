@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,11 +6,20 @@ import { getMarkers } from "../redux/selectors";
 
 import Button from "../components/Button";
 import { addMapMarker } from "../redux/actions/maps";
+import useFetchToilets from "../services/useFetchToilets";
 
 const Maps = ({ navigation }) => {
-  const toilets = useSelector(getMarkers);
   const [canAddToilet, setCanAddToilet] = useState(false);
   const [newCoordinate, setNewCoordinates] = useState();
+  const [toilets, setToilets] = useState([]);
+  const { getToilets } = useFetchToilets();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    getToilets().then((toilet) => {
+      setToilets(toilet);
+    });
+  }, [dispatch]);
 
   const handlePressMap = (coordinate) => {
     if (canAddToilet) {

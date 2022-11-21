@@ -1,11 +1,12 @@
 const pool = require("../modele/database");
 const ToiletModele = require("../modele/toiletDB");
+const LocationModele = require("../modele/toiletLocationDB");
 
 module.exports.getToilets = async (req, res) => {
   const client = await pool.connect();
   try {
     const { rows: toilets } = await ToiletModele.getToilets(client);
-    const { rows: locations } = await ToiletModele.getLocations(client);
+    const { rows: locations } = await LocationModele.getLocations(client);
 
     if (toilets !== undefined && locations !== undefined) {
       toilets.forEach((toilet) => {
@@ -49,10 +50,10 @@ module.exports.getToilet = async (req, res) => {
 };
 
 module.exports.postToilet = async (req, res) => {
-  const body = req.body;
-  const { latitude, longitude, isReducedMobility, isPaid } = body;
+  const { latitude, longitude, isReducedMobility, isPaid } = req.body;
   const client = await pool.connect();
   try {
+    await client.query("START TRANSACTION");
     const { rows: toilets } = await ToiletModele.postToilet(
       isReducedMobility,
       isPaid,
@@ -60,15 +61,19 @@ module.exports.postToilet = async (req, res) => {
     );
     const toilet = toilets[0];
 
-    const { rows: location } = await ToiletModele.postLocation(
+    const { rows: locations } = await LocationModele.postLocation(
       latitude,
       longitude,
       toilet.id,
       client
     );
+    const location = locations[0];
+
+    await client.query("COMMIT TRANSACTION");
 
     res.sendStatus(201);
   } catch (error) {
+    await client.query("ROLLBACK TRANSACTION");
     console.error(error);
     res.sendStatus(500);
   } finally {

@@ -9,7 +9,6 @@ export default function useFetchToilet() {
         method: "get",
         url: BASE_URL_API,
       });
-      console.log(response.status);
       return response.data;
     } catch (error) {
       console.error("getToiletsError", error);
