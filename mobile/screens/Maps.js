@@ -11,13 +11,18 @@ import useFetchToilets from "../services/useFetchToilets";
 const Maps = ({ navigation }) => {
   const [canAddToilet, setCanAddToilet] = useState(false);
   const [newCoordinate, setNewCoordinates] = useState();
-  const [toilets, setToilets] = useState();
+  const [toilets, setToilets] = useSelector(getToilets);
 
   const { getToiletsFetch } = useFetchToilets();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setToilets(getToilets);
+    getToiletsFetch().then((toilets) => setToilets(toilets));
+  }, []);
+
+  useEffect(() => {
+    const newToilets = dispatch(getToilets);
+    setToilets(newToilets);
   }, [dispatch]);
 
   const handlePressMap = (coordinate) => {

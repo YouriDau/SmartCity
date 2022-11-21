@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL_API = "http://192.168.1.53:3001/toilet";
+const BASE_URL_API = "http://172.1.1.28:3001/toilet";
 
 export default function useFetchToilet() {
   const getToiletsFetch = async () => {
@@ -9,6 +9,7 @@ export default function useFetchToilet() {
         method: "get",
         url: BASE_URL_API,
       });
+      console.log(response.data);
       return response.data;
     } catch (error) {
       console.error("getToiletsError", error);
