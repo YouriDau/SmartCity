@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { useDispatch, useSelector } from "react-redux";
-import { getMarkers } from "../redux/selectors";
+import { getToilets } from "../redux/selectors";
 
 import Button from "../components/Button";
 import { addMapMarker } from "../redux/actions/maps";
@@ -11,14 +11,13 @@ import useFetchToilets from "../services/useFetchToilets";
 const Maps = ({ navigation }) => {
   const [canAddToilet, setCanAddToilet] = useState(false);
   const [newCoordinate, setNewCoordinates] = useState();
-  const [toilets, setToilets] = useState([]);
-  const { getToilets } = useFetchToilets();
+  const [toilets, setToilets] = useState();
+
+  const { getToiletsFetch } = useFetchToilets();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getToilets().then((toilet) => {
-      setToilets(toilet);
-    });
+    setToilets(getToilets);
   }, [dispatch]);
 
   const handlePressMap = (coordinate) => {
@@ -42,6 +41,12 @@ const Maps = ({ navigation }) => {
       setCanAddToilet(false);
       navigation.navigate("AddToilet", { newCoordinate });
     }
+  };
+
+  const showMarkers = () => {
+    return toilets.map((toilet) => (
+      <Marker key={toilet.id} coordinate={toilet.location} />
+    ));
   };
 
   const showNewMarker = () => {
@@ -101,9 +106,7 @@ const Maps = ({ navigation }) => {
           handlePressMap(e.nativeEvent.coordinate);
         }}
       >
-        {toilets.map((toilet) => (
-          <Marker key={toilet.id} coordinate={toilet.location} />
-        ))}
+        {showMarkers()}
         {showNewMarker()}
       </MapView>
       {showButtons()}

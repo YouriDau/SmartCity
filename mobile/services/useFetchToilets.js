@@ -1,9 +1,9 @@
 import axios from "axios";
 
-const BASE_URL_API = "http://192.168.1.55:3001/toilet";
+const BASE_URL_API = "http://192.168.1.53:3001/toilet";
 
 export default function useFetchToilet() {
-  const getToilets = async () => {
+  const getToiletsFetch = async () => {
     try {
       const response = await axios({
         method: "get",
@@ -15,7 +15,12 @@ export default function useFetchToilet() {
     }
   };
 
-  const addToilet = async (latitude, longitude, isPaid, isReducedMobility) => {
+  const addToiletFetch = async (
+    latitude,
+    longitude,
+    isPaid,
+    isReducedMobility
+  ) => {
     try {
       await axios({
         method: "post",
@@ -28,7 +33,7 @@ export default function useFetchToilet() {
   };
 
   return {
-    getToilets,
-    addToilet,
+    getToiletsFetch,
+    addToiletFetch,
   };
 }

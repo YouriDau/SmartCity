@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Alert } from "react-native";
 
-const BASE_URL_API = "http://192.168.1.55:3001/person";
+const BASE_URL_API = "http://192.168.1.53:3001/person";
 
 export default function useFetchPerson() {
   const addPerson = async (pseudo, lastname, firstname, email, password) => {
@@ -29,6 +29,7 @@ export default function useFetchPerson() {
         }
       });
     } catch (error) {
+      console.error("addPersonError", error);
       switch (error.response.status) {
         case 409:
           Alert.alert(
@@ -41,7 +42,6 @@ export default function useFetchPerson() {
         default:
           console.log("Add user error default switch");
       }
-      console.error("addPersonError", error);
     }
   };
 

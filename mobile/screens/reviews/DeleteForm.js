@@ -13,7 +13,7 @@ const DeleteForm = ({ navigation, route }) => {
   };
 
   const handlePressDelete = () => {
-    dispatch(deleteReview(id))
+    dispatch(deleteReview(id));
     navigation.goBack();
   };
 
