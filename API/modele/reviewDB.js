@@ -4,16 +4,10 @@ module.exports.getReviews = async (toiletId, client) => {
   ]);
 };
 
-module.exports.postReview = async (
-  note,
-  comment,
-  user_pseudo,
-  toilet_id,
-  client
-) => {
+module.exports.postReview = async (note, comment, toiletId, userId, client) => {
   return await client.query(
-    "INSERT INTO review(note, comment, user_pseudo, toilet_id) VALUES ($1,$2,$3,$4) RETURNING id",
-    [note, comment, user_pseudo, toilet_id]
+    "INSERT INTO review(note, comment, user_id, toilet_id) VALUES ($1,$2,$3,$4) RETURNING id",
+    [note, comment, userId, toiletId]
   );
 };
 

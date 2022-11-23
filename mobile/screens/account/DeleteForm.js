@@ -3,7 +3,6 @@ import CheckBox from "expo-checkbox";
 import { useState } from "react";
 import Title from "../../components/Title";
 import Button from "../../components/Button";
-import Header from "../../components/Header";
 
 const DeleteForm = ({ navigation }) => {
   const [password, setPassword] = useState("");

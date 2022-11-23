@@ -1,9 +1,9 @@
 import { ADD_REVIEW, DELETE_REVIEW } from "./actionsType";
 
-export function addReview(note, comment) {
+export function addReview(note, comment, toiletId) {
   return {
     type: ADD_REVIEW,
-    payload: { note, comment },
+    payload: { note, comment, toiletId },
   };
 }
 

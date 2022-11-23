@@ -2,7 +2,6 @@ import { View, Text, TextInput, StyleSheet } from "react-native";
 import { useState } from "react";
 import Button from "../../components/Button";
 import Title from "../../components/Title";
-import Header from "../../components/Header";
 
 const UpdateForm = ({ navigation }) => {
   const [pseudo, setPseudo] = useState("");

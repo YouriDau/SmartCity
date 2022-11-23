@@ -1,70 +1,9 @@
 import { ADD_REVIEW, DELETE_REVIEW } from "../actions/actionsType";
 import useFetchReviews from "../../services/useFetchReviews";
 
-const { deleteReview, addReview } = useFetchReviews();
+const { deleteReviewFetch, addReviewFetch } = useFetchReviews();
 
-initialState = [
-  {
-    id: 3645654444444445,
-    date: "04/11/2022",
-    note: 4,
-    comment: "test",
-  },
-  {
-    id: 0,
-    date: "28/12/2022",
-    note: 4,
-    comment: "test",
-  },
-  {
-    id: 1,
-    date: "05/11/2022",
-    note: 4,
-    comment: "test",
-  },
-  {
-    id: 2,
-    date: "05/11/2022",
-    note: 4,
-    comment: "test",
-  },
-  {
-    id: 3,
-    date: "05/11/2022",
-    note: 4,
-    comment: "test",
-  },
-  {
-    id: 4,
-    date: "05/11/2022",
-    note: 4,
-    comment: "test",
-  },
-  {
-    id: 5,
-    date: "05/11/2022",
-    note: 4,
-    comment: "test",
-  },
-  {
-    id: 6,
-    date: "05/11/2022",
-    note: 4,
-    comment: "test",
-  },
-  {
-    id: 7,
-    date: "05/11/2022",
-    note: 4,
-    comment: "test",
-  },
-  {
-    id: 8,
-    date: "05/11/2022",
-    note: 4,
-    comment: "test",
-  },
-];
+initialState = [];
 
 export const review = (state = initialState, action) => {
   const date = new Date();
@@ -75,14 +14,18 @@ export const review = (state = initialState, action) => {
 
   switch (action.type) {
     case ADD_REVIEW:
-      addReview(action.payload.note, action.payload.comment);
+      const note = action.payload.note;
+      const comment = action.payload.comment;
+      const toiletId = action.payload.toiletId;
+      addReviewFetch(note, comment, toiletId);
       return [
         ...state,
         {
           id: state.length,
           date: formatedDate,
-          note: action.payload.note,
-          comment: action.payload.comment,
+          note,
+          comment,
+          toiletId,
         },
       ];
     case DELETE_REVIEW:

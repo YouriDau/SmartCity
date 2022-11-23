@@ -1,9 +1,10 @@
 import axios from "axios";
+import { Alert } from "react-native";
 
 const BASE_URL_API = "http://192.168.1.53:3001/review";
 
 export default function useFetchReviews() {
-  const getReviewByToiletId = async (toiletId) => {
+  const getReviewsFetch = async (toiletId) => {
     try {
       const response = await axios({
         method: "get",
@@ -16,19 +17,28 @@ export default function useFetchReviews() {
     }
   };
 
-  const addReview = async (note, comment, user_id = 1, toilet_id = 1) => {
+  const addReviewFetch = async (note, comment, toiletId, userId = 1) => {
     try {
-      await axios({
+      const response = await axios({
         method: "post",
         url: BASE_URL_API,
-        params: { note, comment, user_id, toilet_id },
+        data: {
+          note,
+          comment,
+          toilet_id: toiletId,
+          user_id: userId,
+        },
       });
+      switch (response.status) {
+        case 200:
+          Alert.alert("Success", "The review was created !");
+      }
     } catch (error) {
       console.error("addReviewError", error);
     }
   };
 
-  const deleteReview = async (id) => {
+  const deleteReviewFetch = async (id) => {
     try {
       console.log(id);
       await axios({
@@ -44,8 +54,8 @@ export default function useFetchReviews() {
   };
 
   return {
-    getReviewByToiletId,
-    addReview,
-    deleteReview,
+    getReviewsFetch,
+    addReviewFetch,
+    deleteReviewFetch,
   };
 }

@@ -1,4 +1,5 @@
 import { Pressable, Text, StyleSheet } from "react-native";
+import Icon from "react-native-vector-icons/Ionicons";
 
 const Button = ({ text, textColor, btnColor, handlePress }) => {
   text = text || "Submit";

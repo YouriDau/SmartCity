@@ -11,9 +11,9 @@ const PLACEHOLDER = "Enter your review here";
 const NOTE_MIN = 1;
 const NOTE_MAX = 5;
 
-const ReviewForm = ({ navigation, isUpdate, id }) => {
-  const [note, setNote] = useState();
-  const [comment, setComment] = useState();
+const ReviewForm = ({ navigation, isUpdate, toiletId, id }) => {
+  const [note, setNote] = useState(1);
+  const [comment, setComment] = useState("");
 
   const dispatch = useDispatch();
 
@@ -31,7 +31,7 @@ const ReviewForm = ({ navigation, isUpdate, id }) => {
   };
 
   const handlePressAdd = () => {
-    dispatch(addReview(note, comment));
+    dispatch(addReview(note, comment, toiletId));
     navigation.goBack();
   };
 

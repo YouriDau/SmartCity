@@ -20,7 +20,7 @@ module.exports.getToilets = async (req, res) => {
       res.sendStatus(404);
     }
   } catch (error) {
-    console.error(error);
+    console.error("getToiletsError", error);
     res.sendStatus(500);
   } finally {
     client.release();
@@ -45,7 +45,7 @@ module.exports.getToilet = async (req, res) => {
       res.sendStatus(203);
     }
   } catch (error) {
-    console.error(error);
+    console.error("getToiletError", error);
     res.sendStatus(500);
   } finally {
     client.release();
@@ -78,7 +78,7 @@ module.exports.postToilet = async (req, res) => {
     res.json(toilet.id);
   } catch (error) {
     await client.query("ROLLBACK TRANSACTION");
-    console.error(error);
+    console.error("postToiletError", error);
     res.sendStatus(500);
   } finally {
     client.release();
@@ -92,7 +92,7 @@ module.exports.deleteToilet = async (req, res) => {
     await ToiletModele.deleteToilet(id, client);
     res.sendStatus(204);
   } catch (error) {
-    console.error(error);
+    console.error("deleteToiletError", error);
     res.sendStatus(500);
   } finally {
     client.release();
@@ -110,7 +110,7 @@ module.exports.deleteToilet = async (req, res) => {
       res.sendStatus(401);
     }
   } catch (error) {
-    console.error(error);
+    console.error("updateToiletError", error);
     res.sendStatus(500);
   } finally {
     client.release();

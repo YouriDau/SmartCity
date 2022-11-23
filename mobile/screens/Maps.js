@@ -1,25 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { Alert, StyleSheet, View, Text } from "react-native";
+import { Alert, Pressable, StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { getToilets } from "../redux/selectors";
-
-import MapView, { Marker } from "react-native-maps";
-import { Card, TouchableRipple } from "react-native-paper";
 import Icon from "react-native-vector-icons/Ionicons";
 
+import MapView, { Marker } from "react-native-maps";
+
 import Button from "../components/Button";
-import { addMapMarker, setToilets } from "../redux/actions/maps";
+import { setToilets } from "../redux/actions/maps";
 import useFetchToilets from "../services/useFetchToilets";
+import ToiletCard from "../components/ToiletCard";
 
 const Maps = ({ navigation }) => {
   const [canAddToilet, setCanAddToilet] = useState(false);
   const [newCoordinate, setNewCoordinates] = useState();
   const [cardIsVisible, setCardIsVisible] = useState(false);
-  const [toiletToDisplay, setToiletToDisplay] = useState();
-  const [toiletCard, setToiletCard] = useState();
+  const [toiletSelected, settoiletSelected] = useState();
   const toilets = useSelector(getToilets);
 
-  const { getToiletsFetch, getToiletFetch } = useFetchToilets();
+  const { getToiletsFetch } = useFetchToilets();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -53,12 +52,8 @@ const Maps = ({ navigation }) => {
   };
 
   const handlePressMarker = (toilet) => {
-    setToiletToDisplay(toilet);
+    settoiletSelected(toilet);
     setCardIsVisible(true);
-  };
-
-  const handlePressAddReview = () => {
-    navigation.navigate("AddReview");
   };
 
   const showMarkers = () => {
@@ -84,43 +79,12 @@ const Maps = ({ navigation }) => {
   const showCard = () => {
     if (cardIsVisible) {
       return (
-        <Card style={styles.card}>
-          <Card.Title style={styles.cardTitle} title="toilet description" />
-          <Card.Content>
-            <View style={styles.iconItem}>
-              <Icon
-                size={30}
-                name={
-                  toiletToDisplay.is_paid
-                    ? "checkmark-circle-outline"
-                    : "close-circle-outline"
-                }
-                color={toiletToDisplay.is_paid ? "green" : "red"}
-              />
-              <Text>is paid?</Text>
-            </View>
-            <View style={styles.iconItem}>
-              <Icon
-                name={
-                  toiletToDisplay.is_reduced_mobility
-                    ? "checkmark-circle-outline"
-                    : "close-circle-outline"
-                }
-                size={30}
-                color={toiletToDisplay.is_reduced_mobility ? "green" : "red"}
-              />
-              <Text>is for reduce mobility people?</Text>
-            </View>
-            <View style={styles.cardButtons}>
-              <Button
-                text={"add review"}
-                textColor={"white"}
-                btnColor={"grey"}
-                handlePress={handlePressAddReview}
-              />
-            </View>
-          </Card.Content>
-        </Card>
+        <ToiletCard
+          isPaid={toiletSelected.is_paid}
+          isReducedMobility={toiletSelected.is_reduced_mobility}
+          toiletId={toiletSelected.id}
+          navigation={navigation}
+        />
       );
     }
   };
@@ -129,12 +93,9 @@ const Maps = ({ navigation }) => {
     if (!canAddToilet) {
       return (
         <View style={styles.mapButtons}>
-          <Button
-            text={"Add toilet"}
-            textColor={"white"}
-            btnColor={"grey"}
-            handlePress={handlePressAddToiletFirst}
-          />
+          <Pressable onPress={handlePressAddToiletFirst}>
+            <Icon name="add-circle" size={70} color="grey" />
+          </Pressable>
         </View>
       );
     } else {

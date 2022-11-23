@@ -5,8 +5,11 @@ import { useState } from "react";
 import Button from "../../components/Button";
 import ReviewForm from "../../components/ReviewForm";
 
-const AddForm = ({ navigation }) => {
-  return <ReviewForm isUpdate={false} navigation={navigation} />;
+const AddForm = ({ navigation, route }) => {
+  const { toiletId } = route.params;
+  return (
+    <ReviewForm isUpdate={false} toiletId={toiletId} navigation={navigation} />
+  );
 };
 
 export default AddForm;

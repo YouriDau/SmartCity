@@ -12,7 +12,7 @@ module.exports.getAllPersons = async (req, res) => {
       res.sendStatus(404);
     }
   } catch (error) {
-    console.error(error);
+    console.error("getAllPersonsError", error);
     res.sendStatus(500);
   } finally {
     client.release();
@@ -33,7 +33,7 @@ module.exports.getPerson = async (req, res) => {
       res.sendStatus(404);
     }
   } catch (error) {
-    console.error(error);
+    console.error("getPersonError", error);
     res.sendStatus(500);
   } finally {
     client.release();
@@ -62,7 +62,7 @@ module.exports.postPerson = async (req, res) => {
       res.sendStatus(409);
     }
   } catch (error) {
-    console.error(error);
+    console.error("postPersonError", error);
     res.sendStatus(500);
   } finally {
     client.release();
@@ -90,7 +90,7 @@ module.exports.updatePerson = async (req, res) => {
       res.sendStatus(401);
     }
   } catch (error) {
-    console.error(error);
+    console.error("updatePersonError", error);
     res.sendStatus(500);
   } finally {
     client.release();
@@ -105,7 +105,7 @@ module.exports.deletePerson = async (req, res) => {
     await PersonModele.deletePerson(id, client);
     res.sendStatus(204);
   } catch (error) {
-    console.error(error);
+    console.error("deletePersonError", error);
     res.sendStatus(500);
   } finally {
     client.release();
