@@ -22,18 +22,14 @@ const DrawerMenu = () => {
       name: "Login",
       component: Login,
     },
-    {
-      name: "DeleteAccount",
-      component: DeleteAccount,
-    },
-    {
-      name: "UpdateAccount",
-      component: UpdateAccount,
-    },
-    {
-      name: "ListReview",
-      component: ListReview,
-    },
+    // {
+    //   name: "DeleteAccount",
+    //   component: DeleteAccount,
+    // },
+    // {
+    //   name: "UpdateAccount",
+    //   component: UpdateAccount,
+    // },
     {
       name: "Maps",
       component: Maps,

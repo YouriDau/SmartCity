@@ -21,7 +21,8 @@ export default function useFetchPerson() {
         switch (response.status) {
           case 201:
             Alert.alert(
-              "Félicitation, vous avez créé votre compte avec succès"
+              "Success",
+              "Congratulation, your account was successfully created!"
             );
             break;
           default:
@@ -32,12 +33,13 @@ export default function useFetchPerson() {
       console.error("addPersonError", error);
       switch (error.response.status) {
         case 409:
-          Alert.alert(
-            "Le pseudo est déjà utilisé, veuillez en choisir un autre"
-          );
+          Alert.alert("Retry", "This pseudo is already used!");
           break;
         case 500:
-          Alert.alert("Erreur lors de l'ajout, veuillez réessayer!");
+          Alert.alert(
+            "Error",
+            "There was an error during the creation, retry!"
+          );
           break;
         default:
           console.log("Add user error default switch");

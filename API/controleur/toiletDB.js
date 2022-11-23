@@ -22,24 +22,27 @@ module.exports.getToilets = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.sendStatus(500);
+  } finally {
+    client.release();
   }
 };
 
 module.exports.getToilet = async (req, res) => {
   const client = await pool.connect();
-  const idTexte = req.params.id;
-  const id = parseInt(idTexte);
+  const idText = req.params.id;
+  const id = parseInt(idText);
   try {
     if (!isNaN(id)) {
-      const { rows: toilets } = await ToiletModele.getToilet(id, client);
-      const toilet = toilets[0];
+      const { rows } = await ToiletModele.getToilet(id, client);
+      const toilet = rows[0];
       if (toilet !== undefined) {
+        console.log(toilet);
         res.json(toilet);
       } else {
         res.sendStatus(404);
       }
     } else {
-      res.sendStatus(400);
+      res.sendStatus(203);
     }
   } catch (error) {
     console.error(error);
@@ -60,6 +63,7 @@ module.exports.postToilet = async (req, res) => {
       client
     );
     const toilet = toilets[0];
+    console.log(toilet.id);
 
     const { rows: locations } = await LocationModele.postLocation(
       latitude,
@@ -71,7 +75,7 @@ module.exports.postToilet = async (req, res) => {
 
     await client.query("COMMIT TRANSACTION");
 
-    res.sendStatus(201);
+    res.json(toilet.id);
   } catch (error) {
     await client.query("ROLLBACK TRANSACTION");
     console.error(error);

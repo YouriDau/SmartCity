@@ -3,7 +3,10 @@ module.exports.getToilets = async (client) => {
 };
 
 module.exports.getToilet = async (id, client) => {
-  return await client.query("SELECT * FROM toilet WHERE id = $1 LIMIT 1", [id]);
+  return await client.query(
+    "SELECT id, is_reduced_mobility, is_paid FROM toilet WHERE id = $1 LIMIT 1",
+    [id]
+  );
 };
 
 module.exports.postToilet = async (is_reduced_mobility, is_paid, client) => {

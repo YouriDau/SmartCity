@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL_API = "http://192.168.1.55:3001/review";
+const BASE_URL_API = "http://192.168.1.53:3001/review";
 
 export default function useFetchReviews() {
   const getReviewByToiletId = async (toiletId) => {

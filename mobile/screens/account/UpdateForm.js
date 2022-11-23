@@ -11,6 +11,42 @@ const UpdateForm = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
+  const handlePressUpdate = () => {
+    let alert = "Please enter your ";
+    if (pseudo === "") {
+      alert += "pseudo ";
+      Alert.alert(alert);
+    } else {
+      if (lastname === "") {
+        alert += "lastname ";
+        Alert.alert(alert);
+      } else {
+        if (firstname === "") {
+          alert += "firstname ";
+          Alert.alert(alert);
+        } else {
+          if (password === "") {
+            alert += "password ";
+            Alert.alert(alert);
+          } else {
+            if (email === "") {
+              alert += "email";
+              Alert.alert(alert);
+            } else {
+              dispatch(addUser(pseudo, lastname, firstname, email, password));
+
+              setPseudo("");
+              setLastname("");
+              setFirstame("");
+              setPassword("");
+              setEmail("");
+            }
+          }
+        }
+      }
+    }
+  };
+
   const handlePressCancel = () => {
     navigation.goBack();
   };
@@ -49,7 +85,11 @@ const UpdateForm = ({ navigation }) => {
           btnColor={"grey"}
           handlePress={handlePressCancel}
         />
-        <Button text={"Update"} btnColor={"#E2E52B"} />
+        <Button
+          text={"Update"}
+          btnColor={"#E2E52B"}
+          handlePress={handlePressUpdate}
+        />
       </View>
     </View>
   );
