@@ -7,6 +7,11 @@ class LoginForm extends React.Component {
         this.state = {};
     }
 
+    handlePressLogin(event) {
+        event.preventDefault();
+        console.log("Connexion réussie");
+    }
+
     render() {
         return (
             <div class="form">
@@ -25,7 +30,7 @@ class LoginForm extends React.Component {
                         </div>
                         <div class="divForm">
                             <button>Cancel</button>
-                            <button>Login</button>
+                            <button onClick={(event) => this.handlePressLogin(event)}>Login</button>
                         </div>
                 </form>
             </div>
