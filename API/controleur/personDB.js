@@ -70,8 +70,7 @@ module.exports.postPerson = async (req, res) => {
 };
 
 module.exports.updatePerson = async (req, res) => {
-  const { id, pseudo, last_name, first_name, email, is_admin, password } =
-    req.body;
+  const { id, pseudo, last_name, first_name, email, is_admin, password } = req.body;
   const client = await pool.connect();
   try {
     if (!isNaN(id)) {

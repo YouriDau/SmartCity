@@ -1,23 +1,31 @@
 import React from 'react';
+import Router from './routes/Routes';
 import './App.css';
 import Header from './component/Header';
 
-import RegistrationForm from './component/RegistrationForm';
 import LoginForm from './screen/LoginForm';
-import DeleteUser from './component/DeleteUser';
-import DeleteReport from './component/DeleteReport';
-import DeleteToiletSecondStep from './component/DeleteToiletSecondStep';
-import ListUsers from './component/ListUsers';
-import ReadReports from './component/ReadReports';
-import UpdateReport from './component/UpdateReport';
-import UpdateToilet from './component/UpdateToilet';
 
-//const internalIp = require('internal-ip');
+import AddUser from './screen/AddUser';
+import DeleteUser from './screen/DeleteUser';
+import UpdateUser from './screen/UpdateUser';
+import ListUsers from './component/ListUsers';
+
+import AddReport from './screen/AddReport';
+import DeleteReport from './screen/DeleteReport';
+import UpdateReport from './screen/UpdateReport';
+
+import AddToilet from './screen/AddToilet';
+import UpdateToilet from './screen/UpdateToilet';
+import DeleteToilet from './screen/DeleteToilet';
+
+import AddReview from './screen/AddReview';
+import DeleteReview from './screen/DeleteReview';
+import UpdateReview from './screen/UpdateReview';
 
 function App() {
   return (
     <div className="App">
-      <RegistrationForm/>
+      <Router/>
     </div>
   );
 }
