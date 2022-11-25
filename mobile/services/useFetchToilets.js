@@ -15,20 +15,6 @@ export default function useFetchToilet() {
     }
   };
 
-  const getToiletFetch = async (id) => {
-    try {
-      const response = await axios({
-        method: "get",
-        url: `${BASE_URL_API}/toilet`,
-        params: { id },
-      });
-      console.log(response.data);
-      return response.data;
-    } catch (error) {
-      console.error("getToiletError", error);
-    }
-  };
-
   const addToiletFetch = async (
     latitude,
     longitude,
@@ -54,7 +40,6 @@ export default function useFetchToilet() {
 
   return {
     getToiletsFetch,
-    getToiletFetch,
     addToiletFetch,
   };
 }

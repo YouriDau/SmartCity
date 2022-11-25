@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, Pressable } from "react-native";
 import { Card } from "react-native-paper";
 import Icon from "react-native-vector-icons/Ionicons";
 
@@ -37,19 +37,14 @@ const ToiletCard = ({ isPaid, isReducedMobility, toiletId, navigation }) => {
           />
           <Text>is for reduce mobility people?</Text>
         </View>
-        <View style={styles.buttons}>
-          <Button
-            text={"Reviews List"}
-            textColor={"white"}
-            btnColor={"grey"}
-            handlePress={handlePressListReviews}
-          />
-          <Button
-            text={"add review"}
-            textColor={"white"}
-            btnColor={"grey"}
-            handlePress={handlePressAddReview}
-          />
+        <Text style={styles.reviewTitle}>Review</Text>
+        <View style={styles.review}>
+          <Pressable style={styles.button} onPress={handlePressListReviews}>
+            <Icon name="list-outline" size={45} color="grey" />
+          </Pressable>
+          <Pressable style={styles.button} onPress={handlePressAddReview}>
+            <Icon name="add-circle" size={45} color="grey" />
+          </Pressable>
         </View>
       </Card.Content>
     </Card>
@@ -59,18 +54,33 @@ const ToiletCard = ({ isPaid, isReducedMobility, toiletId, navigation }) => {
 const styles = StyleSheet.create({
   card: {
     position: "absolute",
-    bottom: 80,
+    bottom: 90,
     paddingHorizontal: 10,
     width: "90%",
   },
   iconItem: {
     flexDirection: "row",
+    alignItems: "center",
   },
-  buttons: {
+  button: {
+    marginBottom: 15,
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+  },
+  reviewTitle: {
+    fontSize: 19,
+    color: "grey",
+  },
+  review: {
     flexDirection: "row",
     flexWrap: "wrap",
-    alignContent: "space-between",
+    justifyContent: "space-around",
+    alignItems: "center",
     width: "100%",
+    borderWidth: 1,
+    borderRadius: 8,
+    borderColor: "lightgrey",
   },
 });
 

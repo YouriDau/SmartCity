@@ -1,17 +1,20 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getReviews } from "../../redux/selectors";
+import { useNavigation } from "@react-navigation/native";
+import { setReviews } from "../../redux/actions/review";
+
 import { View, Text, Pressable, StyleSheet, FlatList } from "react-native";
 import Title from "../../components/Title";
 import Button from "../../components/Button";
-import { useSelector } from "react-redux";
-import { getReviews } from "../../redux/selectors";
-import { useNavigation } from "@react-navigation/native";
-import { useEffect } from "react";
+import useFetchReviews from "../../services/useFetchReviews";
 
-const Item = ({ navigation, id, date }) => {
+const Item = ({ navigation, review }) => {
   return (
     <View style={styles.item}>
       <View style={styles.leftPart}>
         <Text>
-          review {id}: {date}
+          review {review.id}: {review.date}
         </Text>
       </View>
 
@@ -19,7 +22,7 @@ const Item = ({ navigation, id, date }) => {
         <Pressable
           style={styles.pressable}
           onPress={() => {
-            navigation.navigate("UpdateReview", { id });
+            navigation.navigate("UpdateReview", { review });
           }}
         >
           <Text style={styles.button}>See more</Text>
@@ -27,7 +30,7 @@ const Item = ({ navigation, id, date }) => {
         <Pressable
           style={styles.pressable}
           onPress={() => {
-            navigation.navigate("DeleteReview", { id });
+            navigation.navigate("DeleteReview", { id: review.id });
           }}
         >
           <Text style={styles.button}>Delete</Text>
@@ -37,15 +40,21 @@ const Item = ({ navigation, id, date }) => {
   );
 };
 
-const List = ({ navigate, route }) => {
+const List = ({ navigation, route }) => {
   const { toiletId } = route.params;
   const reviews = useSelector(getReviews);
-  const navigation = useNavigation();
+  const dispatch = useDispatch();
 
-  useEffect(() => {}, []);
+  const { getReviewsFetch } = useFetchReviews();
+
+  useEffect(() => {
+    getReviewsFetch(toiletId).then((allReviews) => {
+      dispatch(setReviews(allReviews));
+    });
+  }, []);
 
   const renderItem = ({ item }) => {
-    return <Item navigation={navigation} id={item.id} date={item.date} />;
+    return <Item navigation={navigation} review={item} />;
   };
 
   const handlePressCancel = () => {
@@ -55,23 +64,12 @@ const List = ({ navigate, route }) => {
   const showReviews = () => {
     if (reviews.length > 0) {
       return (
-        <View>
-          <Title text={"Reviews"} />
-          <View style={styles.content}>
-            <FlatList
-              data={reviews}
-              renderItem={renderItem}
-              keyExtractor={(item) => item.id}
-            />
-          </View>
-          <View style={styles.buttons}>
-            <Button
-              text={"Cancel"}
-              textColor={"white"}
-              btnColor={"grey"}
-              handlePress={handlePressCancel}
-            />
-          </View>
+        <View style={styles.content}>
+          <FlatList
+            data={reviews}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+          />
         </View>
       );
     } else {
@@ -79,12 +77,26 @@ const List = ({ navigate, route }) => {
     }
   };
 
-  return <View style={styles.container}>{showReviews()}</View>;
+  return (
+    <View style={styles.container}>
+      <Title text={"Reviews"} />
+      {showReviews()}
+      <View style={styles.buttons}>
+        <Button
+          text={"Cancel"}
+          textColor={"white"}
+          btnColor={"grey"}
+          handlePress={handlePressCancel}
+        />
+      </View>
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    alignItems: "center",
   },
   content: {
     flex: 1,
@@ -111,6 +123,8 @@ const styles = StyleSheet.create({
     color: "blue",
   },
   buttons: {
+    position: "absolute",
+    bottom: 0,
     marginTop: 50,
     flexDirection: "row",
     justifyContent: "space-evenly",

@@ -1,4 +1,5 @@
 const PersonControleur = require("../controleur/personDB");
+const cors = require("cors");
 
 const Router = require("express-promise-router");
 const router = new Router();

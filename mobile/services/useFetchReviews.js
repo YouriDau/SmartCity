@@ -7,12 +7,11 @@ export default function useFetchReviews() {
     try {
       const response = await axios({
         method: "get",
-        url: `${BASE_URL_API}/review`,
-        params: { toiletId },
+        url: `${BASE_URL_API}/review/${toiletId}`,
       });
       return response.data;
     } catch (error) {
-      console.error("getReviewError", error);
+      console.error("getReviewsError", error);
     }
   };
 
@@ -20,12 +19,12 @@ export default function useFetchReviews() {
     try {
       const response = await axios({
         method: "post",
-        url: BASE_URL_API,
+        url: `${BASE_URL_API}/review`,
         data: {
           note,
           comment,
-          toilet_id: toiletId,
-          user_id: userId,
+          toiletId,
+          userId,
         },
       });
       switch (response.status) {
@@ -39,10 +38,9 @@ export default function useFetchReviews() {
 
   const deleteReviewFetch = async (id) => {
     try {
-      console.log(id);
       await axios({
         method: "delete",
-        url: BASE_URL_API,
+        url: `${BASE_URL_API}/review`,
         data: {
           id,
         },

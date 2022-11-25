@@ -1,7 +1,4 @@
-import { ADD_REVIEW, DELETE_REVIEW } from "../actions/actionsType";
-import useFetchReviews from "../../services/useFetchReviews";
-
-const { deleteReviewFetch, addReviewFetch } = useFetchReviews();
+import { SET_REVIEWS, ADD_REVIEW, DELETE_REVIEW } from "../actions/actionsType";
 
 initialState = [];
 
@@ -13,11 +10,14 @@ export const review = (state = initialState, action) => {
   const formatedDate = `${day}/${month}/${year}`;
 
   switch (action.type) {
+    case SET_REVIEWS:
+      state = action.payload.reviews;
+      return state;
     case ADD_REVIEW:
       const note = action.payload.note;
       const comment = action.payload.comment;
       const toiletId = action.payload.toiletId;
-      addReviewFetch(note, comment, toiletId);
+
       return [
         ...state,
         {
@@ -29,7 +29,6 @@ export const review = (state = initialState, action) => {
         },
       ];
     case DELETE_REVIEW:
-      deleteReview(action.payload.id);
       return state.filter((review) => review.id != action.payload.id);
     default:
       return initialState;

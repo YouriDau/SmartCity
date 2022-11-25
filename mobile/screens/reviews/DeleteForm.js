@@ -3,17 +3,19 @@ import Title from "../../components/Title";
 import Button from "../../components/Button";
 import { useDispatch } from "react-redux";
 import { deleteReview } from "../../redux/actions/review";
+import useFetchReviews from "../../services/useFetchReviews";
 
 const DeleteForm = ({ navigation, route }) => {
   const id = route.params.id;
   const dispatch = useDispatch();
+  const { deleteReviewFetch } = useFetchReviews();
 
   const handlePressCancel = () => {
     navigation.goBack();
   };
 
   const handlePressDelete = () => {
-    dispatch(deleteReview(id));
+    deleteReviewFetch(id).then(dispatch(deleteReview(id)));
     navigation.goBack();
   };
 

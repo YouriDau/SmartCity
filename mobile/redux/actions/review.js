@@ -1,4 +1,11 @@
-import { ADD_REVIEW, DELETE_REVIEW } from "./actionsType";
+import { SET_REVIEWS, ADD_REVIEW, DELETE_REVIEW } from "./actionsType";
+
+export function setReviews(reviews) {
+  return {
+    type: SET_REVIEWS,
+    payload: { reviews },
+  };
+}
 
 export function addReview(note, comment, toiletId) {
   return {

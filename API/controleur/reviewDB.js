@@ -13,6 +13,12 @@ module.exports.getReviews = async (req, res) => {
       );
       const reviews = reviewRows;
       if (reviews !== undefined) {
+        reviews.forEach((review) => {
+          review.toiletId = review.toilet_id;
+          review.userId = review.userId;
+          delete review.toilet_id;
+          delete review.user_id;
+        });
         res.json(reviews);
       } else {
         res.sendStatus(404);
@@ -29,14 +35,14 @@ module.exports.getReviews = async (req, res) => {
 };
 
 module.exports.postReview = async (req, res) => {
-  const { note, comment, toilet_id, user_id } = req.body;
+  const { note, comment, toiletId, userId } = req.body;
   const client = await pool.connect();
   try {
     const { rows: rowReview } = await ReviewModele.postReview(
       note,
       comment,
-      toilet_id,
-      user_id,
+      toiletId,
+      userId,
       client
     );
     const review = rowReview[0];

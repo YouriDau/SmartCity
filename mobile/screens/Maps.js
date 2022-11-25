@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Alert, Pressable, StyleSheet, View } from "react-native";
+import { Alert, Pressable, StyleSheet, View, Text } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { getToilets } from "../redux/selectors";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -22,7 +22,7 @@ const Maps = ({ navigation }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getToiletsFetch().then((newToilets) => dispatch(setToilets(newToilets)));
+    getToiletsFetch().then((allToilets) => dispatch(setToilets(allToilets)));
   }, []);
 
   const handlePressMap = (coordinate) => {

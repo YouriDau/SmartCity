@@ -16,7 +16,7 @@ export default function useFetchPerson() {
           is_admin: false,
           password,
         },
-      }).then(function (response) {
+      }).then((response) => {
         switch (response.status) {
           case 201:
             Alert.alert(

@@ -6,6 +6,7 @@ import Button from "./Button";
 import { useDispatch, useSelector } from "react-redux";
 import { getReviews } from "../redux/selectors";
 import { addReview } from "../redux/actions/review";
+import useFetchReviews from "../services/useFetchReviews";
 
 const PLACEHOLDER = "Enter your review here";
 const NOTE_MIN = 1;
@@ -14,10 +15,24 @@ const NOTE_MAX = 5;
 const ReviewForm = ({ navigation, isUpdate, toiletId, id }) => {
   const [note, setNote] = useState(1);
   const [comment, setComment] = useState("");
+  const title = isUpdate ? "Update review " + id : "Add Review";
 
   const dispatch = useDispatch();
+  const { addReviewFetch } = useFetchReviews();
 
-  const title = isUpdate ? "Update review " + id : "Add Review";
+  const handlePressCancel = () => {
+    navigation.goBack();
+  };
+
+  const handlePressAdd = () => {
+    addReviewFetch(note, comment, toiletId).then(() => {
+      dispatch(addReview(note, comment, toiletId));
+    });
+    navigation.goBack();
+  };
+
+  const handlePressUpdate = () => {};
+
   const showButton = () => {
     if (isUpdate) {
       return <Button text={"Update"} btnColor={"#E2E52B"} />;
@@ -25,17 +40,6 @@ const ReviewForm = ({ navigation, isUpdate, toiletId, id }) => {
       return <Button text={"Submit"} handlePress={handlePressAdd} />;
     }
   };
-
-  const handlePressCancel = () => {
-    navigation.goBack();
-  };
-
-  const handlePressAdd = () => {
-    dispatch(addReview(note, comment, toiletId));
-    navigation.goBack();
-  };
-
-  const handlePressUpdate = () => {};
 
   return (
     <View style={styles.container}>
