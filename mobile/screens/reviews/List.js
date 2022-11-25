@@ -4,6 +4,7 @@ import Button from "../../components/Button";
 import { useSelector } from "react-redux";
 import { getReviews } from "../../redux/selectors";
 import { useNavigation } from "@react-navigation/native";
+import { useEffect } from "react";
 
 const Item = ({ navigation, id, date }) => {
   return (
@@ -36,9 +37,12 @@ const Item = ({ navigation, id, date }) => {
   );
 };
 
-const List = () => {
+const List = ({ navigate, route }) => {
+  const { toiletId } = route.params;
   const reviews = useSelector(getReviews);
   const navigation = useNavigation();
+
+  useEffect(() => {}, []);
 
   const renderItem = ({ item }) => {
     return <Item navigation={navigation} id={item.id} date={item.date} />;
@@ -48,26 +52,34 @@ const List = () => {
     navigation.goBack();
   };
 
-  return (
-    <View style={styles.container}>
-      <Title text={"Reviews"} />
-      <View style={styles.content}>
-        <FlatList
-          data={reviews}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-        />
-      </View>
-      <View style={styles.buttons}>
-        <Button
-          text={"Cancel"}
-          textColor={"white"}
-          btnColor={"grey"}
-          handlePress={handlePressCancel}
-        />
-      </View>
-    </View>
-  );
+  const showReviews = () => {
+    if (reviews.length > 0) {
+      return (
+        <View>
+          <Title text={"Reviews"} />
+          <View style={styles.content}>
+            <FlatList
+              data={reviews}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.id}
+            />
+          </View>
+          <View style={styles.buttons}>
+            <Button
+              text={"Cancel"}
+              textColor={"white"}
+              btnColor={"grey"}
+              handlePress={handlePressCancel}
+            />
+          </View>
+        </View>
+      );
+    } else {
+      return <Text>There is not reviews in the list</Text>;
+    }
+  };
+
+  return <View style={styles.container}>{showReviews()}</View>;
 };
 
 const styles = StyleSheet.create({

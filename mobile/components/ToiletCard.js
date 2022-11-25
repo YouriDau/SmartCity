@@ -5,6 +5,10 @@ import Icon from "react-native-vector-icons/Ionicons";
 import Button from "../components/Button";
 
 const ToiletCard = ({ isPaid, isReducedMobility, toiletId, navigation }) => {
+  const handlePressListReviews = () => {
+    navigation.navigate("ListReviews", { toiletId });
+  };
+
   const handlePressAddReview = () => {
     navigation.navigate("AddReview", { toiletId });
   };
@@ -34,6 +38,12 @@ const ToiletCard = ({ isPaid, isReducedMobility, toiletId, navigation }) => {
           <Text>is for reduce mobility people?</Text>
         </View>
         <View style={styles.buttons}>
+          <Button
+            text={"Reviews List"}
+            textColor={"white"}
+            btnColor={"grey"}
+            handlePress={handlePressListReviews}
+          />
           <Button
             text={"add review"}
             textColor={"white"}

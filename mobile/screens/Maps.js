@@ -15,7 +15,7 @@ const Maps = ({ navigation }) => {
   const [canAddToilet, setCanAddToilet] = useState(false);
   const [newCoordinate, setNewCoordinates] = useState();
   const [cardIsVisible, setCardIsVisible] = useState(false);
-  const [toiletSelected, settoiletSelected] = useState();
+  const [toiletSelected, setToiletSelected] = useState();
   const toilets = useSelector(getToilets);
 
   const { getToiletsFetch } = useFetchToilets();
@@ -52,7 +52,7 @@ const Maps = ({ navigation }) => {
   };
 
   const handlePressMarker = (toilet) => {
-    settoiletSelected(toilet);
+    setToiletSelected(toilet);
     setCardIsVisible(true);
   };
 
@@ -80,8 +80,8 @@ const Maps = ({ navigation }) => {
     if (cardIsVisible) {
       return (
         <ToiletCard
-          isPaid={toiletSelected.is_paid}
-          isReducedMobility={toiletSelected.is_reduced_mobility}
+          isPaid={toiletSelected.isPaid}
+          isReducedMobility={toiletSelected.isReducedMobility}
           toiletId={toiletSelected.id}
           navigation={navigation}
         />

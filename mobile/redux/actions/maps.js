@@ -7,9 +7,15 @@ export function setToilets(toilets) {
   };
 }
 
-export function addMapMarker(latitude, longitude, isPaid, isReducedMobility) {
+export function addMapMarker(
+  id,
+  latitude,
+  longitude,
+  isPaid,
+  isReducedMobility
+) {
   return {
     type: ADD_MAP_MARKER,
-    payload: { latitude, longitude, isPaid, isReducedMobility },
+    payload: { id, latitude, longitude, isPaid, isReducedMobility },
   };
 }

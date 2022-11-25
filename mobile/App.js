@@ -7,6 +7,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import DrawerMenu from "./components/DrawerMenu";
 
 import AddReview from "./screens/reviews/AddForm";
+import ListReviews from "./screens/reviews/List";
 import UpdateReview from "./screens/reviews/UpdateForm";
 import DeleteReview from "./screens/reviews/DeleteForm";
 
@@ -29,6 +30,10 @@ const App = () => {
     {
       name: "AddReview",
       component: AddReview,
+    },
+    {
+      name: "ListReviews",
+      component: ListReviews,
     },
     {
       name: "UpdateReview",

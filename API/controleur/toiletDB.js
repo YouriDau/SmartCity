@@ -10,6 +10,11 @@ module.exports.getToilets = async (req, res) => {
 
     if (toilets !== undefined && locations !== undefined) {
       toilets.forEach((toilet) => {
+        toilet.isPaid = toilet.is_paid;
+        toilet.isReducedMobility = toilet.is_reduced_mobility;
+        delete toilet.is_paid;
+        delete toilet.is_reduced_mobility;
+
         toilet.location = locations.filter(
           (location) => location.toilet_id === toilet.id
         )[0];
@@ -36,7 +41,6 @@ module.exports.getToilet = async (req, res) => {
       const { rows } = await ToiletModele.getToilet(id, client);
       const toilet = rows[0];
       if (toilet !== undefined) {
-        console.log(toilet);
         res.json(toilet);
       } else {
         res.sendStatus(404);
@@ -63,7 +67,6 @@ module.exports.postToilet = async (req, res) => {
       client
     );
     const toilet = toilets[0];
-    console.log(toilet.id);
 
     const { rows: locations } = await LocationModele.postLocation(
       latitude,

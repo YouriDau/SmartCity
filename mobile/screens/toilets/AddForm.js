@@ -6,6 +6,10 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addMapMarker } from "../../redux/actions/maps";
 
+import useFetchToilet from "../../services/useFetchToilets";
+
+const { addToiletFetch } = useFetchToilet();
+
 const AddToilet = ({ navigation, route }) => {
   const [isPaid, setIsPaid] = useState(false);
   const [isReducedMobility, setIsReducedMobility] = useState(false);
@@ -18,14 +22,23 @@ const AddToilet = ({ navigation, route }) => {
   };
 
   const handlePressSubmit = () => {
-    dispatch(
-      addMapMarker(
-        newCoordinate.latitude,
-        newCoordinate.longitude,
-        isPaid,
-        isReducedMobility
-      )
-    );
+    addToiletFetch(
+      newCoordinate.latitude,
+      newCoordinate.longitude,
+      isPaid,
+      isReducedMobility
+    ).then((id) => {
+      dispatch(
+        addMapMarker(
+          id,
+          newCoordinate.latitude,
+          newCoordinate.longitude,
+          isPaid,
+          isReducedMobility
+        )
+      );
+    });
+
     navigation.navigate("Maps");
   };
 

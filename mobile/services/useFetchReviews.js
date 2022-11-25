@@ -1,14 +1,13 @@
 import axios from "axios";
 import { Alert } from "react-native";
-
-const BASE_URL_API = "http://192.168.1.53:3001/review";
+import { BASE_URL_API } from "../config";
 
 export default function useFetchReviews() {
   const getReviewsFetch = async (toiletId) => {
     try {
       const response = await axios({
         method: "get",
-        url: BASE_URL_API,
+        url: `${BASE_URL_API}/review`,
         params: { toiletId },
       });
       return response.data;

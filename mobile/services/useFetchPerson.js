@@ -1,14 +1,13 @@
 import axios from "axios";
 import { Alert } from "react-native";
-
-const BASE_URL_API = "http://192.168.1.53:3001/person";
+import { BASE_URL_API } from "../config";
 
 export default function useFetchPerson() {
   const addPerson = async (pseudo, lastname, firstname, email, password) => {
     try {
       await axios({
         method: "post",
-        url: BASE_URL_API,
+        url: `${BASE_URL_API}/person`,
         data: {
           pseudo,
           last_name: lastname,

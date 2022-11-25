@@ -1,8 +1,6 @@
 import { useEffect } from "react";
 import { SET_TOILETS, ADD_MAP_MARKER } from "../actions/actionsType";
-import useFetchToilet from "../../services/useFetchToilets";
 
-const { addToiletFetch } = useFetchToilet();
 initialState = [];
 
 export const map = (state = initialState, action) => {
@@ -11,11 +9,11 @@ export const map = (state = initialState, action) => {
       state = action.payload.toilets;
       return state;
     case ADD_MAP_MARKER:
+      const id = action.payload.id;
       const latitude = action.payload.latitude;
       const longitude = action.payload.longitude;
       const isPaid = action.payload.isPaid;
       const isReducedMobility = action.payload.isReducedMobility;
-      const id = addToiletFetch(latitude, longitude, isPaid, isReducedMobility);
 
       return [
         ...state,
