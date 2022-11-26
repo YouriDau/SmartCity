@@ -2,8 +2,14 @@ module.exports.getAllPersons = async (client) => {
   return await client.query("SELECT * FROM person");
 };
 
-module.exports.getPerson = async (id, client) => {
-  return await client.query("SELECT * FROM person WHERE id = $1 LIMIT 1", [id]);
+module.exports.getPersonById = async (client, id) => {
+  return await client.query("SELECT * FROM person WHERE id=$1", [id]);
+};
+
+module.exports.getPerson = async (client, pseudo) => {
+  return await client.query("SELECT * FROM person WHERE pseudo=$1 LIMIT 1", [
+    pseudo,
+  ]);
 };
 
 module.exports.postPerson = async (

@@ -21,11 +21,10 @@ module.exports.getAllPersons = async (req, res) => {
 
 module.exports.getPerson = async (req, res) => {
   const client = await pool.connect();
-  const idText = req.params.id;
-  const id = parseInt(idText);
+  const pseudo = req.params.pseudo;
 
   try {
-    const { rows: persons } = await PersonModele.getPerson(id, client);
+    const { rows: persons } = await PersonModele.getPerson(pseudo, client);
     const person = persons[0];
     if (person !== undefined) {
       res.json(person);

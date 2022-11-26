@@ -9,7 +9,7 @@ CREATE TABLE person
     first_name varchar(250) not null,
     email varchar(250) unique not null,
     is_admin boolean not null,
-    password varchar(250) not null
+    password varchar not null
     );
 
 DROP TABLE IF EXISTS toilet CASCADE;
@@ -61,9 +61,8 @@ CREATE TABLE review
 -- PERSON
 INSERT INTO person (pseudo, last_name, first_name, email, is_admin, password)
 VALUES 
-    ( 'youyou', 'Dautrebande', 'Youri', 'ydautrebande@gmail.com', TRUE, 'password'),
-    ( 'tim', 'Ciciotti', 'Timothé', 'timothecicio@gmail.com', TRUE, 'motdepasse'),
-    ( 'tom', 'Gedusor', 'Tom', 'tomgedusore@gmail.com', FALSE, 'test');
+    ( 'youyou', 'Dautrebande', 'Youri', 'ydautrebande@gmail.com', TRUE, '$2a$10$vQ1rrXjoPNYhualYPfWlFec41p3JpSQH33B4VwXEyeaUTKmoF4VSy'), -- motdepasse
+    ( 'tim', 'Ciciotti', 'Timothé', 'timothecicio@gmail.com', FALSE, '$2a$10$fiKILzSQn2YvA.mbmxhqa.7f8pErrnl4qofZY7nE/a5Vq8KakfPKG'); -- password
 
 -- TOILET
 INSERT INTO toilet (is_reduced_mobility, is_paid)
@@ -84,19 +83,19 @@ VALUES
 -- REPORT
 INSERT INTO report (reason, "date", is_done, user_id) 
 VALUES
-    ('reason 1 short', TO_DATE('2021/11/15', 'YYYY/MM/DD'), TRUE, 3),
+    ('reason 1 short', TO_DATE('2021/11/15', 'YYYY/MM/DD'), TRUE, 1),
     ('reason 2 more longer than the first', TO_DATE('2022/09/10', 'YYYY/MM/DD'), FALSE, 1),
     ('reason 3, more more longer than the second one', CURRENT_DATE, FALSE, 2);
 INSERT INTO report (reason, is_done, user_id)
 VALUES 
-    ('reason', FALSE, 3);
+    ('reason', FALSE, 2);
 
 -- REVIEW
 INSERT INTO review (note, comment, user_id, toilet_id)
 VALUES
     (3, 'I don"t have comment', 1, 1),
-    (5, 'Really clean this toilet', 3, 2),
+    (5, 'Really clean this toilet', 2, 2),
     (2, 'You have to clean this toilet guys', 2, 1),
     (4, 'Nothing to say', 2, 2),
-    (5, 'yes it"s a toilet', 3, 3);
+    (5, 'yes it"s a toilet', 1, 3);
 
