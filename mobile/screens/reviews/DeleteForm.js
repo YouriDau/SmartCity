@@ -15,7 +15,9 @@ const DeleteForm = ({ navigation, route }) => {
   };
 
   const handlePressDelete = () => {
-    deleteReviewFetch(id).then(dispatch(deleteReview(id)));
+    deleteReviewFetch(id)
+      .then(dispatch(deleteReview(id)))
+      .catch((error) => console.log("deleteReviewFetchError", error));
     navigation.goBack();
   };
 

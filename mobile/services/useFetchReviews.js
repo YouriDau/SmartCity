@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Alert } from "react-native";
 import { BASE_URL_API } from "../config";
+import authHeader from "./authHeader";
 
 export default function useFetchReviews() {
   const getReviewsFetch = async (toiletId) => {
@@ -37,17 +38,14 @@ export default function useFetchReviews() {
   };
 
   const deleteReviewFetch = async (id) => {
-    try {
-      await axios({
-        method: "delete",
-        url: `${BASE_URL_API}/review`,
-        data: {
-          id,
-        },
-      });
-    } catch (error) {
-      console.error("deleteReviewError", e);
-    }
+    const response = await axios({
+      method: "delete",
+      url: `${BASE_URL_API}/review`,
+      data: {
+        id,
+      },
+      headers: authHeader(),
+    });
   };
 
   return {

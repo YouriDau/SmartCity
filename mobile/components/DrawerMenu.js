@@ -9,11 +9,12 @@ import UpdateAccount from "../screens/account/UpdateForm";
 import DeleteAccount from "../screens/account/DeleteForm";
 
 import ListReview from "../screens/reviews/List";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Drawer = createDrawerNavigator();
 
 const DrawerMenu = () => {
-  const screens = [
+  const screensNotConnected = [
     {
       name: "Registration",
       component: Registration,
@@ -22,14 +23,21 @@ const DrawerMenu = () => {
       name: "Login",
       component: Login,
     },
-    // {
-    //   name: "DeleteAccount",
-    //   component: DeleteAccount,
-    // },
-    // {
-    //   name: "UpdateAccount",
-    //   component: UpdateAccount,
-    // },
+    {
+      name: "Maps",
+      component: Maps,
+    },
+  ];
+
+  const screensConnected = [
+    {
+      name: "DeleteAccount",
+      component: DeleteAccount,
+    },
+    {
+      name: "UpdateAccount",
+      component: UpdateAccount,
+    },
     {
       name: "Maps",
       component: Maps,
@@ -43,7 +51,7 @@ const DrawerMenu = () => {
       backBehavior="history"
       screenOptions={{ drawerType: "slide", swipeEdgeWidth: 80 }}
     >
-      {screens.map((screen) => (
+      {screensNotConnected.map((screen) => (
         <Drawer.Screen
           key={screen.name}
           name={screen.name}
