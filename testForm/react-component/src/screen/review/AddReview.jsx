@@ -8,11 +8,6 @@ class AddReview extends React.Component {
     this.state = {};
   }
 
-  handlePressAdd(event) {
-    event.preventDefault();
-    console.log("Add review");
-  }
-
   render() {
     return (
       <div class="form">
@@ -22,7 +17,7 @@ class AddReview extends React.Component {
         <ReviewForm
           title={"Add a review"}
           titleButton={"Submit"}
-          handlePress={this.handlePressAdd}
+          isUpdate={false}
         />
       </div>
     );

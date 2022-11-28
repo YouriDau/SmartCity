@@ -8,11 +8,6 @@ class AddReport extends React.Component {
     this.state = {};
   }
 
-  handlePressAdd(event) {
-    event.preventDefault();
-    console.log("Add report");
-  }
-
   render() {
     return (
       <div class="form">
@@ -22,7 +17,7 @@ class AddReport extends React.Component {
         <ReportForm
           title={"Add a report about this toilet"}
           titleButton={"Report"}
-          handlePress={this.handlePressAdd}
+          isUpdate={false}
         />
       </div>
     );

@@ -45,9 +45,9 @@ module.exports.postReview = async (req, res) => {
       userId,
       client
     );
-    const review = rowReview[0];
-
-    res.json(review);
+    //const review = rowReview[0];
+    //res.json(review);  
+    res.sendStatus(201).send(rows[0].id);
   } catch (error) {
     console.error("PostReviewError", error);
     res.sendStatus(500);

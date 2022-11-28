@@ -1,6 +1,7 @@
 const ReviewControleur = require("../controleur/reviewDB");
 const JWTMiddleware = require("../middleware/Identification");
 const AuthoMiddleware = require("../middleware/Authorization");
+const cors = require("cors");
 
 const Router = require("express-promise-router");
 const router = new Router();
