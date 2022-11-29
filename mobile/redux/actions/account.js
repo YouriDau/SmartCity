@@ -1,9 +1,9 @@
 import { ADD_USER, DELETE_USER } from "./actionsType";
 
-export function addUser(pseudo, lastname, firstname, email, password) {
+export function addUser(pseudo, lastName, firstName, email, password) {
   return {
     type: ADD_USER,
-    payload: { pseudo, lastname, firstname, email, password },
+    payload: { pseudo, lastName, firstName, email, password },
   };
 }
 

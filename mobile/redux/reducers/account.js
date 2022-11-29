@@ -9,8 +9,8 @@ export const account = (state = initialState, action) => {
         ...state,
         {
           pseudo: action.payload.pseudo,
-          lastname: action.payload.lastname,
-          firstname: action.payload.firstname,
+          lastName: action.payload.lastName,
+          firstName: action.payload.firstName,
           email: action.payload.email,
           password: action.payload.password,
         },

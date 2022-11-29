@@ -17,19 +17,25 @@ class UserForm extends React.Component {
 
   async handlePressAdd(event) {
     event.preventDefault();
-    console.log("on passe bien dans UserForm");
-    try {
-      await addPersonFetch(
-        this.state.inputPseudo,
-        this.state.inputLastName,
-        this.state.inputFirstName,
-        this.state.inputEmail,
-        this.state.inputPassword
-      );
-      console.log("Ajout effectué");
-    } catch (error) {
-      console.error("AddPersonFetchError", error);
-    }
+    addPersonFetch(
+      this.state.inputPseudo,
+      this.state.inputLastName,
+      this.state.inputFirstName,
+      this.state.inputEmail,
+      this.state.inputPassword
+    )
+      .then((status) => {
+        switch (status) {
+          case 201:
+            console.log("Insert Réussi!");
+            break;
+          default:
+            console.log(`Error ${status}`);
+        }
+      })
+      .catch((error) => {
+        console.error("AddPersonFetchError", error);
+      });
   }
 
   handlePressUpdate(event) {

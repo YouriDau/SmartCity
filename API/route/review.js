@@ -12,7 +12,7 @@ router.patch("/", ReviewControleur.updateReview);
 router.delete(
   "/",
   JWTMiddleware.identification,
-  AuthoMiddleware.mustBeAdmin,
+  AuthoMiddleware.mustBeAdminOrOwner,
   ReviewControleur.deleteReview
 );
 

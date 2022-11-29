@@ -7,8 +7,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const PLACEHOLDERS = {
   pseudo: "Your pseudo here",
-  lastname: "Your lastname here",
-  firstname: "Your firstname here",
+  lastName: "Your lastname here",
+  firstName: "Your firstname here",
   password: "Your password here",
   email: "Your email here",
 };

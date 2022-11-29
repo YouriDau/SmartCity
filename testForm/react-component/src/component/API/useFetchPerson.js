@@ -19,20 +19,14 @@ const addPersonFetch = async (pseudo, lastName, firstName, email, password) => {
     url: `${BASE_URL_API}/person`,
     data: {
       pseudo,
-      last_name: lastName,
-      first_name: firstName,
+      lastName,
+      firstName,
       email,
-      is_admin: false,
       password,
     },
+    headers: { "Content-Type": "application/json" },
   }).then((response) => {
-    switch (response.status) {
-      case 201:
-        console.log("Insert Réussi!");
-        break;
-      default:
-        console.log("Add user default switch");
-    }
+    return response.status;
   });
 };
 

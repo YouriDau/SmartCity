@@ -9,8 +9,8 @@ import useFetchPerson from "../../services/useFetchPerson";
 
 const PLACEHOLDERS = {
   pseudo: "Your pseudo here",
-  lastname: "Your lastname here",
-  firstname: "Your firstname here",
+  lastName: "Your last name here",
+  firstName: "Your first name here",
   password: "Your password here",
   email: "Your email here",
 };
@@ -20,8 +20,8 @@ const RegistrationForm = ({ navigation }) => {
   const { addPersonFetch } = useFetchPerson();
 
   const [pseudo, setPseudo] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [firstname, setFirstame] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [firstName, setFirstName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
@@ -31,12 +31,12 @@ const RegistrationForm = ({ navigation }) => {
       alert += "pseudo ";
       Alert.alert(alert);
     } else {
-      if (lastname === "") {
-        alert += "lastname ";
+      if (lastName === "") {
+        alert += "last name ";
         Alert.alert(alert);
       } else {
-        if (firstname === "") {
-          alert += "firstname ";
+        if (firstName === "") {
+          alert += "first name ";
           Alert.alert(alert);
         } else {
           if (password === "") {
@@ -47,12 +47,12 @@ const RegistrationForm = ({ navigation }) => {
               alert += "email";
               Alert.alert(alert);
             } else {
-              addPersonFetch(pseudo, lastname, firstname, email, password)
+              addPersonFetch(pseudo, lastName, firstName, email, password)
                 .then(() => {
                   dispatch(
                     addUser(
                       { pseudo },
-                      { lastname },
+                      { lastName },
                       { firstname },
                       { email },
                       { password }
@@ -87,8 +87,8 @@ const RegistrationForm = ({ navigation }) => {
                 });
 
               setPseudo("");
-              setLastname("");
-              setFirstame("");
+              setLastName("");
+              setFirstName("");
               setPassword("");
               setEmail("");
             }
@@ -114,20 +114,20 @@ const RegistrationForm = ({ navigation }) => {
           value={pseudo}
         />
 
-        <Text style={styles.inputText}>Lastname</Text>
+        <Text style={styles.inputText}>Last name</Text>
         <TextInput
           style={styles.input}
-          placeholder={PLACEHOLDERS.lastname}
-          onChangeText={setLastname}
-          value={lastname}
+          placeholder={PLACEHOLDERS.lastName}
+          onChangeText={setLastName}
+          value={lastName}
         />
 
-        <Text style={styles.inputText}>Firstname</Text>
+        <Text style={styles.inputText}>First name</Text>
         <TextInput
           style={styles.input}
-          placeholder={PLACEHOLDERS.firstname}
-          onChangeText={setFirstame}
-          value={firstname}
+          placeholder={PLACEHOLDERS.firstName}
+          onChangeText={setFirstName}
+          value={firstName}
         />
 
         <Text style={styles.inputText}>Password</Text>

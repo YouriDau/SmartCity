@@ -5,7 +5,7 @@ import { BASE_URL_API } from "../config";
 export default function useFetchPerson() {
   const addPersonFetch = async (
     pseudo,
-    lastname,
+    lastName,
     firstname,
     email,
     password
@@ -15,10 +15,9 @@ export default function useFetchPerson() {
       url: `${BASE_URL_API}/person`,
       data: {
         pseudo,
-        last_name: lastname,
+        lastName: lastName,
         first_name: firstname,
         email,
-        is_admin: false,
         password,
       },
     });

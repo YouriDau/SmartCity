@@ -5,8 +5,8 @@ import Title from "../../components/Title";
 
 const UpdateForm = ({ navigation }) => {
   const [pseudo, setPseudo] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [firstname, setFirstname] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [firstName, setFirstName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
@@ -16,12 +16,12 @@ const UpdateForm = ({ navigation }) => {
       alert += "pseudo ";
       Alert.alert(alert);
     } else {
-      if (lastname === "") {
-        alert += "lastname ";
+      if (lastName === "") {
+        alert += "last name ";
         Alert.alert(alert);
       } else {
-        if (firstname === "") {
-          alert += "firstname ";
+        if (firstName === "") {
+          alert += "first name ";
           Alert.alert(alert);
         } else {
           if (password === "") {
@@ -32,11 +32,11 @@ const UpdateForm = ({ navigation }) => {
               alert += "email";
               Alert.alert(alert);
             } else {
-              dispatch(addUser(pseudo, lastname, firstname, email, password));
+              dispatch(addUser(pseudo, lastName, firstName, email, password));
 
               setPseudo("");
-              setLastname("");
-              setFirstame("");
+              setLastName("");
+              setFirstName("");
               setPassword("");
               setEmail("");
             }
@@ -57,11 +57,11 @@ const UpdateForm = ({ navigation }) => {
         <Text style={styles.inputText}>Pseudo</Text>
         <TextInput style={styles.input} onChangeText={setPseudo} />
 
-        <Text style={styles.inputText}>Lastname</Text>
-        <TextInput style={styles.input} onChangeText={setLastname} />
+        <Text style={styles.inputText}>Last name</Text>
+        <TextInput style={styles.input} onChangeText={setLastName} />
 
-        <Text style={styles.inputText}>Firstname</Text>
-        <TextInput style={styles.input} onChangeText={setFirstname} />
+        <Text style={styles.inputText}>First name</Text>
+        <TextInput style={styles.input} onChangeText={setFirstName} />
 
         <Text style={styles.inputText}>Password</Text>
         <TextInput

@@ -1,6 +1,5 @@
 const pool = require("../modele/database");
 const ReviewModele = require("../modele/reviewDB");
-const jwt = require("jsonwebtoken");
 
 module.exports.getReviews = async (req, res) => {
   const toiletIdText = req.params.toiletId;
@@ -31,6 +30,22 @@ module.exports.getReviews = async (req, res) => {
   } catch (error) {
     console.error("getReviewError", error);
     res.sendStatus(500);
+  } finally {
+    client.release();
+  }
+};
+
+module.exports.getReview = async (req, res) => {
+  const client = await pool.connect();
+  console.log(req.params.id);
+  try {
+    const { rows } = await ReviewModele.getReview(req.params.id, client);
+    const review = rows[0];
+    if (review !== undefined) {
+      res.sendStatus(200).json(review);
+    }
+  } catch (error) {
+    console.error("mustBeAdminError", error);
   } finally {
     client.release();
   }

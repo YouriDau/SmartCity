@@ -40,7 +40,7 @@ module.exports.getPerson = async (req, res) => {
 };
 
 module.exports.postPerson = async (req, res) => {
-  const { pseudo, last_name, first_name, email, is_admin, password } = req.body;
+  const { pseudo, lastName, firstName, email, password } = req.body;
   const client = await pool.connect();
   try {
     const pseudoExist = await PersonModele.pseudoExist(pseudo, client);
@@ -48,10 +48,9 @@ module.exports.postPerson = async (req, res) => {
     if (!pseudoExist && !emailExist) {
       await PersonModele.postPerson(
         pseudo,
-        last_name,
-        first_name,
+        lastName,
+        firstName,
         email,
-        is_admin,
         password,
         client
       );
