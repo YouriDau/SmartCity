@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Alert } from "react-native";
 import Title from "../../components/Title";
 import Button from "../../components/Button";
 import { useDispatch } from "react-redux";
@@ -16,7 +16,14 @@ const DeleteForm = ({ navigation, route }) => {
 
   const handlePressDelete = () => {
     deleteReviewFetch(id)
-      .then(dispatch(deleteReview(id)))
+      .then((status) => {
+        if (status === 204) {
+          Alert.alert("Delete success");
+          dispatch(deleteReview(id));
+        } else {
+          Alert.alert("Error", "Error while delete the review");
+        }
+      })
       .catch((error) => console.log("deleteReviewFetchError", error));
     navigation.goBack();
   };

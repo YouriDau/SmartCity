@@ -5,6 +5,7 @@ import Button from "../../components/Button";
 import { useDispatch } from "react-redux";
 import { addUser } from "../../redux/actions/account";
 import { ScrollView } from "react-native-gesture-handler";
+import useFetchPerson from "../../services/useFetchPerson";
 
 const PLACEHOLDERS = {
   pseudo: "Your pseudo here",
@@ -16,6 +17,7 @@ const PLACEHOLDERS = {
 
 const RegistrationForm = ({ navigation }) => {
   const dispatch = useDispatch();
+  const { addPersonFetch } = useFetchPerson();
 
   const [pseudo, setPseudo] = useState("");
   const [lastname, setLastname] = useState("");
@@ -45,7 +47,44 @@ const RegistrationForm = ({ navigation }) => {
               alert += "email";
               Alert.alert(alert);
             } else {
-              dispatch(addUser(pseudo, lastname, firstname, email, password));
+              addPersonFetch(pseudo, lastname, firstname, email, password)
+                .then(() => {
+                  dispatch(
+                    addUser(
+                      { pseudo },
+                      { lastname },
+                      { firstname },
+                      { email },
+                      { password }
+                    )
+                  );
+                  switch (response.status) {
+                    case 201:
+                      Alert.alert(
+                        "Success",
+                        "Congratulation, your account was successfully created!"
+                      );
+                      break;
+                    default:
+                      console.log("Add user default switch");
+                  }
+                })
+                .catch((error) => {
+                  console.error("addPersonError", error);
+                  switch (error.response.status) {
+                    case 409:
+                      Alert.alert("Retry", "This pseudo is already used!");
+                      break;
+                    case 500:
+                      Alert.alert(
+                        "Error",
+                        "There was an error during the creation, retry!"
+                      );
+                      break;
+                    default:
+                      console.log("Add user error default switch");
+                  }
+                });
 
               setPseudo("");
               setLastname("");

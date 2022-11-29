@@ -4,15 +4,11 @@ import { BASE_URL_API } from "../config";
 
 export default function useFetchToilet() {
   const getToiletsFetch = async () => {
-    try {
-      const response = await axios({
-        method: "get",
-        url: `${BASE_URL_API}/toilet`,
-      });
-      return response.data;
-    } catch (error) {
-      console.error("getToiletsError", error);
-    }
+    const response = await axios({
+      method: "get",
+      url: `${BASE_URL_API}/toilet`,
+    });
+    return { status: response.status, data: response.data };
   };
 
   const addToiletFetch = async (

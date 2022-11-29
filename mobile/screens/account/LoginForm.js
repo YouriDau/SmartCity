@@ -2,7 +2,7 @@ import { useState } from "react";
 import { View, Text, StyleSheet, TextInput, Alert } from "react-native";
 import Title from "../../components/Title";
 import Button from "../../components/Button";
-import useFetchUser from "../../services/useFetchUser";
+import useFetchPerson from "../../services/useFetchPerson";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const PLACEHOLDERS = {
@@ -16,7 +16,7 @@ const PLACEHOLDERS = {
 const LoginForm = ({ navigation }) => {
   const [pseudo, setPseudo] = useState("");
   const [password, setPassword] = useState("");
-  const { loginFetch } = useFetchUser();
+  const { loginFetch } = useFetchPerson();
 
   const handlePressCancel = () => {
     navigation.goBack();
@@ -26,8 +26,11 @@ const LoginForm = ({ navigation }) => {
     loginFetch(pseudo, password)
       .then((result) => {
         if (result.status === 200) {
+          Alert.alert("Login success!");
           AsyncStorage.setItem("token", result.data);
-          navigation.navigate("Maps");
+          navigation.navigate("MenuConnected");
+        } else {
+          Alert.alert("Pseudo or password incorect!");
         }
       })
       .catch((error) => console.error("loginFetchError", error));

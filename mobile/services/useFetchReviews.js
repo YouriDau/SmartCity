@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { Alert } from "react-native";
 import { BASE_URL_API } from "../config";
@@ -38,13 +39,17 @@ export default function useFetchReviews() {
   };
 
   const deleteReviewFetch = async (id) => {
-    const response = await axios({
-      method: "delete",
-      url: `${BASE_URL_API}/review`,
-      data: {
-        id,
-      },
-      headers: authHeader(),
+    AsyncStorage.getItem("token").then((token) => {
+      axios({
+        method: "delete",
+        url: `${BASE_URL_API}/review`,
+        data: {
+          id,
+        },
+        headers: { authorization: `Bearer ${token}` },
+      }).then((response) => {
+        return response.status;
+      });
     });
   };
 

@@ -22,7 +22,7 @@ const Maps = ({ navigation }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getToiletsFetch().then((allToilets) => dispatch(setToilets(allToilets)));
+    getToiletsFetch().then(({ status, data }) => dispatch(setToilets(data)));
   }, []);
 
   const handlePressMap = (coordinate) => {

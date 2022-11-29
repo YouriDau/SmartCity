@@ -1,5 +1,6 @@
 const pool = require("../modele/database");
 const ReviewModele = require("../modele/reviewDB");
+const jwt = require("jsonwebtoken");
 
 module.exports.getReviews = async (req, res) => {
   const toiletIdText = req.params.toiletId;
@@ -14,6 +15,7 @@ module.exports.getReviews = async (req, res) => {
       const reviews = reviewRows;
       if (reviews !== undefined) {
         reviews.forEach((review) => {
+          console.log(review.date);
           review.toiletId = review.toilet_id;
           review.userId = review.userId;
           delete review.toilet_id;
@@ -38,16 +40,14 @@ module.exports.postReview = async (req, res) => {
   const { note, comment, toiletId, userId } = req.body;
   const client = await pool.connect();
   try {
-    const { rows: rowReview } = await ReviewModele.postReview(
+    const { rows: reviews } = await ReviewModele.postReview(
       note,
       comment,
       toiletId,
       userId,
       client
     );
-    //const review = rowReview[0];
-    //res.json(review);  
-    res.sendStatus(201).send(rows[0].id);
+    res.sendStatus(201).send(reviews[0].id);
   } catch (error) {
     console.error("PostReviewError", error);
     res.sendStatus(500);

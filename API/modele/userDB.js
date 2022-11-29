@@ -9,7 +9,7 @@ module.exports.getUser = async (client, pseudo, password) => {
       person !== undefined &&
       (await compareHash(password, person.password))
     ) {
-      if (person.isAdmin) {
+      if (person.is_admin) {
         return { userType: "admin", value: person };
       } else {
         return { userType: "user", value: person };

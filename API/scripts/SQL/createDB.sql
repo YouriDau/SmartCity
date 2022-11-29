@@ -35,7 +35,7 @@ CREATE TABLE report
     (
     id serial primary key,
     reason varchar(250) not null,
-    "date" date not null DEFAULT CURRENT_DATE, 
+    "date" timestamp without time zone not null DEFAULT CURRENT_TIMESTAMP, 
     is_done boolean not null,
     user_id int not null, 
     foreign KEY(user_id) references person(id)
@@ -47,7 +47,7 @@ CREATE TABLE review
     id serial primary key,
     note int not null,
     comment varchar(250) not null,
-    "date" date not null DEFAULT CURRENT_DATE,
+    "date" timestamp without time zone not null DEFAULT CURRENT_TIMESTAMP,
     user_id int not null,
     toilet_id int not null,
     foreign KEY(user_id) references person(id),
