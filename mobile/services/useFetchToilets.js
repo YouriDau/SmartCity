@@ -17,21 +17,12 @@ export default function useFetchToilet() {
     isPaid,
     isReducedMobility
   ) => {
-    try {
-      const response = await axios({
-        method: "post",
-        url: `${BASE_URL_API}/toilet`,
-        data: { latitude, longitude, isPaid, isReducedMobility },
-      });
-      Alert.alert("Success", "The toilet was successfully created!");
-      return response.data;
-    } catch (error) {
-      Alert.alert(
-        "Retry",
-        "There was an error during the creation of the toilet, retry!"
-      );
-      console.error("addToiletError", error);
-    }
+    const response = await axios({
+      method: "post",
+      url: `${BASE_URL_API}/toilet`,
+      data: { latitude, longitude, isPaid, isReducedMobility },
+    });
+    return { status: response.status, data: response.data };
   };
 
   return {

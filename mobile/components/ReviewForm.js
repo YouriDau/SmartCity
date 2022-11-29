@@ -3,8 +3,7 @@ import Title from "./Title";
 import Slider from "@react-native-community/slider";
 import { useState } from "react";
 import Button from "./Button";
-import { useDispatch, useSelector } from "react-redux";
-import { getReviews } from "../redux/selectors";
+import { useDispatch } from "react-redux";
 import { addReview } from "../redux/actions/review";
 import useFetchReviews from "../services/useFetchReviews";
 
@@ -25,8 +24,8 @@ const ReviewForm = ({ navigation, isUpdate, toiletId, id }) => {
   };
 
   const handlePressAdd = () => {
-    addReviewFetch(note, comment, toiletId).then(() => {
-      dispatch(addReview(note, comment, toiletId));
+    addReviewFetch(note, comment, toiletId).then(({ status, data }) => {
+      dispatch(addReview(data.id, note, comment, toiletId));
     });
     navigation.goBack();
   };

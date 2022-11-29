@@ -5,12 +5,14 @@ initialState = [];
 export const review = (state = initialState, action) => {
   const date = new Date();
   date.toLocaleDateString("fr");
+  const dateFormated = toString(date);
 
   switch (action.type) {
     case SET_REVIEWS:
       state = action.payload.reviews;
       return state;
     case ADD_REVIEW:
+      const id = action.payload.id;
       const note = action.payload.note;
       const comment = action.payload.comment;
       const toiletId = action.payload.toiletId;
@@ -18,8 +20,8 @@ export const review = (state = initialState, action) => {
       return [
         ...state,
         {
-          id: state.length,
-          date: formatedDate,
+          id,
+          date: dateFormated,
           note,
           comment,
           toiletId,

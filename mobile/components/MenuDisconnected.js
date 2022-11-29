@@ -1,4 +1,5 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
+import { useNavigation } from "@react-navigation/native";
 
 import Maps from "../screens/Maps";
 
@@ -7,6 +8,7 @@ import Login from "../screens/account/LoginForm";
 
 const DrawerMenu = () => {
   const Drawer = createDrawerNavigator();
+  const navigation = useNavigation();
 
   return (
     <Drawer.Navigator

@@ -9,7 +9,7 @@ module.exports.getReport = async (req, res) => {
     if (isNaN(id)) {
       res.sendStatus(400);
     } else {
-      const { rows: reports } = await ReportModele.getReport(id, client);
+      const { rows: reports } = await ReportModele.getReport(client, id);
       const report = reports[0];
       if (report !== undefined) {
         res.json(report);
@@ -31,11 +31,11 @@ module.exports.postReport = async (req, res) => {
   const client = await pool.connect();
   try {
     const { rows } = await ReportModele.postReport(
+      client,
       reason,
       date,
       is_done,
-      user_pseudo,
-      client
+      user_pseudo
     );
     res.status(201).send(rows[0].id);
   } catch (error) {
@@ -50,7 +50,7 @@ module.exports.deleteReport = async (req, res) => {
   const { id } = req.body;
   const client = await pool.connect();
   try {
-    await ReportModele.deleteReport(id, client);
+    await ReportModele.deleteReport(client, id);
     res.sendStatus(204);
   } catch (error) {
     console.error(error);
@@ -65,7 +65,7 @@ module.exports.updateReport = async (req, res) => {
   const { id, reason, isDone } = req.body;
   const client = await pool.connect();
   try {
-    await ReportModele.updateReport(id, reason, isDone, client);
+    await ReportModele.updateReport(client, id, reason, isDone);
     res.sendStatus(204);
   } catch (error) {
     console.error(error);

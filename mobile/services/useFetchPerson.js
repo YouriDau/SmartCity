@@ -26,7 +26,7 @@ export default function useFetchPerson() {
   const loginFetch = async (pseudo, password) => {
     const response = await axios({
       method: "post",
-      url: `${BASE_URL_API}/user/login`,
+      url: `${BASE_URL_API}/person/login`,
       data: {
         pseudo,
         password,

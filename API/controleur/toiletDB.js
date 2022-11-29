@@ -38,7 +38,7 @@ module.exports.getToilet = async (req, res) => {
   const id = parseInt(idText);
   try {
     if (!isNaN(id)) {
-      const { rows } = await ToiletModele.getToilet(id, client);
+      const { rows } = await ToiletModele.getToilet(client, id);
       const toilet = rows[0];
       if (toilet !== undefined) {
         res.json(toilet);
@@ -62,23 +62,17 @@ module.exports.postToilet = async (req, res) => {
   try {
     await client.query("START TRANSACTION");
     const { rows: toilets } = await ToiletModele.postToilet(
+      client,
       isReducedMobility,
-      isPaid,
-      client
+      isPaid
     );
-    const toilet = toilets[0];
+    const toiletId = toilets[0].id;
 
-    const { rows: locations } = await LocationModele.postLocation(
-      latitude,
-      longitude,
-      toilet.id,
-      client
-    );
-    const location = locations[0];
+    await LocationModele.postLocation(client, latitude, longitude, toiletId);
 
     await client.query("COMMIT TRANSACTION");
 
-    res.json(toilet.id);
+    res.status(200).json(toiletId);
   } catch (error) {
     await client.query("ROLLBACK TRANSACTION");
     console.error("postToiletError", error);
@@ -92,7 +86,7 @@ module.exports.deleteToilet = async (req, res) => {
   const { id } = req.body;
   const client = await pool.connect();
   try {
-    await ToiletModele.deleteToilet(id, client);
+    await ToiletModele.deleteToilet(client, id);
     res.sendStatus(204);
   } catch (error) {
     console.error("deleteToiletError", error);
@@ -107,7 +101,7 @@ module.exports.deleteToilet = async (req, res) => {
   const client = await pool.connect();
   try {
     if (!isNaN(id)) {
-      await ToiletModele.updateToilet(id, isPaid, isReducedMobility, client);
+      await ToiletModele.updateToilet(client, id, isPaid, isReducedMobility);
       res.sendStatus(204);
     } else {
       res.sendStatus(401);

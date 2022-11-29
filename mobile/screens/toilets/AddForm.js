@@ -27,17 +27,22 @@ const AddToilet = ({ navigation, route }) => {
       newCoordinate.longitude,
       isPaid,
       isReducedMobility
-    ).then((id) => {
-      dispatch(
-        addMapMarker(
-          id,
-          newCoordinate.latitude,
-          newCoordinate.longitude,
-          isPaid,
-          isReducedMobility
-        )
-      );
-    });
+    )
+      .then(({ status, data }) => {
+        console.log(data);
+        dispatch(
+          addMapMarker(
+            data,
+            newCoordinate.latitude,
+            newCoordinate.longitude,
+            isPaid,
+            isReducedMobility
+          )
+        );
+      })
+      .catch((error) => {
+        console.error("addToiletFetchError", error);
+      });
 
     navigation.navigate("Maps");
   };

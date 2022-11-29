@@ -4,7 +4,7 @@ module.exports.getLocations = async (client) => {
   );
 };
 
-module.exports.postLocation = async (latitude, longitude, toiletId, client) => {
+module.exports.postLocation = async (client, latitude, longitude, toiletId) => {
   return await client.query(
     `INSERT INTO location_toilet(latitude, longitude, toilet_id)
        VALUES($1, $2, $3) RETURNING id`,

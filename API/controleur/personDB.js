@@ -1,5 +1,6 @@
 const pool = require("../modele/database");
 const PersonModele = require("../modele/personDB");
+const jwt = require("jsonwebtoken");
 
 module.exports.getAllPersons = async (req, res) => {
   const client = await pool.connect();
@@ -24,7 +25,7 @@ module.exports.getPerson = async (req, res) => {
   const pseudo = req.params.pseudo;
 
   try {
-    const { rows: persons } = await PersonModele.getPerson(pseudo, client);
+    const { rows: persons } = await PersonModele.getPerson(client, pseudo);
     const person = persons[0];
     if (person !== undefined) {
       res.json(person);
@@ -43,16 +44,16 @@ module.exports.postPerson = async (req, res) => {
   const { pseudo, lastName, firstName, email, password } = req.body;
   const client = await pool.connect();
   try {
-    const pseudoExist = await PersonModele.pseudoExist(pseudo, client);
-    const emailExist = await PersonModele.emailExist(email, client);
+    const pseudoExist = await PersonModele.pseudoExist(client, pseudo);
+    const emailExist = await PersonModele.emailExist(client, email);
     if (!pseudoExist && !emailExist) {
       await PersonModele.postPerson(
+        client,
         pseudo,
         lastName,
         firstName,
         email,
-        password,
-        client
+        password
       );
       res.sendStatus(201);
     } else {
@@ -68,20 +69,18 @@ module.exports.postPerson = async (req, res) => {
 };
 
 module.exports.updatePerson = async (req, res) => {
-  const { id, pseudo, last_name, first_name, email, is_admin, password } =
-    req.body;
+  const { id, pseudo, lastName, firstName, email, password } = req.body;
   const client = await pool.connect();
   try {
     if (!isNaN(id)) {
       await PersonModele.updatePerson(
+        client,
         id,
         pseudo,
-        last_name,
-        first_name,
+        lastName,
+        firstName,
         email,
-        is_admin,
-        password,
-        client
+        password
       );
       res.sendStatus(204);
     } else {
@@ -100,12 +99,46 @@ module.exports.deletePerson = async (req, res) => {
   const client = await pool.connect();
 
   try {
-    await PersonModele.deletePerson(id, client);
+    await PersonModele.deletePerson(client, id);
     res.sendStatus(204);
   } catch (error) {
     console.error("deletePersonError", error);
     res.sendStatus(500);
   } finally {
     client.release();
+  }
+};
+
+module.exports.login = async (req, res) => {
+  const { pseudo, password } = req.body;
+  if (pseudo === undefined || password === undefined) {
+    res.sendStatus(400);
+  } else {
+    const client = await pool.connect();
+    try {
+      const { userType, value } = await PersonModele.getUser(
+        client,
+        pseudo,
+        password
+      );
+      if (userType === "unknow") {
+        res.sendStatus(404);
+      } else {
+        const { id, pseudo } = value;
+        const payload = {
+          status: userType,
+          value: { id, pseudo },
+        };
+        const token = jwt.sign(payload, process.env.SECRET_TOKEN, {
+          expiresIn: "1d",
+        });
+        res.status(200).json(token);
+      }
+    } catch (e) {
+      console.error("personControllerLoginError", e);
+      res.sendStatus(500);
+    } finally {
+      client.release();
+    }
   }
 };

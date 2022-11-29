@@ -17,15 +17,26 @@ const DeleteForm = ({ navigation, route }) => {
   const handlePressDelete = () => {
     deleteReviewFetch(id)
       .then((status) => {
+        console.log(status);
         if (status === 204) {
-          Alert.alert("Delete success");
-          dispatch(deleteReview(id));
-        } else {
-          Alert.alert("Error", "Error while delete the review");
+          Alert.alert("Success", "Delete with success!");
         }
       })
-      .catch((error) => console.log("deleteReviewFetchError", error));
-    navigation.goBack();
+      .catch((error) => {
+        console.log(error);
+        switch (error.response.status) {
+          case 400:
+            Alert.alert("Login needed");
+            navigation.navigate("Login");
+            break;
+          case 403:
+            Alert.alert(
+              "Error",
+              "You do not have the necessary rights to delete this review"
+            );
+            break;
+        }
+      });
   };
 
   return (

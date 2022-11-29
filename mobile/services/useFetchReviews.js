@@ -18,39 +18,30 @@ export default function useFetchReviews() {
   };
 
   const addReviewFetch = async (note, comment, toiletId, userId = 1) => {
-    try {
-      const response = await axios({
-        method: "post",
-        url: `${BASE_URL_API}/review`,
-        data: {
-          note,
-          comment,
-          toiletId,
-          userId,
-        },
-      });
-      switch (response.status) {
-        case 200:
-          Alert.alert("Success", "The review was created !");
-      }
-    } catch (error) {
-      console.error("addReviewError", error);
-    }
+    const response = await axios({
+      method: "post",
+      url: `${BASE_URL_API}/review`,
+      data: {
+        note,
+        comment,
+        toiletId,
+        userId,
+      },
+    });
+    return { status: response.status, data: response.data };
   };
 
   const deleteReviewFetch = async (id) => {
-    AsyncStorage.getItem("token").then((token) => {
-      axios({
-        method: "delete",
-        url: `${BASE_URL_API}/review`,
-        data: {
-          id,
-        },
-        headers: { authorization: `Bearer ${token}` },
-      }).then((response) => {
-        return response.status;
-      });
+    const token = AsyncStorage.getItem("token");
+    const response = await axios({
+      method: "delete",
+      url: `${BASE_URL_API}/review`,
+      data: {
+        id,
+      },
+      headers: { authorization: `Bearer ${token}` },
     });
+    return response.status;
   };
 
   return {

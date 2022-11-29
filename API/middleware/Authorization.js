@@ -1,5 +1,4 @@
 const ReviewModele = require("../modele/reviewDB");
-const PersonModel = require("../modele/personDB");
 const pool = require("../modele/database");
 
 const jwt = require("jsonwebtoken");
@@ -13,7 +12,7 @@ module.exports.mustBeAdmin = (req, res, next) => {
   }
 };
 
-module.exports.mustBeAdminOrOwner = async (req, res, next) => {
+module.exports.mustBeAdminOrOwnerReview = async (req, res, next) => {
   if (req.session !== undefined && req.session.authLevel === "admin") {
     next();
   } else {
@@ -22,21 +21,21 @@ module.exports.mustBeAdminOrOwner = async (req, res, next) => {
       const jwtToken = headerAuth.split(" ")[1];
       const decodedJwtToken = jwt.verify(jwtToken, process.env.SECRET_TOKEN);
       const userId = decodedJwtToken.value.id;
+      const reviewId = req.body.id;
 
       if (req.session.authLevel === "user") {
         const client = await pool.connect();
 
         try {
-          const { rows } = await ReviewModele.getReview(req.body.id, client);
-          const review = rows[0];
-          if (review !== undefined) {
-            if (userId === review.user_id) {
-              next();
-            } else {
-              res.sendStatus(403);
-            }
+          const isCreatedByUser = await ReviewModele.isReviewCreatedByUser(
+            client,
+            reviewId,
+            userId
+          );
+          if (isCreatedByUser) {
+            next();
           } else {
-            res.sendStatus(404);
+            res.sendStatus(403);
           }
         } catch (error) {
           console.error("adminOwnerError", error);

@@ -8,8 +8,8 @@ module.exports.getReviews = async (req, res) => {
   try {
     if (!isNaN(toiletId)) {
       const { rows: reviewRows } = await ReviewModele.getReviews(
-        toiletId,
-        client
+        client,
+        toiletId
       );
       const reviews = reviewRows;
       if (reviews !== undefined) {
@@ -37,9 +37,10 @@ module.exports.getReviews = async (req, res) => {
 
 module.exports.getReview = async (req, res) => {
   const client = await pool.connect();
-  console.log(req.params.id);
+  const idText = req.params.id;
+  const id = parseInt(idText);
   try {
-    const { rows } = await ReviewModele.getReview(req.params.id, client);
+    const { rows } = await ReviewModele.getReview(client, id);
     const review = rows[0];
     if (review !== undefined) {
       res.sendStatus(200).json(review);
@@ -56,13 +57,13 @@ module.exports.postReview = async (req, res) => {
   const client = await pool.connect();
   try {
     const { rows: reviews } = await ReviewModele.postReview(
+      client,
       note,
       comment,
       toiletId,
-      userId,
-      client
+      userId
     );
-    res.sendStatus(201).send(reviews[0].id);
+    res.status(201).json(reviews[0].id);
   } catch (error) {
     console.error("PostReviewError", error);
     res.sendStatus(500);
@@ -75,7 +76,7 @@ module.exports.deleteReview = async (req, res) => {
   const { id } = req.body;
   const client = await pool.connect();
   try {
-    await ReviewModele.deleteReview(id, client);
+    await ReviewModele.deleteReview(client, id);
     res.sendStatus(204);
   } catch (error) {
     console.error("deleteReviewError", error);
@@ -89,7 +90,7 @@ module.exports.updateReview = async (req, res) => {
   const { id, note, comment } = req.body;
   const client = await pool.connect();
   try {
-    await ReviewModele.updateReview(id, note, comment, client);
+    await ReviewModele.updateReview(client, id, note, comment);
     res.sendStatus(204);
   } catch (error) {
     console.error("updateReviewError", error);
