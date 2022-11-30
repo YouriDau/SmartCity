@@ -5,20 +5,25 @@ class ReportForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            inputReason: ""
+            inputReport: ""
         };
     }
 
     async handlePressAdd(event) {
         event.preventDefault();
-        try {
-            await addReportFetch(
-                this.state.inputReason
-            );
-            console.log("Ajout effectué");
-        } catch (error) {
+        addReportFetch(this.state.inputReport)
+        .then((status) => {
+            switch (status) {
+                case 201:
+                  console.log("Insert Réussi!");
+                  break;
+                default:
+                  console.log(`Error ${status}`);
+              }
+        }) 
+        .catch((error) => {
             console.error("AddReportFetchError", error);
-        }
+          });
     }
 
     handlePressUpdate(event) {
@@ -36,7 +41,7 @@ class ReportForm extends React.Component {
                         <br/>
                         <textarea 
                             onChange={(event) => {
-                                this.setState({ inputReason: event.target.value });
+                                this.setState({ inputReport: event.target.value });
                             }} 
                         />
                     </div>

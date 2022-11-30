@@ -11,14 +11,19 @@ class ReviewForm extends React.Component {
 
     async handlePressAdd(event) {
         event.preventDefault();
-        try {
-            await addReviewFetch(
-                this.state.inputReview
-            );
-            console.log("Ajout effectué");
-        } catch (error) {
+        addReviewFetch(this.state.inputReview)
+        .then((status) => {
+            switch (status) {
+                case 201:
+                  console.log("Insert Réussi!");
+                  break;
+                default:
+                  console.log(`Error ${status}`);
+              }
+        }) 
+        .catch((error) => {
             console.error("AddReviewFetchError", error);
-        }
+          });
     }
 
     handlePressUpdate(event) {

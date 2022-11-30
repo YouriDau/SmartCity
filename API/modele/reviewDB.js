@@ -8,7 +8,7 @@ module.exports.getReview = async (client, id) => {
   return await client.query("SELECT * FROM review WHERE id=$1 LIMIT 1", [id]);
 };
 
-module.exports.postReview = async (client, note, comment, toiletId, userId) => {
+module.exports.postReview = async (client, note, comment, userId, toiletId) => {
   return await client.query(
     "INSERT INTO review(note, comment, user_id, toilet_id) VALUES ($1,$2,$3,$4) RETURNING id",
     [note, comment, userId, toiletId]

@@ -36,9 +36,11 @@ CREATE TABLE report
     id serial primary key,
     reason varchar(250) not null,
     "date" timestamp without time zone not null DEFAULT CURRENT_TIMESTAMP, 
-    is_done boolean not null,
+    is_done boolean not null DEFAULT FALSE,
     user_id int not null, 
-    foreign KEY(user_id) references person(id)
+    toilet_id int not null,
+    foreign KEY(user_id) references person(id),
+    foreign KEY(toilet_id) references toilet(id)
     );
 
 DROP TABLE IF EXISTS review CASCADE;
@@ -81,14 +83,14 @@ VALUES
     (50.46535, 4.85975, 4);
 
 -- REPORT
-INSERT INTO report (reason, "date", is_done, user_id) 
-VALUES
-    ('reason 1 short', TO_DATE('2021/11/15', 'YYYY/MM/DD'), TRUE, 1),
-    ('reason 2 more longer than the first', TO_DATE('2022/09/10', 'YYYY/MM/DD'), FALSE, 1),
-    ('reason 3, more more longer than the second one', CURRENT_DATE, FALSE, 2);
-INSERT INTO report (reason, is_done, user_id)
-VALUES 
-    ('reason', FALSE, 2);
+-- INSERT INTO report (reason, "date", is_done, user_id) 
+-- VALUES
+--     ('reason 1 short', TO_DATE('2021/11/15', 'YYYY/MM/DD'), TRUE, 1),
+--     ('reason 2 more longer than the first', TO_DATE('2022/09/10', 'YYYY/MM/DD'), FALSE, 1),
+--     ('reason 3, more more longer than the second one', CURRENT_DATE, FALSE, 2);
+-- INSERT INTO report (reason, is_done, user_id)
+-- VALUES 
+--     ('reason', FALSE, 2);
 
 -- REVIEW
 INSERT INTO review (note, comment, user_id, toilet_id)

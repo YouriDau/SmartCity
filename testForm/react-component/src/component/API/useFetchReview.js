@@ -4,12 +4,12 @@ import { BASE_URL_API } from "../../config";
 const addReviewFetch = async (comment) => {
     await axios({
         method: "post",
-        url: `${BASE_URL_API}/report`,
+        url: `${BASE_URL_API}/review`,
         data: {
-            note: 4,
+            note: 1,
             comment,
-            toilet_id: 1,
-            user_id: 1
+            toiletId: 1,
+            userId: 1
         }
     }).then((response) => {
         switch (response.status) {
@@ -19,6 +19,8 @@ const addReviewFetch = async (comment) => {
           default:
             console.log("Add user default switch");
         }
+    }).catch((error) => {
+        console.log(error.response.status);
     });
 }
 

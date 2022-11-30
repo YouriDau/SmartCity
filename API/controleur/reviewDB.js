@@ -53,15 +53,15 @@ module.exports.getReview = async (req, res) => {
 };
 
 module.exports.postReview = async (req, res) => {
-  const { note, comment, toiletId, userId } = req.body;
+  const { note, comment, userId, toiletId } = req.body;
   const client = await pool.connect();
   try {
     const { rows: reviews } = await ReviewModele.postReview(
       client,
       note,
       comment,
-      toiletId,
-      userId
+      userId,
+      toiletId
     );
     res.status(201).json(reviews[0].id);
   } catch (error) {
