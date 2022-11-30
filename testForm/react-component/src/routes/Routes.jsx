@@ -3,6 +3,7 @@ import AddToilet from "../screen/toilet/AddToilet";
 import AddUser from "../screen/account/AddUser";
 import AddReport from "../screen/report/AddReport";
 import AddReview from "../screen/review/AddReview";
+import ListUsers from "../screen/account/ListUsers";
 
 export default function Router() {
   return (
@@ -11,6 +12,7 @@ export default function Router() {
         <Route path={"/addToilet"} element={<AddToilet />} />
         <Route path={"/addReport"} element={<AddReport />} />
         <Route path={"/addReview"} element={<AddReview />} />
+        <Route path={"/listUsers"} element={<ListUsers />} />
         <Route path={"/"} element={<AddUser />} />
       </Routes>
     </BrowserRouter>

@@ -1,6 +1,15 @@
 import axios from "axios";
 import { BASE_URL_API } from "../../config";
 
+const getAllPersonsFetch = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL_API}/person`);
+    return response.data;
+  } catch (error) {
+    console.error("getAllPersonsFetchError", error)
+  }
+}
+
 const getPersonById = async (id) => {
   try {
     const response = await axios.get(BASE_URL_API, {
@@ -30,4 +39,4 @@ const addPersonFetch = async (pseudo, lastName, firstName, email, password) => {
   });
 };
 
-export { getPersonById, addPersonFetch };
+export { getAllPersonsFetch, getPersonById, addPersonFetch };

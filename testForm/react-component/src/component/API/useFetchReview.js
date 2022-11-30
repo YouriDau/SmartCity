@@ -17,7 +17,7 @@ const addReviewFetch = async (comment) => {
             console.log("Insert Réussi!");
             break;
           default:
-            console.log("Add user default switch");
+            console.log("Add review default switch");
         }
     }).catch((error) => {
         console.log(error.response.status);

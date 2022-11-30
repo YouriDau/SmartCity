@@ -1,5 +1,7 @@
 import React from "react";
+import List from "../../component/List";
 import Header from "../../component/Header";
+//import { getAllPersonsFetch } from "../component/API/useFetchPerson";
 
 class ListUsers extends React.Component {
   constructor() {
@@ -11,8 +13,9 @@ class ListUsers extends React.Component {
     return (
       <div>
         <Header />
-        <h1>List of users</h1>
-        <button>Back</button>
+        <List 
+          title={"List of users"}
+        />
       </div>
     );
   }
