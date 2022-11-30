@@ -4,8 +4,7 @@ import { store } from "./redux/store";
 import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import MenuConnected from "./components/MenuConnected";
-import MenuDisconnected from "./components/MenuDisconnected";
+import DrawerMenu from "./components/DrawerMenu";
 
 import AddReview from "./screens/reviews/AddForm";
 import ListReviews from "./screens/reviews/List";
@@ -15,40 +14,31 @@ import DeleteReview from "./screens/reviews/DeleteForm";
 import AddReport from "./screens/reports/AddForm";
 
 import AddToilet from "./screens/toilets/AddForm";
+
+import AddPerson from "./screens/account/RegistrationForm";
+
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
-  const [initialRouteName, setInitialRouteName] = useState();
-
-  useEffect(() => {
-    AsyncStorage.getItem("token").then((response) => {
-      if (response !== undefined) {
-        setInitialRouteName("MenuDisconnected");
-      } else {
-        setInitialRouteName("MenuConnected");
-      }
-    });
-  }, []);
-
   return (
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName={initialRouteName}
+          initialRouteName={"DrawerMenu"}
           screenOptions={{ headerShown: false }}
         >
           <Stack.Screen
-            key="MenuDisconnected"
-            name="MenuDisconnected"
-            component={MenuDisconnected}
+            key="DrawerMenu"
+            name="DrawerMenu"
+            component={DrawerMenu}
           />
           <Stack.Screen
-            key="MenuConnected"
-            name="MenuConnected"
-            component={MenuConnected}
+            key="AddPerson"
+            name="AddPerson"
+            component={AddPerson}
           />
           <Stack.Screen
             key="AddReview"
