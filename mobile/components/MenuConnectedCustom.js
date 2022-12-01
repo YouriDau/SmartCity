@@ -4,6 +4,8 @@ import {
   DrawerItemList,
 } from "@react-navigation/drawer";
 
+import { Octicons } from "@expo/vector-icons";
+
 import Maps from "../screens/Maps";
 
 import UpdateAccount from "../screens/account/UpdateForm";
@@ -24,11 +26,14 @@ const MenuConnectedCustom = (props) => {
 
   return (
     <View style={styles.container}>
-      <DrawerItem
-        style={styles.logout}
-        label="Logout"
-        onPress={handlePressLogout}
-      />
+      <View>
+        <DrawerItem
+          icon={() => <Octicons name="sign-out" size={30} color="black" />}
+          style={styles.logout}
+          label="Logout"
+          onPress={handlePressLogout}
+        />
+      </View>
       <DrawerContentScrollView style={{ flex: 1 }} {...props}>
         <DrawerItemList {...props} />
       </DrawerContentScrollView>

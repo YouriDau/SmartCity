@@ -22,15 +22,14 @@ const MenuConnected = () => {
     >
       <Drawer.Screen key="Maps" name="Maps" component={Maps} />
 
-      <Drawer.Screen key="AddPerson" name="AddPerson" component={AddPerson} />
       <Drawer.Screen
         key="UpdatePerson"
-        name="UpdatePerson"
+        name="Update account"
         component={UpdatePerson}
       />
       <Drawer.Screen
         key="DeletePerson"
-        name="DeletePerson"
+        name="Delete account"
         component={DeletePerson}
       />
     </Drawer.Navigator>

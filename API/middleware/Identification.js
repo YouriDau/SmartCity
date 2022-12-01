@@ -8,6 +8,7 @@ module.exports.identification = async (req, res, next) => {
     const jwtToken = headerAuth.split(" ")[1]; // Permet de récupérer le token [0] = "Bearer", [1] = le token
     try {
       const decodedJwtToken = jwt.verify(jwtToken, process.env.SECRET_TOKEN); // Vérifier si le token n'a pas changé
+      console.log(decodedJwtToken);
       req.session = decodedJwtToken.value;
       req.session.authLevel = decodedJwtToken.status;
       next();

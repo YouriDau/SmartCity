@@ -5,10 +5,13 @@ module.exports.getAllPersons = async (client) => {
 };
 
 module.exports.getPersonById = async (client, id) => {
-  return await client.query("SELECT * FROM person WHERE id=$1", [id]);
+  return await client.query(
+    "SELECT id, pseudo, last_name, first_name, email FROM person WHERE id=$1 LIMIT 1",
+    [id]
+  );
 };
 
-module.exports.getPerson = async (client, pseudo) => {
+module.exports.getPersonByPseudo = async (client, pseudo) => {
   return await client.query("SELECT * FROM person WHERE pseudo=$1 LIMIT 1", [
     pseudo,
   ]);
@@ -66,9 +69,9 @@ module.exports.emailExist = async (client, email) => {
   return rows[0].nbr > 0;
 };
 
-module.exports.getUser = async (client, pseudo, password) => {
+module.exports.getUserType = async (client, pseudo, password) => {
   try {
-    const { rows: personRows } = await this.getPerson(client, pseudo);
+    const { rows: personRows } = await this.getPersonByPseudo(client, pseudo);
     const person = personRows[0];
     if (
       person !== undefined &&

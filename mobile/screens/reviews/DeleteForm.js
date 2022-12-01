@@ -4,6 +4,7 @@ import Button from "../../components/Button";
 import { useDispatch } from "react-redux";
 import { deleteReview } from "../../redux/actions/review";
 import useFetchReviews from "../../services/useFetchReviews";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const DeleteForm = ({ navigation, route }) => {
   const id = route.params.id;
@@ -20,6 +21,8 @@ const DeleteForm = ({ navigation, route }) => {
         console.log(status);
         if (status === 204) {
           Alert.alert("Success", "Delete with success!");
+          dispatch(deleteReview(id));
+          navigation.goBack();
         }
       })
       .catch((error) => {
@@ -47,7 +50,6 @@ const DeleteForm = ({ navigation, route }) => {
           Are you sure you want to delete this review?
         </Text>
       </View>
-
       <View style={styles.buttons}>
         <Button
           text={"Cancel"}

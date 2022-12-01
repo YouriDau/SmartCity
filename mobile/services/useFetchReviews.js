@@ -27,19 +27,19 @@ export default function useFetchReviews() {
         toiletId,
         userId,
       },
+      headers: await authHeader(),
     });
     return { status: response.status, data: response.data };
   };
 
   const deleteReviewFetch = async (id) => {
-    const token = AsyncStorage.getItem("token");
     const response = await axios({
       method: "delete",
       url: `${BASE_URL_API}/review`,
       data: {
         id,
       },
-      headers: { authorization: `Bearer ${token}` },
+      headers: await authHeader(),
     });
     return response.status;
   };

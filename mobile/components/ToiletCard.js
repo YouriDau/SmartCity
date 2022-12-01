@@ -1,4 +1,5 @@
-import { View, StyleSheet, Text, Pressable } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { View, StyleSheet, Text, Pressable, Alert } from "react-native";
 import { Card } from "react-native-paper";
 import Icon from "react-native-vector-icons/Ionicons";
 
@@ -10,7 +11,14 @@ const ToiletCard = ({ isPaid, isReducedMobility, toiletId, navigation }) => {
   };
 
   const handlePressAddReview = () => {
-    navigation.navigate("AddReview", { toiletId });
+    AsyncStorage.getItem("token").then((token) => {
+      console.log(token);
+      if (token) {
+        navigation.navigate("AddReview", { toiletId });
+      } else {
+        Alert.alert("You are not connected", "Please, connect to add toilet");
+      }
+    });
   };
 
   return (

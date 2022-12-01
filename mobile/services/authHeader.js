@@ -1,11 +1,10 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function authHeader() {
-  AsyncStorage.getItem("token").then((item) => {
-    if (item !== undefined) {
-      return { authorization: `Bearer ${item}` };
-    } else {
-      return {};
-    }
-  });
+export default async function authHeader() {
+  const token = await AsyncStorage.getItem("token");
+  if (token) {
+    return { authorization: `Bearer ${token}` };
+  } else {
+    return {};
+  }
 }

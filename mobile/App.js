@@ -24,11 +24,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const Stack = createNativeStackNavigator();
 
 const App = () => {
-  const [isConnected, setIsConnected] = useState(false);
+  const [isConnected, setIsConnected] = useState();
 
   useEffect(() => {
     AsyncStorage.getItem("token").then((token) => {
-      setIsConnected(token !== undefined);
+      setIsConnected(token !== undefined && token !== null);
     });
   }, []);
 

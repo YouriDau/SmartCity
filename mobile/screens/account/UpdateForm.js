@@ -1,7 +1,9 @@
-import { View, Text, TextInput, StyleSheet } from "react-native";
-import { useState } from "react";
+import { View, Text, TextInput, StyleSheet, Alert } from "react-native";
+import { useEffect, useState } from "react";
 import Button from "../../components/Button";
 import Title from "../../components/Title";
+import useFetchPerson from "../../services/useFetchPerson";
+import { ScrollView } from "react-native-gesture-handler";
 
 const UpdateForm = ({ navigation }) => {
   const [pseudo, setPseudo] = useState("");
@@ -9,6 +11,17 @@ const UpdateForm = ({ navigation }) => {
   const [firstName, setFirstName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+
+  const { getCurrentUserFetch } = useFetchPerson();
+
+  useEffect(() => {
+    getCurrentUserFetch().then(({ status, user }) => {
+      setPseudo(user.pseudo);
+      setLastName(user.lastName);
+      setFirstName(user.firstName);
+      setEmail(user.email);
+    });
+  });
 
   const handlePressUpdate = () => {
     let alert = "Please enter your ";
@@ -53,19 +66,32 @@ const UpdateForm = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Title text={"Modify account"} />
-      <View style={styles.form}>
+      <ScrollView style={styles.form}>
         <Text style={styles.inputText}>Pseudo</Text>
-        <TextInput style={styles.input} onChangeText={setPseudo} />
+        <TextInput
+          style={styles.input}
+          value={pseudo}
+          onChangeText={setPseudo}
+        />
 
         <Text style={styles.inputText}>Last name</Text>
-        <TextInput style={styles.input} onChangeText={setLastName} />
+        <TextInput
+          style={styles.input}
+          value={lastName}
+          onChangeText={setLastName}
+        />
 
         <Text style={styles.inputText}>First name</Text>
-        <TextInput style={styles.input} onChangeText={setFirstName} />
+        <TextInput
+          style={styles.input}
+          value={firstName}
+          onChangeText={setFirstName}
+        />
 
         <Text style={styles.inputText}>Password</Text>
         <TextInput
           style={styles.input}
+          placeholder="****"
           secureTextEntry
           onChangeText={setPassword}
         />
@@ -74,9 +100,10 @@ const UpdateForm = ({ navigation }) => {
         <TextInput
           style={styles.input}
           textContentType={"emailAddress"}
+          value={email}
           onChangeText={setEmail}
         />
-      </View>
+      </ScrollView>
       <View style={styles.buttons}>
         <Button
           text={"cancel"}
@@ -111,6 +138,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 4,
     borderColor: "lightgrey",
+    backgroundColor: "white",
   },
   buttons: {
     flexDirection: "row",

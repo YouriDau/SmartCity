@@ -10,6 +10,7 @@ import Button from "../components/Button";
 import { setToilets } from "../redux/actions/maps";
 import useFetchToilets from "../services/useFetchToilets";
 import ToiletCard from "../components/ToiletCard";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Maps = ({ navigation }) => {
   const [canAddToilet, setCanAddToilet] = useState(false);
@@ -40,8 +41,15 @@ const Maps = ({ navigation }) => {
   };
 
   const handlePressAddToiletFirst = () => {
-    Alert.alert("click on the map to add new marker");
-    setCanAddToilet(true);
+    setCardIsVisible(false);
+    AsyncStorage.getItem("token").then((token) => {
+      if (token) {
+        Alert.alert("click on the map to add new marker");
+        setCanAddToilet(true);
+      } else {
+        Alert.alert("You are not connected", "Please, connect to add toilet");
+      }
+    });
   };
 
   const handlePressAddToiletSecond = () => {

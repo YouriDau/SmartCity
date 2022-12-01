@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { addUser } from "../../redux/actions/account";
 import { ScrollView } from "react-native-gesture-handler";
 import useFetchPerson from "../../services/useFetchPerson";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const PLACEHOLDERS = {
   pseudo: "Your pseudo here",
@@ -48,7 +49,7 @@ const RegistrationForm = ({ navigation }) => {
               Alert.alert(alert);
             } else {
               addPersonFetch(pseudo, lastName, firstName, email, password)
-                .then(() => {
+                .then((status) => {
                   dispatch(
                     addUser(
                       { pseudo },
@@ -58,32 +59,30 @@ const RegistrationForm = ({ navigation }) => {
                       { password }
                     )
                   );
-                  switch (response.status) {
+                  console.log(status);
+                  switch (status) {
                     case 201:
                       Alert.alert(
                         "Success",
                         "Congratulation, your account was successfully created!"
                       );
+
                       break;
                     default:
                       console.log("Add user default switch");
                   }
                 })
-                .catch((error) => {
-                  console.error("addPersonError", error);
-                  switch (error.response.status) {
-                    case 409:
-                      Alert.alert("Retry", "This pseudo is already used!");
-                      break;
-                    case 500:
-                      Alert.alert(
-                        "Error",
-                        "There was an error during the creation, retry!"
-                      );
-                      break;
-                    default:
-                      console.log("Add user error default switch");
-                  }
+                .then(() => {
+                  loginFetch(pseudo, password)
+                    .then((result) => {
+                      if (result.status === 200) {
+                        AsyncStorage.setItem("token", result.data);
+                        navigation.navigate("MenuConnected");
+                      } else {
+                        Alert.alert("Pseudo or password incorect!");
+                      }
+                    })
+                    .catch((error) => console.error("loginFetchError", error));
                 });
 
               setPseudo("");
@@ -178,6 +177,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 4,
     borderColor: "lightgrey",
+    backgroundColor: "white",
   },
   buttons: {
     flexDirection: "row",

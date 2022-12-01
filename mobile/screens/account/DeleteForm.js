@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 4,
     borderColor: "lightgrey",
+    backgroundColor: "white",
   },
   checkBoxContainer: {
     flex: 1,

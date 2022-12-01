@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TextInput } from "react-native";
+import { View, Text, StyleSheet, TextInput, Alert } from "react-native";
 import Title from "./Title";
 import Slider from "@react-native-community/slider";
 import { useState } from "react";
@@ -6,6 +6,7 @@ import Button from "./Button";
 import { useDispatch } from "react-redux";
 import { addReview } from "../redux/actions/review";
 import useFetchReviews from "../services/useFetchReviews";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const PLACEHOLDER = "Enter your review here";
 const NOTE_MIN = 1;
@@ -25,9 +26,8 @@ const ReviewForm = ({ navigation, isUpdate, toiletId, id }) => {
 
   const handlePressAdd = () => {
     addReviewFetch(note, comment, toiletId).then(({ status, data }) => {
-      dispatch(addReview(data.id, note, comment, toiletId));
+      dispatch(addReview(data, note, comment, toiletId));
     });
-    navigation.goBack();
   };
 
   const handlePressUpdate = () => {};
@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     textAlignVertical: "top",
     padding: 15,
+    backgroundColor: "white",
   },
   buttons: {
     width: "100%",

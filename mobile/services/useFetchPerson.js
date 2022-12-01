@@ -1,26 +1,46 @@
 import axios from "axios";
 import { Alert } from "react-native";
 import { BASE_URL_API } from "../config";
+import authHeader from "./authHeader";
 
 export default function useFetchPerson() {
   const addPersonFetch = async (
     pseudo,
     lastName,
-    firstname,
+    firstName,
     email,
     password
   ) => {
-    await axios({
-      method: "post",
-      url: `${BASE_URL_API}/person`,
-      data: {
-        pseudo,
-        lastName: lastName,
-        first_name: firstname,
-        email,
-        password,
-      },
-    });
+    try {
+      const response = await axios({
+        method: "post",
+        url: `${BASE_URL_API}/person`,
+        data: {
+          pseudo,
+          lastName,
+          firstName,
+          email,
+          password,
+        },
+      });
+      console.log(response.status);
+      return response.status;
+    } catch (error) {
+      console.error("addPersonError", error);
+      switch (error.response.status) {
+        case 409:
+          Alert.alert("Retry", "This pseudo is already used!");
+          break;
+        case 500:
+          Alert.alert(
+            "Error",
+            "There was an error during the creation, retry!"
+          );
+          break;
+        default:
+          console.log("Add user error default switch");
+      }
+    }
   };
 
   const loginFetch = async (pseudo, password) => {
@@ -45,7 +65,12 @@ export default function useFetchPerson() {
 
   const getCurrentUserFetch = async () => {
     try {
-      return JSON.parse(localStorage.getItem("user"));
+      const response = await axios({
+        method: "get",
+        url: `${BASE_URL_API}/person/current`,
+        headers: await authHeader(),
+      });
+      return { status: response.status, user: response.data };
     } catch (error) {
       console.error("getCurrentUserError", error);
     }

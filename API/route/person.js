@@ -3,7 +3,8 @@ const PersonControleur = require("../controleur/personDB");
 const Router = require("express-promise-router");
 const router = new Router();
 
-router.get("/:id", PersonControleur.getPerson);
+router.get("/current", PersonControleur.getCurrentUser);
+router.get("/:pseudo", PersonControleur.getPersonByPseudo);
 router.get("/", PersonControleur.getAllPersons); // Pour le test
 router.post("/login", PersonControleur.login);
 router.post("/", PersonControleur.postPerson);

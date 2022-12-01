@@ -4,7 +4,7 @@ import {
   DrawerItemList,
 } from "@react-navigation/drawer";
 
-import Maps from "../screens/Maps";
+import { Octicons } from "@expo/vector-icons";
 
 import { Alert, Pressable, View, Text, StyleSheet } from "react-native";
 import Constants from "expo-constants";
@@ -22,13 +22,17 @@ const MenuDisconnectedCustom = (props) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.account}>
-        <Pressable style={styles.accountButton} onPress={handlePressLogin}>
-          <Text style={styles.accountButtonText}>Login</Text>
-        </Pressable>
-        <Pressable style={styles.accountButton} onPress={handlePressRegister}>
-          <Text style={styles.accountButtonText}>Register</Text>
-        </Pressable>
+      <View>
+        <DrawerItem
+          icon={() => <Octicons name="sign-in" size={30} color="black" />}
+          label="Sign-in"
+          onPress={handlePressLogin}
+        />
+        <DrawerItem
+          icon={() => <Octicons name="pencil" size={30} color="black" />}
+          label="Sign-up"
+          onPress={handlePressRegister}
+        />
       </View>
       <DrawerContentScrollView style={{ flex: 1 }} {...props}>
         <DrawerItemList {...props} />
@@ -41,11 +45,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: Constants.statusBarHeight,
-  },
-  account: {
-    paddingTop: 30,
-    justifyContent: "space-around",
-    flexDirection: "row",
   },
   accountButton: {
     alignItems: "center",

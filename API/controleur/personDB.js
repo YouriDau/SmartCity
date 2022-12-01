@@ -29,12 +29,15 @@ module.exports.getAllPersons = async (req, res) => {
   }
 };
 
-module.exports.getPerson = async (req, res) => {
+module.exports.getPersonByPseudo = async (req, res) => {
   const client = await pool.connect();
   const pseudo = req.params.pseudo;
 
   try {
-    const { rows: persons } = await PersonModele.getPerson(client, pseudo);
+    const { rows: persons } = await PersonModele.getPersonByPseudo(
+      client,
+      pseudo
+    );
     const person = persons[0];
     if (person !== undefined) {
       res.json(person);
@@ -56,7 +59,6 @@ module.exports.postPerson = async (req, res) => {
     const pseudoExist = await PersonModele.pseudoExist(client, pseudo);
     const emailExist = await PersonModele.emailExist(client, email);
     if (!pseudoExist && !emailExist) {
-      console.log(getHash(password));
       const passwordHashed = await getHash(password);
       await PersonModele.postPerson(
         client,
@@ -127,7 +129,7 @@ module.exports.login = async (req, res) => {
   } else {
     const client = await pool.connect();
     try {
-      const { userType, value } = await PersonModele.getUser(
+      const { userType, value } = await PersonModele.getUserType(
         client,
         pseudo,
         password
@@ -141,6 +143,7 @@ module.exports.login = async (req, res) => {
           value: { id, pseudo },
         };
         const token = jwt.sign(payload, process.env.SECRET_TOKEN, {
+          // 1 day because
           expiresIn: "1d",
         });
         res.status(200).json(token);
@@ -151,5 +154,40 @@ module.exports.login = async (req, res) => {
     } finally {
       client.release();
     }
+  }
+};
+
+module.exports.getCurrentUser = async (req, res) => {
+  const client = await pool.connect();
+  try {
+    const headerAuth = req.get("authorization");
+    if (headerAuth !== undefined && headerAuth.includes("Bearer")) {
+      const jwtToken = headerAuth.split(" ")[1];
+      const decodedJwtToken = jwt.verify(jwtToken, process.env.SECRET_TOKEN);
+      const userId = decodedJwtToken.value.id;
+      const { rows: persons } = await PersonModele.getPersonById(
+        client,
+        userId
+      );
+      const person = persons[0];
+      if (person !== undefined) {
+        person.lastName = person.last_name;
+        person.firstName = person.first_name;
+        delete person.last_name;
+        delete person.first_name;
+
+        console.log(200);
+        return res.json(person);
+      } else {
+        console.log(400);
+      }
+    } else {
+      res.sendStatus(403);
+    }
+  } catch (error) {
+    console.error("getCurrentUserError", error);
+    res.sendStatus(500);
+  } finally {
+    client.release();
   }
 };
