@@ -1,34 +1,21 @@
-import {
-  createDrawerNavigator,
-  DrawerContentScrollView,
-  DrawerItem,
-  DrawerItemList,
-} from "@react-navigation/drawer";
-import { useNavigation } from "@react-navigation/native";
-import { View } from "react-native";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import MenuDisconnectedCustom from "./MenuDisconnectedCustom";
 
 import Maps from "../screens/Maps";
-import AddPerson from "../screens/account/RegistrationForm";
 
-import Registration from "../screens/account/RegistrationForm";
-import Login from "../screens/account/LoginForm";
-import { Drawer } from "react-native-paper";
-
-const MenuDisconnected = (props) => {
-  const navigation = props.navigation;
+const MenuDisconnected = () => {
+  const Drawer = createDrawerNavigator();
 
   return (
-    <View>
-      <DrawerContentScrollView {...props}>
-        <DrawerItemList {...props} />
-      </DrawerContentScrollView>
-      <DrawerItem
-        label="Login"
-        onPress={() => {
-          Alert.alert("You are connected");
-        }}
-      />
-    </View>
+    <Drawer.Navigator
+      initialRouteName="Maps"
+      // Pour l'ordre du retour en arrière
+      backBehavior="history"
+      screenOptions={{ drawerType: "slide", swipeEdgeWidth: 80 }}
+      drawerContent={(props) => <MenuDisconnectedCustom {...props} />}
+    >
+      <Drawer.Screen key="Maps" name="Maps" component={Maps} />
+    </Drawer.Navigator>
   );
 };
 

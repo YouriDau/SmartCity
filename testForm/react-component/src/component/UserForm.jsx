@@ -23,19 +23,16 @@ class UserForm extends React.Component {
       this.state.inputFirstName,
       this.state.inputEmail,
       this.state.inputPassword
-    )
-      .then((status) => {
-        switch (status) {
-          case 201:
-            console.log("Insert Réussi!");
-            break;
-          default:
-            console.log(`Error ${status}`);
-        }
-      })
-      .catch((error) => {
-        console.error("AddPersonFetchError", error);
-      });
+    ).then((status) => {
+      console.log(status);
+      switch (status) {
+        case 201:
+          console.log("Insert Réussi!");
+          break;
+        default:
+          console.log(`Error ${status}`);
+      }
+    });
   }
 
   handlePressUpdate(event) {

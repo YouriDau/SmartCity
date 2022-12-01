@@ -17,7 +17,7 @@ const PLACEHOLDERS = {
 
 const RegistrationForm = ({ navigation }) => {
   const dispatch = useDispatch();
-  const { addPersonFetch } = useFetchPerson();
+  const { addPersonFetch, loginFetch } = useFetchPerson();
 
   const [pseudo, setPseudo] = useState("");
   const [lastName, setLastName] = useState("");
@@ -53,7 +53,7 @@ const RegistrationForm = ({ navigation }) => {
                     addUser(
                       { pseudo },
                       { lastName },
-                      { firstname },
+                      { firstName },
                       { email },
                       { password }
                     )

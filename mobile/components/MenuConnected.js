@@ -1,38 +1,39 @@
-import {
-  DrawerContentScrollView,
-  DrawerItem,
-  DrawerItemList,
-} from "@react-navigation/drawer";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import { useEffect, useState } from "react";
 
 import Maps from "../screens/Maps";
 
-import UpdateAccount from "../screens/account/UpdateForm";
-import DeleteAccount from "../screens/account/DeleteForm";
-import { Alert, Pressable, View, Text } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import AddPerson from "../screens/account/RegistrationForm";
+import UpdatePerson from "../screens/account/UpdateForm";
+import DeletePerson from "../screens/account/DeleteForm";
 
-const MenuConnected = (props) => {
-  const navigation = props.navigation;
+import CustomMenu from "../components/MenuConnectedCustom";
 
+const Drawer = createDrawerNavigator();
+
+const MenuConnected = () => {
   return (
-    <View>
-      <DrawerContentScrollView {...props}>
-        <DrawerItemList {...props} />
-        <DrawerItem
-          label="AddPerson"
-          onPress={() => {
-            navigation.navigate("AddPerson");
-          }}
-        />
-      </DrawerContentScrollView>
-      <DrawerItem
-        label="Logout"
-        onPress={() => {
-          Alert.alert("You are disconnected");
-          navigation.navigate("MenuDisconnected");
-        }}
+    <Drawer.Navigator
+      initialRouteName="Maps"
+      // Pour l'ordre du retour en arrière
+      backBehavior="history"
+      screenOptions={{ drawerType: "slide", swipeEdgeWidth: 80 }}
+      drawerContent={(props) => <CustomMenu {...props} />}
+    >
+      <Drawer.Screen key="Maps" name="Maps" component={Maps} />
+
+      <Drawer.Screen key="AddPerson" name="AddPerson" component={AddPerson} />
+      <Drawer.Screen
+        key="UpdatePerson"
+        name="UpdatePerson"
+        component={UpdatePerson}
       />
-    </View>
+      <Drawer.Screen
+        key="DeletePerson"
+        name="DeletePerson"
+        component={DeletePerson}
+      />
+    </Drawer.Navigator>
   );
 };
 

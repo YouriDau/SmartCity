@@ -1,4 +1,4 @@
-const bcrypt = require("bcrypt");
+const { compareHash } = require("../utils/utils");
 
 module.exports.getAllPersons = async (client) => {
   return await client.query("SELECT * FROM person");
@@ -50,7 +50,6 @@ module.exports.deletePerson = async (client, id) => {
   return await client.query("DELETE FROM person WHERE id = $1", [id]);
 };
 
-// Check if the pseudo is used
 module.exports.pseudoExist = async (client, pseudo) => {
   const { rows } = await client.query(
     `SELECT count(pseudo) AS nbr FROM person WHERE pseudo=$1`,
@@ -73,7 +72,7 @@ module.exports.getUser = async (client, pseudo, password) => {
     const person = personRows[0];
     if (
       person !== undefined &&
-      (await bcrypt.compare(password, person.password))
+      (await compareHash(password, person.password))
     ) {
       if (person.is_admin) {
         return { userType: "admin", value: person };

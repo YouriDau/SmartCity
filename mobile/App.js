@@ -2,9 +2,13 @@ import { Provider } from "react-redux";
 import { store } from "./redux/store";
 
 import { NavigationContainer } from "@react-navigation/native";
-import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import DrawerMenu from "./components/DrawerMenu";
+
+import MenuDisconnected from "./components/MenuDisconnected";
+import MenuConnected from "./components/MenuConnected";
+
+import Registration from "./screens/account/RegistrationForm";
+import Login from "./screens/account/LoginForm";
 
 import AddReview from "./screens/reviews/AddForm";
 import ListReviews from "./screens/reviews/List";
@@ -14,32 +18,44 @@ import DeleteReview from "./screens/reviews/DeleteForm";
 import AddReport from "./screens/reports/AddForm";
 
 import AddToilet from "./screens/toilets/AddForm";
-
-import AddPerson from "./screens/account/RegistrationForm";
-
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
+  const [isConnected, setIsConnected] = useState(false);
+
+  useEffect(() => {
+    AsyncStorage.getItem("token").then((token) => {
+      setIsConnected(token !== undefined);
+    });
+  }, []);
+
   return (
     <Provider store={store}>
+      {console.log(isConnected)}
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName={"DrawerMenu"}
+          initialRouteName={isConnected ? "MenuConnected" : "MenuDisconnected"}
           screenOptions={{ headerShown: false }}
         >
           <Stack.Screen
-            key="DrawerMenu"
-            name="DrawerMenu"
-            component={DrawerMenu}
+            key="MenuDisconnected"
+            name="MenuDisconnected"
+            component={MenuDisconnected}
           />
           <Stack.Screen
-            key="AddPerson"
-            name="AddPerson"
-            component={AddPerson}
+            key="MenuConnected"
+            name="MenuConnected"
+            component={MenuConnected}
           />
+          <Stack.Screen
+            key="Registration"
+            name="Registration"
+            component={Registration}
+          />
+          <Stack.Screen key="Login" name="Login" component={Login} />
           <Stack.Screen
             key="AddReview"
             name="AddReview"

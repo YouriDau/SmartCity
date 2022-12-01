@@ -1,6 +1,7 @@
 const pool = require("../modele/database");
 const PersonModele = require("../modele/personDB");
 const jwt = require("jsonwebtoken");
+const { getHash } = require("../utils/utils");
 
 module.exports.getAllPersons = async (req, res) => {
   const client = await pool.connect();
@@ -8,6 +9,14 @@ module.exports.getAllPersons = async (req, res) => {
     const { rows: persons } = await PersonModele.getAllPersons(client);
     const allPersons = persons;
     if (allPersons !== undefined) {
+      allPersons.forEach((person) => {
+        person.firstName = person.first_name;
+        person.lastName = person.last_name;
+        person.isAdmin = person.is_admin;
+        delete person.first_name;
+        delete person.last_name;
+        delete person.is_admin;
+      });
       res.json(allPersons);
     } else {
       res.sendStatus(404);
@@ -47,13 +56,15 @@ module.exports.postPerson = async (req, res) => {
     const pseudoExist = await PersonModele.pseudoExist(client, pseudo);
     const emailExist = await PersonModele.emailExist(client, email);
     if (!pseudoExist && !emailExist) {
+      console.log(getHash(password));
+      const passwordHashed = await getHash(password);
       await PersonModele.postPerson(
         client,
         pseudo,
         lastName,
         firstName,
         email,
-        password
+        passwordHashed
       );
       res.sendStatus(201);
     } else {

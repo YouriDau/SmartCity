@@ -6,9 +6,9 @@ const getAllPersonsFetch = async () => {
     const response = await axios.get(`${BASE_URL_API}/person`);
     return response.data;
   } catch (error) {
-    console.error("getAllPersonsFetchError", error)
+    console.error("getAllPersonsFetchError", error);
   }
-}
+};
 
 const getPersonById = async (id) => {
   try {
@@ -22,21 +22,22 @@ const getPersonById = async (id) => {
 };
 
 const addPersonFetch = async (pseudo, lastName, firstName, email, password) => {
-  console.log(BASE_URL_API);
-  await axios({
-    method: "post",
-    url: `${BASE_URL_API}/person`,
-    data: {
-      pseudo,
-      lastName,
-      firstName,
-      email,
-      password,
-    },
-    headers: { "Content-Type": "application/json" },
-  }).then((response) => {
+  try {
+    const response = await axios({
+      method: "post",
+      url: `${BASE_URL_API}/person`,
+      data: {
+        pseudo,
+        lastName,
+        firstName,
+        email,
+        password,
+      },
+    });
     return response.status;
-  });
+  } catch (error) {
+    console.error("addPersonFetchError", error);
+  }
 };
 
 export { getAllPersonsFetch, getPersonById, addPersonFetch };

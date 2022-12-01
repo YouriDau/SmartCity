@@ -14,7 +14,6 @@ module.exports.getReviews = async (req, res) => {
       const reviews = reviewRows;
       if (reviews !== undefined) {
         reviews.forEach((review) => {
-          console.log(review.date);
           review.toiletId = review.toilet_id;
           review.userId = review.userId;
           delete review.toilet_id;
