@@ -1,5 +1,6 @@
 const pool = require("../modele/database");
 const ReviewModele = require("../modele/reviewDB");
+const jwt = require("jsonwebtoken");
 
 module.exports.getReviews = async (req, res) => {
   const toiletIdText = req.params.toiletId;
@@ -16,6 +17,11 @@ module.exports.getReviews = async (req, res) => {
         reviews.forEach((review) => {
           review.toiletId = review.toilet_id;
           review.userId = review.userId;
+          review.date = review.date.toLocaleDateString("fr", {
+            hour: "numeric",
+            minute: "numeric",
+            second: "numeric",
+          });
           delete review.toilet_id;
           delete review.user_id;
         });
@@ -52,14 +58,15 @@ module.exports.getReview = async (req, res) => {
 };
 
 module.exports.postReview = async (req, res) => {
-  const { note, comment, userId, toiletId } = req.body;
+  const { note, comment, toiletId } = req.body;
+
   const client = await pool.connect();
   try {
     const { rows: reviews } = await ReviewModele.postReview(
       client,
       note,
       comment,
-      userId,
+      req.session.id,
       toiletId
     );
     res.status(201).json(reviews[0].id);

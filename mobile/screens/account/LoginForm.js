@@ -4,6 +4,7 @@ import Title from "../../components/Title";
 import Button from "../../components/Button";
 import useFetchPerson from "../../services/useFetchPerson";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { LOGIN_NOT_FOUND } from "../../config";
 
 const PLACEHOLDERS = {
   pseudo: "Your pseudo here",
@@ -33,7 +34,13 @@ const LoginForm = ({ navigation }) => {
           Alert.alert("Pseudo or password incorect!");
         }
       })
-      .catch((error) => console.error("loginFetchError", error));
+      .catch((error) => {
+        console.error("loginFetchError", error);
+        switch (error.response.status) {
+          case 404:
+            Alert.alert(LOGIN_NOT_FOUND);
+        }
+      });
   };
 
   return (

@@ -17,36 +17,62 @@ export default function useFetchReviews() {
     }
   };
 
-  const addReviewFetch = async (note, comment, toiletId, userId = 1) => {
-    const response = await axios({
-      method: "post",
-      url: `${BASE_URL_API}/review`,
-      data: {
-        note,
-        comment,
-        toiletId,
-        userId,
-      },
-      headers: await authHeader(),
-    });
-    return { status: response.status, data: response.data };
+  const addReviewFetch = async (note, comment, toiletId) => {
+    try {
+      const response = await axios({
+        method: "post",
+        url: `${BASE_URL_API}/review`,
+        data: {
+          note,
+          comment,
+          toiletId,
+        },
+        headers: await authHeader(),
+      });
+      return { status: response.status, data: response.data };
+    } catch (error) {
+      console.error("addReviewFetchError", error);
+    }
   };
 
   const deleteReviewFetch = async (id) => {
-    const response = await axios({
-      method: "delete",
-      url: `${BASE_URL_API}/review`,
-      data: {
-        id,
-      },
-      headers: await authHeader(),
-    });
-    return response.status;
+    try {
+      const response = await axios({
+        method: "delete",
+        url: `${BASE_URL_API}/review`,
+        data: {
+          id,
+        },
+        headers: await authHeader(),
+      });
+      return response.status;
+    } catch (error) {
+      console.error("deleteReviewFetchError", error);
+    }
+  };
+
+  const updateReviewFetch = async (id, note, comment) => {
+    try {
+      const response = await axios({
+        method: "put", // put et pas patch car remplace pas le userId ni l'id
+        url: `${BASE_URL_API}/review`,
+        date: {
+          id,
+          note,
+          comment,
+        },
+        headers: await authHeader(),
+      });
+      return response.status;
+    } catch (error) {
+      console.error("updateReviewFetchError", error);
+    }
   };
 
   return {
     getReviewsFetch,
     addReviewFetch,
     deleteReviewFetch,
+    updateReviewFetch,
   };
 }

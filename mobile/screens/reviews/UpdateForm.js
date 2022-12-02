@@ -1,9 +1,17 @@
 import ReviewForm from "../../components/ReviewForm";
 
 const UpdateForm = ({ navigation, route }) => {
-  const id = route.params.id;
+  const review = route.params.review;
+  const toiletId = route.params.toiletId;
 
-  return <ReviewForm isUpdate={true} navigation={navigation} id={id} />;
+  return (
+    <ReviewForm
+      isUpdate={true}
+      navigation={navigation}
+      toiletId={toiletId}
+      review={review}
+    />
+  );
 };
 
 export default UpdateForm;

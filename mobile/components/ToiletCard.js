@@ -4,6 +4,7 @@ import { Card } from "react-native-paper";
 import Icon from "react-native-vector-icons/Ionicons";
 
 import Button from "../components/Button";
+import { NEED_CONNEXION_ERROR } from "../config";
 
 const ToiletCard = ({ isPaid, isReducedMobility, toiletId, navigation }) => {
   const handlePressListReviews = () => {
@@ -12,11 +13,20 @@ const ToiletCard = ({ isPaid, isReducedMobility, toiletId, navigation }) => {
 
   const handlePressAddReview = () => {
     AsyncStorage.getItem("token").then((token) => {
-      console.log(token);
       if (token) {
         navigation.navigate("AddReview", { toiletId });
       } else {
-        Alert.alert("You are not connected", "Please, connect to add toilet");
+        Alert.alert(NEED_CONNEXION_ERROR);
+      }
+    });
+  };
+
+  const handlePressAddReport = () => {
+    AsyncStorage.getItem("token").then((token) => {
+      if (token) {
+        navigation.navigate("AddReport", { toiletId });
+      } else {
+        Alert.alert(NEED_CONNEXION_ERROR);
       }
     });
   };
@@ -45,12 +55,19 @@ const ToiletCard = ({ isPaid, isReducedMobility, toiletId, navigation }) => {
           />
           <Text>is for reduce mobility people?</Text>
         </View>
-        <Text style={styles.reviewTitle}>Review</Text>
-        <View style={styles.review}>
+
+        <Text style={styles.title}>Review</Text>
+        <View style={styles.subcontent}>
           <Pressable style={styles.button} onPress={handlePressListReviews}>
             <Icon name="list-outline" size={45} color="grey" />
           </Pressable>
           <Pressable style={styles.button} onPress={handlePressAddReview}>
+            <Icon name="add-circle" size={45} color="grey" />
+          </Pressable>
+        </View>
+        <Text style={styles.title}>Report</Text>
+        <View style={styles.subContentReport}>
+          <Pressable style={styles.button} onPress={handlePressAddReport}>
             <Icon name="add-circle" size={45} color="grey" />
           </Pressable>
         </View>
@@ -71,21 +88,24 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   button: {
-    marginBottom: 15,
-    alignItems: "center",
+    marginVertical: 10,
     justifyContent: "center",
     flexDirection: "row",
   },
-  reviewTitle: {
+  title: {
     fontSize: 19,
     color: "grey",
   },
-  review: {
+  subcontent: {
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-around",
     alignItems: "center",
-    width: "100%",
+    borderWidth: 1,
+    borderRadius: 8,
+    borderColor: "lightgrey",
+  },
+  subContentReport: {
     borderWidth: 1,
     borderRadius: 8,
     borderColor: "lightgrey",

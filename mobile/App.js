@@ -24,20 +24,23 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const Stack = createNativeStackNavigator();
 
 const App = () => {
-  const [isConnected, setIsConnected] = useState();
+  const [initialMenu, setInitialMenu] = useState();
 
   useEffect(() => {
     AsyncStorage.getItem("token").then((token) => {
-      setIsConnected(token !== undefined && token !== null);
+      if (token) {
+        setInitialMenu("MenuConnected");
+      } else {
+        setInitialMenu("MenuDisconnected");
+      }
     });
   }, []);
 
   return (
     <Provider store={store}>
-      {console.log(isConnected)}
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName={isConnected ? "MenuConnected" : "MenuDisconnected"}
+          initialRouteName={initialMenu}
           screenOptions={{ headerShown: false }}
         >
           <Stack.Screen

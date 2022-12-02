@@ -1,4 +1,9 @@
-import { SET_REVIEWS, ADD_REVIEW, DELETE_REVIEW } from "../actions/actionsType";
+import {
+  SET_REVIEWS,
+  ADD_REVIEW,
+  DELETE_REVIEW,
+  UPDATE_REVIEW,
+} from "../actions/actionsType";
 
 initialState = [];
 
@@ -29,6 +34,14 @@ export const review = (state = initialState, action) => {
       ];
     case DELETE_REVIEW:
       return state.filter((review) => review.id != action.payload.id);
+    case UPDATE_REVIEW:
+      state.forEach((review) => {
+        if (review.id === action.payload.id) {
+          review.note = action.payload.note;
+          review.comment = action.payload.comment;
+        }
+      });
+      return state;
     default:
       return initialState;
   }

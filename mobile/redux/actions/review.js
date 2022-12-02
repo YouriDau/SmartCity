@@ -1,4 +1,9 @@
-import { SET_REVIEWS, ADD_REVIEW, DELETE_REVIEW } from "./actionsType";
+import {
+  SET_REVIEWS,
+  ADD_REVIEW,
+  DELETE_REVIEW,
+  UPDATE_REVIEW,
+} from "./actionsType";
 
 export function setReviews(reviews) {
   return {
@@ -21,9 +26,9 @@ export function deleteReview(id) {
   };
 }
 
-export function updateReview(id) {
+export function updateReview(id, note, comment) {
   return {
     type: UPDATE_REVIEW,
-    payload: { id },
+    payload: { id, note, comment },
   };
 }

@@ -6,8 +6,13 @@ const Router = require("express-promise-router");
 const router = new Router();
 
 router.get("/:toiletId", ReviewControleur.getReviews);
-router.post("/", ReviewControleur.postReview);
-router.patch("/", ReviewControleur.updateReview);
+router.post("/", JWTMiddleware.identification, ReviewControleur.postReview);
+router.patch(
+  "/",
+  JWTMiddleware.identification,
+  AuthoMiddleware.mustBeAdminOrOwnerReview,
+  ReviewControleur.updateReview
+);
 router.delete(
   "/",
   JWTMiddleware.identification,

@@ -38,14 +38,13 @@ module.exports.updatePerson = async (
   pseudo,
   lastName,
   firstName,
-  email,
-  password
+  email
 ) => {
   return await client.query(
     `UPDATE person 
-     SET pseudo=$1, last_name=$2, first_name=$3, email=$4, is_admin=$5, password=$6 
-     WHERE id=$7`,
-    [pseudo, lastName, firstName, email, false, password, id]
+     SET pseudo=$1, last_name=$2, first_name=$3, email=$4
+     WHERE id=$5`,
+    [pseudo, lastName, firstName, email, id]
   );
 };
 

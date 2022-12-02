@@ -1,20 +1,42 @@
-import { View, Text, TextInput, StyleSheet } from "react-native";
+import { View, Text, TextInput, StyleSheet, Alert } from "react-native";
 import CheckBox from "expo-checkbox";
 import { useState } from "react";
 import Title from "../../components/Title";
 import Button from "../../components/Button";
 
+import useFetchPerson from "../../services/useFetchPerson";
+import { ACCOUNT_DELETE_SUCCESS, PASSWORD_INPUT_EMPTY } from "../../config";
+
 const DeleteForm = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [isChecked, setIsChecked] = useState(false);
+
+  const { deletePersonFetch } = useFetchPerson();
 
   const handlePressCancel = () => {
     navigation.goBack();
   };
 
+  const handlePressDelete = () => {
+    if (password !== "") {
+      if (isChecked) {
+        deletePersonFetch(password).then((status) => {
+          if (status === 204) {
+            Alert.alert(ACCOUNT_DELETE_SUCCESS);
+            navigation.navigate("Maps");
+          }
+        });
+      } else {
+        Alert.alert(DELETE_NOT_CHECK);
+      }
+    } else {
+      Alert.alert(PASSWORD_INPUT_EMPTY);
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <Title text={"Delete form"} />
+      <Title text={"Delete account"} />
       <View style={styles.passwordContainer}>
         <Text>Password</Text>
         <TextInput
@@ -41,7 +63,11 @@ const DeleteForm = ({ navigation }) => {
           btnColor={"grey"}
           handlePress={handlePressCancel}
         />
-        <Button text={"Delete"} btnColor={"#D42929"} />
+        <Button
+          text={"Delete"}
+          btnColor={"#D42929"}
+          handlePress={handlePressDelete}
+        />
       </View>
     </View>
   );

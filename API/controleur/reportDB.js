@@ -29,7 +29,6 @@ module.exports.postReport = async (req, res) => {
   const { reason, userId, toiletId } = req.body;
   const client = await pool.connect();
   try {
-    console.log(reason + " " + userId + " " + toiletId);
     const { rows: reports } = await ReportModele.postReport(
       client,
       reason,

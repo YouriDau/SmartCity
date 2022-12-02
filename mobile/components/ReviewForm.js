@@ -7,18 +7,19 @@ import { useDispatch } from "react-redux";
 import { addReview } from "../redux/actions/review";
 import useFetchReviews from "../services/useFetchReviews";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ADD_REVIEW_SUCCESS } from "../config";
 
 const PLACEHOLDER = "Enter your review here";
 const NOTE_MIN = 1;
 const NOTE_MAX = 5;
 
-const ReviewForm = ({ navigation, isUpdate, toiletId, id }) => {
-  const [note, setNote] = useState(1);
-  const [comment, setComment] = useState("");
-  const title = isUpdate ? "Update review " + id : "Add Review";
+const ReviewForm = ({ isUpdate, navigation, toiletId, review }) => {
+  const [note, setNote] = useState(review?.note);
+  const [comment, setComment] = useState(review?.comment);
+  const title = isUpdate ? "Update review " + review.id : "Add Review";
 
   const dispatch = useDispatch();
-  const { addReviewFetch } = useFetchReviews();
+  const { addReviewFetch, updateReviewFetch } = useFetchReviews();
 
   const handlePressCancel = () => {
     navigation.goBack();
@@ -27,14 +28,28 @@ const ReviewForm = ({ navigation, isUpdate, toiletId, id }) => {
   const handlePressAdd = () => {
     addReviewFetch(note, comment, toiletId).then(({ status, data }) => {
       dispatch(addReview(data, note, comment, toiletId));
+      Alert.alert(ADD_REVIEW_SUCCESS);
+      navigation.navigate("Maps");
     });
   };
 
-  const handlePressUpdate = () => {};
+  const handlePressUpdate = () => {
+    updateReviewFetch(review.id, review.note, review.comment).then((status) => {
+      if (status === 204) {
+        Alert.alert(ADD_REVIEW_SUCCESS);
+      }
+    });
+  };
 
   const showButton = () => {
     if (isUpdate) {
-      return <Button text={"Update"} btnColor={"#E2E52B"} />;
+      return (
+        <Button
+          text={"Update"}
+          btnColor={"#E2E52B"}
+          handlePress={handlePressUpdate}
+        />
+      );
     } else {
       return <Button text={"Submit"} handlePress={handlePressAdd} />;
     }
@@ -51,6 +66,7 @@ const ReviewForm = ({ navigation, isUpdate, toiletId, id }) => {
             minimumValue={NOTE_MIN}
             maximumValue={NOTE_MAX}
             step={1}
+            value={note}
             onValueChange={setNote}
           />
         </View>
@@ -63,6 +79,7 @@ const ReviewForm = ({ navigation, isUpdate, toiletId, id }) => {
             maxLength={300}
             placeholder={PLACEHOLDER}
             scrollEnabled={true}
+            value={comment}
             onChangeText={setComment}
           />
         </View>
@@ -86,7 +103,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   content: {
-    height: "80%",
+    alignItems: "center",
   },
   slideContainer: {
     alignItems: "center",
@@ -112,6 +129,8 @@ const styles = StyleSheet.create({
     marginTop: 50,
     flexDirection: "row",
     justifyContent: "space-around",
+    position: "absolute",
+    bottom: 0,
   },
 });
 

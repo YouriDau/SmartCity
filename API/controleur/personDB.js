@@ -1,7 +1,8 @@
 const pool = require("../modele/database");
 const PersonModele = require("../modele/personDB");
+const ReviewModele = require("../modele/reviewDB");
 const jwt = require("jsonwebtoken");
-const { getHash } = require("../utils/utils");
+const { getHash, compareHash } = require("../utils/utils");
 
 module.exports.getAllPersons = async (req, res) => {
   const client = await pool.connect();
@@ -82,23 +83,28 @@ module.exports.postPerson = async (req, res) => {
 };
 
 module.exports.updatePerson = async (req, res) => {
-  const { id, pseudo, lastName, firstName, email, password } = req.body;
+  const { pseudo, lastName, firstName, email } = req.body;
   const client = await pool.connect();
   try {
-    if (!isNaN(id)) {
-      await PersonModele.updatePerson(
-        client,
-        id,
-        pseudo,
-        lastName,
-        firstName,
-        email,
-        password
-      );
-      res.sendStatus(204);
-    } else {
-      res.sendStatus(401);
-    }
+    console.log(req.session.id);
+    await PersonModele.updatePerson(
+      client,
+      req.session.id,
+      pseudo,
+      lastName,
+      firstName,
+      email
+    );
+    // New JWT because the informations was been modified
+    const payload = {
+      status: req.session.authLevel,
+      value: { id: req.session.id, pseudo: pseudo },
+    };
+    const token = jwt.sign(payload, process.env.SECRET_TOKEN, {
+      expiresIn: "1d",
+    });
+
+    res.send(204).json(token);
   } catch (error) {
     console.error("updatePersonError", error);
     res.sendStatus(500);
@@ -108,17 +114,42 @@ module.exports.updatePerson = async (req, res) => {
 };
 
 module.exports.deletePerson = async (req, res) => {
-  const { id } = req.body;
-  const client = await pool.connect();
+  const { password } = req.body;
+  if (password === undefined) {
+    res.sendStatus(400);
+  } else {
+    const client = await pool.connect();
+    try {
+      const { rows } = await PersonModele.getPersonByPseudo(
+        client,
+        req.session.pseudo
+      );
+      const person = rows[0];
+      console.log(req.session);
+      if (compareHash(password, person.password)) {
+        client.query("START TRANSACTION");
+        // ----- Supprimer toutes les reviews de l'utilisateur
+        const { rows } = await ReviewModele.getReviewsByUser(
+          client,
+          req.session.id
+        );
+        const reviews = rows[0];
+        if (reviews !== undefined) {
+        }
+        // -----
 
-  try {
-    await PersonModele.deletePerson(client, id);
-    res.sendStatus(204);
-  } catch (error) {
-    console.error("deletePersonError", error);
-    res.sendStatus(500);
-  } finally {
-    client.release();
+        await PersonModele.deletePerson(client, req.session.id);
+        client.query("COMMIT TRANSACTION");
+        res.sendStatus(204);
+      } else {
+        res.sendStatus(400);
+      }
+    } catch (error) {
+      console.error("deletePersonError", error);
+      res.sendStatus(500);
+    } finally {
+      client.release();
+    }
   }
 };
 
@@ -143,7 +174,8 @@ module.exports.login = async (req, res) => {
           value: { id, pseudo },
         };
         const token = jwt.sign(payload, process.env.SECRET_TOKEN, {
-          // 1 day because
+          // 1 day because when a user visit our app, it's usually for 1 (for example to visit a city)
+          // So they can use our app during 1 day without reconnect themself (userfriendly)
           expiresIn: "1d",
         });
         res.status(200).json(token);
@@ -160,29 +192,18 @@ module.exports.login = async (req, res) => {
 module.exports.getCurrentUser = async (req, res) => {
   const client = await pool.connect();
   try {
-    const headerAuth = req.get("authorization");
-    if (headerAuth !== undefined && headerAuth.includes("Bearer")) {
-      const jwtToken = headerAuth.split(" ")[1];
-      const decodedJwtToken = jwt.verify(jwtToken, process.env.SECRET_TOKEN);
-      const userId = decodedJwtToken.value.id;
-      const { rows: persons } = await PersonModele.getPersonById(
-        client,
-        userId
-      );
-      const person = persons[0];
-      if (person !== undefined) {
-        person.lastName = person.last_name;
-        person.firstName = person.first_name;
-        delete person.last_name;
-        delete person.first_name;
+    const userId = req.session.id;
+    const { rows: persons } = await PersonModele.getPersonById(client, userId);
+    const person = persons[0];
+    if (person !== undefined) {
+      person.lastName = person.last_name;
+      person.firstName = person.first_name;
+      delete person.last_name;
+      delete person.first_name;
 
-        console.log(200);
-        return res.json(person);
-      } else {
-        console.log(400);
-      }
+      res.json(person);
     } else {
-      res.sendStatus(403);
+      res.sendStatus(400);
     }
   } catch (error) {
     console.error("getCurrentUserError", error);

@@ -23,8 +23,8 @@ const RegistrationForm = ({ navigation }) => {
   const [pseudo, setPseudo] = useState("");
   const [lastName, setLastName] = useState("");
   const [firstName, setFirstName] = useState("");
-  const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handlePressRegister = () => {
     let alert = "Please enter your ";
@@ -40,12 +40,12 @@ const RegistrationForm = ({ navigation }) => {
           alert += "first name ";
           Alert.alert(alert);
         } else {
-          if (password === "") {
-            alert += "password ";
+          if (email === "") {
+            alert += "email ";
             Alert.alert(alert);
           } else {
-            if (email === "") {
-              alert += "email";
+            if (password === "") {
+              alert += "password";
               Alert.alert(alert);
             } else {
               addPersonFetch(pseudo, lastName, firstName, email, password)
@@ -129,15 +129,6 @@ const RegistrationForm = ({ navigation }) => {
           value={firstName}
         />
 
-        <Text style={styles.inputText}>Password</Text>
-        <TextInput
-          style={styles.input}
-          placeholder={PLACEHOLDERS.password}
-          secureTextEntry
-          onChangeText={setPassword}
-          value={password}
-        />
-
         <Text style={styles.inputText}>Email</Text>
         <TextInput
           style={styles.input}
@@ -145,6 +136,15 @@ const RegistrationForm = ({ navigation }) => {
           textContentType={"emailAddress"}
           onChangeText={setEmail}
           value={email}
+        />
+
+        <Text style={styles.inputText}>Password</Text>
+        <TextInput
+          style={styles.input}
+          placeholder={PLACEHOLDERS.password}
+          secureTextEntry
+          onChangeText={setPassword}
+          value={password}
         />
       </ScrollView>
       <View style={styles.buttons}>

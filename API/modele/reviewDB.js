@@ -4,6 +4,10 @@ module.exports.getReviews = async (client, toiletId) => {
   ]);
 };
 
+module.exports.getReviewsByUser = async (client, userId) => {
+  return await client.query("SELECT * FROM review WHERE user_id=$1", [userId]);
+};
+
 module.exports.getReview = async (client, id) => {
   return await client.query("SELECT * FROM review WHERE id=$1 LIMIT 1", [id]);
 };

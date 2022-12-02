@@ -4,15 +4,16 @@ import Button from "../../components/Button";
 import Title from "../../components/Title";
 import useFetchPerson from "../../services/useFetchPerson";
 import { ScrollView } from "react-native-gesture-handler";
+import { ACCOUNT_MODIFY_SUCCESS } from "../../config";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const UpdateForm = ({ navigation }) => {
   const [pseudo, setPseudo] = useState("");
   const [lastName, setLastName] = useState("");
   const [firstName, setFirstName] = useState("");
-  const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
-  const { getCurrentUserFetch } = useFetchPerson();
+  const { getCurrentUserFetch, updatePersonFetch } = useFetchPerson();
 
   useEffect(() => {
     getCurrentUserFetch().then(({ status, user }) => {
@@ -21,7 +22,7 @@ const UpdateForm = ({ navigation }) => {
       setFirstName(user.firstName);
       setEmail(user.email);
     });
-  });
+  }, []);
 
   const handlePressUpdate = () => {
     let alert = "Please enter your ";
@@ -37,22 +38,24 @@ const UpdateForm = ({ navigation }) => {
           alert += "first name ";
           Alert.alert(alert);
         } else {
-          if (password === "") {
-            alert += "password ";
+          if (email === "") {
+            alert += "email ";
             Alert.alert(alert);
           } else {
-            if (email === "") {
-              alert += "email";
-              Alert.alert(alert);
-            } else {
-              dispatch(addUser(pseudo, lastName, firstName, email, password));
+            updatePersonFetch(pseudo, lastName, firstName, email).then(
+              (response) => {
+                if (response.status === 204) {
+                  Alert.alert(ACCOUNT_MODIFY_SUCCESS);
+                  navigation.navigate("Maps");
+                  AsyncStorage.setItem("token", response.data);
+                }
+              }
+            );
 
-              setPseudo("");
-              setLastName("");
-              setFirstName("");
-              setPassword("");
-              setEmail("");
-            }
+            setPseudo("");
+            setLastName("");
+            setFirstName("");
+            setEmail("");
           }
         }
       }
@@ -86,14 +89,6 @@ const UpdateForm = ({ navigation }) => {
           style={styles.input}
           value={firstName}
           onChangeText={setFirstName}
-        />
-
-        <Text style={styles.inputText}>Password</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="****"
-          secureTextEntry
-          onChangeText={setPassword}
         />
 
         <Text style={styles.inputText}>Email</Text>
