@@ -35,9 +35,17 @@ npx create-expo-app mobile
 
       // Navigation
       npm install @react-navigation/native @react-navigation/native-stack
+      npm install @react-navigation/drawer
 
       // Pour afficher infos lors d'un click sur une toilette
-      npm i bootstrap-3-card
+        // -> {Card}
+      npm install react-native-paper
+
+      // Pour requêtes vers l'API
+      npm install axios
+
+      // Pour la localisation
+      npm install expo-location@~14.3.0
 
 npm install react-native-screens react-native-safe-area-context
 // Navigation

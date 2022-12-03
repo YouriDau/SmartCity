@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Alert, Pressable, StyleSheet, View, Text } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
+import * as Location from "expo-location";
 import { getToilets } from "../redux/selectors";
 import Icon from "react-native-vector-icons/Ionicons";
 
@@ -13,6 +14,10 @@ import ToiletCard from "../components/ToiletCard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Maps = ({ navigation }) => {
+  const [initialPosition, setInitialPosition] = useState({
+    latitude: 50.46498,
+    longitude: 4.86529,
+  });
   const [canAddToilet, setCanAddToilet] = useState(false);
   const [newCoordinate, setNewCoordinates] = useState();
   const [cardIsVisible, setCardIsVisible] = useState(false);
@@ -23,8 +28,29 @@ const Maps = ({ navigation }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getToiletsFetch().then(({ status, data }) => dispatch(setToilets(data)));
+    getCoordinate().then((coordinate) => {
+      if (coordinate !== undefined) {
+        setInitialPosition({
+          latitude: coordinate.latitude,
+          longitude: coordinate.longitude,
+        });
+      }
+
+      getToiletsFetch().then(({ status, data }) => dispatch(setToilets(data)));
+    });
   }, []);
+
+  const getCoordinate = async () => {
+    // demander authorisation pour la localisation
+    const { status } = await Location.requestForegroundPermissionsAsync();
+    if (status === "granted") {
+      const userLocation = await Location.getCurrentPositionAsync({
+        accuracy: Location.ACCESS_COARSE_LOCATION, // pour avoir une localisation approximative
+      });
+      // coords contient {latitude, longitude}
+      return userLocation.coords;
+    }
+  };
 
   const handlePressMap = (coordinate) => {
     if (cardIsVisible) {
@@ -132,8 +158,7 @@ const Maps = ({ navigation }) => {
         style={styles.map}
         initialRegion={{
           // Latitude et longitude de Namur
-          latitude: 50.46535,
-          longitude: 4.86461,
+          ...initialPosition,
           // LatitudeDelta and LongitudeDelta to the size of the map
           latitudeDelta: 0.02,
           longitudeDelta: 0.02,
