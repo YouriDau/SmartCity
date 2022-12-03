@@ -44,10 +44,10 @@ const UpdateForm = ({ navigation }) => {
           } else {
             updatePersonFetch(pseudo, lastName, firstName, email).then(
               (response) => {
-                if (response.status === 204) {
+                if (response.status === 200) {
                   Alert.alert(ACCOUNT_MODIFY_SUCCESS);
-                  navigation.navigate("Maps");
                   AsyncStorage.setItem("token", response.data);
+                  navigation.navigate("Maps");
                 }
               }
             );

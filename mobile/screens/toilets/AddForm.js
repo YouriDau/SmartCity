@@ -29,16 +29,18 @@ const AddToilet = ({ navigation, route }) => {
       isReducedMobility
     )
       .then(({ status, data }) => {
-        console.log(data);
-        dispatch(
-          addMapMarker(
-            data,
-            newCoordinate.latitude,
-            newCoordinate.longitude,
-            isPaid,
-            isReducedMobility
-          )
-        );
+        if (status === 201) {
+          console.log(data);
+          dispatch(
+            addMapMarker(
+              data,
+              newCoordinate.latitude,
+              newCoordinate.longitude,
+              isPaid,
+              isReducedMobility
+            )
+          );
+        }
       })
       .catch((error) => {
         console.error("addToiletFetchError", error);

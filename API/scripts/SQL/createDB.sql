@@ -1,6 +1,6 @@
 /* ----- INITIALISATION ----- */
 
-DROP TABLE IF EXISTS person;
+DROP TABLE IF EXISTS person CASCADE;
 CREATE TABLE person
     (
     id serial primary key,
@@ -12,7 +12,7 @@ CREATE TABLE person
     password varchar not null
     );
 
-DROP TABLE IF EXISTS toilet;
+DROP TABLE IF EXISTS toilet CASCADE;
 CREATE TABLE toilet
     (
     id serial primary key,
@@ -20,7 +20,7 @@ CREATE TABLE toilet
     is_paid boolean not null
     );
 
-DROP TABLE IF EXISTS location_toilet;
+DROP TABLE IF EXISTS location_toilet CASCADE;
 CREATE TABLE location_toilet
     (
     id serial primary key,
@@ -30,7 +30,7 @@ CREATE TABLE location_toilet
     foreign KEY(toilet_id) references toilet(id)
     );
 
-DROP TABLE IF EXISTS report;
+DROP TABLE IF EXISTS report CASCADE;
 CREATE TABLE report
     (
     id serial primary key,
@@ -43,7 +43,7 @@ CREATE TABLE report
     foreign KEY(toilet_id) references toilet(id)
     );
 
-DROP TABLE IF EXISTS review;
+DROP TABLE IF EXISTS review CASCADE;
 CREATE TABLE review
     (
     id serial primary key,

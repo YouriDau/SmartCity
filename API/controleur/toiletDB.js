@@ -72,7 +72,7 @@ module.exports.postToilet = async (req, res) => {
 
     await client.query("COMMIT TRANSACTION");
 
-    res.status(200).json(toiletId);
+    res.status(201).json(toiletId);
   } catch (error) {
     await client.query("ROLLBACK TRANSACTION");
     console.error("postToiletError", error);

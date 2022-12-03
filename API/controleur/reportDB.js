@@ -26,7 +26,8 @@ module.exports.getReport = async (req, res) => {
 };
 
 module.exports.postReport = async (req, res) => {
-  const { reason, userId, toiletId } = req.body;
+  const { reason, toiletId } = req.body;
+  const userId = req.session.id;
   const client = await pool.connect();
   try {
     const { rows: reports } = await ReportModele.postReport(
@@ -35,7 +36,12 @@ module.exports.postReport = async (req, res) => {
       userId,
       toiletId
     );
-    res.status(201).json(reports[0].id);
+    const reportId = reports[0];
+    if (reportId !== undefined) {
+      res.status(201).json(reports[0].id);
+    } else {
+      res.sendStatus(404);
+    }
   } catch (error) {
     console.error("PostReportError", error);
     res.sendStatus(500);

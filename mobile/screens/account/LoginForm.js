@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { View, Text, StyleSheet, TextInput, Alert } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import Title from "../../components/Title";
 import Button from "../../components/Button";
 import useFetchPerson from "../../services/useFetchPerson";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import { LOGIN_NOT_FOUND } from "../../config";
 
 const PLACEHOLDERS = {

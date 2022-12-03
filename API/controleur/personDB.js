@@ -104,7 +104,7 @@ module.exports.updatePerson = async (req, res) => {
       expiresIn: "1d",
     });
 
-    res.send(204).json(token);
+    res.send(200).json(token);
   } catch (error) {
     console.error("updatePersonError", error);
     res.sendStatus(500);
@@ -125,16 +125,17 @@ module.exports.deletePerson = async (req, res) => {
         req.session.pseudo
       );
       const person = rows[0];
-      console.log(req.session);
       if (compareHash(password, person.password)) {
         client.query("START TRANSACTION");
         // ----- Supprimer toutes les reviews de l'utilisateur
-        const { rows } = await ReviewModele.getReviewsByUser(
+        const { rows: reviews } = await ReviewModele.getReviewsByUser(
           client,
           req.session.id
         );
-        const reviews = rows[0];
         if (reviews !== undefined) {
+          for (let iReview = 0; iReview < reviews.length; iReview++) {
+            await ReviewModele.deleteReview(client, reviews[iReview].id);
+          }
         }
         // -----
 

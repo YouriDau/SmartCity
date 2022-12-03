@@ -27,9 +27,11 @@ const ReviewForm = ({ isUpdate, navigation, toiletId, review }) => {
 
   const handlePressAdd = () => {
     addReviewFetch(note, comment, toiletId).then(({ status, data }) => {
-      dispatch(addReview(data, note, comment, toiletId));
-      Alert.alert(ADD_REVIEW_SUCCESS);
-      navigation.navigate("Maps");
+      if (status === 204) {
+        dispatch(addReview(data, note, comment, toiletId));
+        Alert.alert(REVIEW_ADD_SUCCESS);
+        navigation.navigate("Maps");
+      }
     });
   };
 
@@ -37,6 +39,7 @@ const ReviewForm = ({ isUpdate, navigation, toiletId, review }) => {
     updateReviewFetch(review.id, review.note, review.comment).then((status) => {
       if (status === 204) {
         Alert.alert(ADD_REVIEW_SUCCESS);
+        navigation.navigate("Maps");
       }
     });
   };

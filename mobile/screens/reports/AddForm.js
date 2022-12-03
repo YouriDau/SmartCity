@@ -1,20 +1,38 @@
 import { useState } from "react";
-import { View, TextInput, Text, StyleSheet } from "react-native";
+import { View, TextInput, Text, StyleSheet, Alert } from "react-native";
 import Button from "../../components/Button";
 import Title from "../../components/Title";
+import { REASON_INPUT_EMPTY, REPORT_ADD_SUCCESS } from "../../config";
+import useFetchReport from "../../services/useFetchReport";
 
 const PLACEHOLDER = "Enter your problem here";
 
-const AddForm = ({ navigation }) => {
-  const [report, setReport] = useState("");
+const AddForm = ({ navigation, route }) => {
+  const [reason, setReason] = useState("");
+  const toiletId = route.params.toiletId;
+
+  const addReportFetch = useFetchReport();
 
   const handlePressCancel = () => {
     navigation.goBack();
   };
 
+  const handlePressSubmit = () => {
+    if (reason) {
+      addReportFetch(reason, toiletId).then((status) => {
+        if (status === 201) {
+          Alert.alert(REPORT_ADD_SUCCESS);
+          navigation.navigate("Maps");
+        }
+      });
+    } else {
+      Alert.alert(REASON_INPUT_EMPTY);
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <Title text={"Report toilet"} />
+      <Title text={`Report toilet ${toiletId}`} />
       <View style={styles.content}>
         <Text>What is the problem ?</Text>
         <TextInput
@@ -23,7 +41,7 @@ const AddForm = ({ navigation }) => {
           maxLength={300}
           placeholder={PLACEHOLDER}
           scrollEnabled={true}
-          onChangeText={setReport}
+          onChangeText={setReason}
         />
       </View>
 
@@ -34,7 +52,7 @@ const AddForm = ({ navigation }) => {
           btnColor={"grey"}
           handlePress={handlePressCancel}
         />
-        <Button text={"Report"} />
+        <Button text="Report" handlePress={handlePressSubmit} />
       </View>
     </View>
   );

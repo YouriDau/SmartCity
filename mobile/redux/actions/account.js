@@ -1,8 +1,8 @@
-import { ADD_USER, DELETE_USER } from "./actionsType";
+import { SET_USER, DELETE_USER } from "./actionsType";
 
-export function addUser(pseudo, lastName, firstName, email, password) {
+export function setUser(pseudo, lastName, firstName, email, password) {
   return {
-    type: ADD_USER,
+    type: SET_USER,
     payload: { pseudo, lastName, firstName, email, password },
   };
 }
