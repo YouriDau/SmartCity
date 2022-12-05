@@ -2,6 +2,10 @@ module.exports.getReport = async (client, id) => {
   return await client.query("SELECT * FROM report WHERE id = $1", [id]);
 };
 
+module.exports.getReportsByUser = async (client, userId) => {
+  return await client.query("SELECT * FROM report WHERE user_id=$1", [userId]);
+};
+
 module.exports.postReport = async (client, reason, userId, toiletId) => {
   return await client.query(
     "INSERT INTO report(reason, user_id, toilet_id) VALUES ($1,$2,$3) RETURNING id",

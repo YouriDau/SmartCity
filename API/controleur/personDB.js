@@ -1,6 +1,7 @@
 const pool = require("../modele/database");
 const PersonModele = require("../modele/personDB");
 const ReviewModele = require("../modele/reviewDB");
+const ReportModele = require("../modele/reportDB");
 const jwt = require("jsonwebtoken");
 const { getHash, compareHash } = require("../utils/utils");
 
@@ -126,27 +127,31 @@ module.exports.deletePerson = async (req, res) => {
       );
       const person = rows[0];
       if (compareHash(password, person.password)) {
-        client.query("START TRANSACTION");
-        // ----- Supprimer toutes les reviews de l'utilisateur
-        const { rows: reviews } = await ReviewModele.getReviewsByUser(
-          client,
-          req.session.id
-        );
-        if (reviews !== undefined) {
-          for (let iReview = 0; iReview < reviews.length; iReview++) {
-            await ReviewModele.deleteReview(client, reviews[iReview].id);
-          }
-        }
-        // -----
-
-        await PersonModele.deletePerson(client, req.session.id);
-        client.query("COMMIT TRANSACTION");
+        await deleteUserId(client, req.session.id);
         res.sendStatus(204);
       } else {
         res.sendStatus(400);
       }
     } catch (error) {
       console.error("deletePersonError", error);
+      res.sendStatus(500);
+    } finally {
+      client.release();
+    }
+  }
+};
+
+module.exports.deletePersonById = async (req, res) => {
+  const { id } = req.body;
+  if (id === undefined) {
+    res.sendStatus(400);
+  } else {
+    const client = await pool.connect();
+    try {
+      await deleteUserId(client, id);
+      res.sendStatus(204);
+    } catch (error) {
+      console.error("deletePersonByIdError", error);
       res.sendStatus(500);
     } finally {
       client.release();
@@ -213,3 +218,25 @@ module.exports.getCurrentUser = async (req, res) => {
     client.release();
   }
 };
+
+async function deleteUserId(client, id) {
+  client.query("START TRANSACTION");
+  const { rows: reviews } = await ReviewModele.getReviewsByUser(client, id);
+  if (reviews !== undefined) {
+    for (let iReview = 0; iReview < reviews.length; iReview++) {
+      await ReviewModele.deleteReview(client, reviews[iReview].id);
+    }
+  }
+
+  const { rows: reports } = await ReportModele.getReportsByUser(client, id);
+
+  if (reports !== undefined) {
+    for (let iReport = 0; iReport < reports.length; iReport++) {
+      await ReportModele.deleteReport(client, reports[iReport].id);
+    }
+  }
+
+  await PersonModele.deletePerson(client, id);
+  client.query("COMMIT TRANSACTION");
+  res.sendStatus(204);
+}
