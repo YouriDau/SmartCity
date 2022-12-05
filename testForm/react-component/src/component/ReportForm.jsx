@@ -1,5 +1,5 @@
 import React from "react";
-import { addReportFetch } from "../component/API/useFetchReport"
+import { addReportFetch } from "../component/API/useFetchReport";
 
 class ReportForm extends React.Component {
     constructor(props) {

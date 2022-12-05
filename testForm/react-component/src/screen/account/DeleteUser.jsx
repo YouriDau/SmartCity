@@ -1,16 +1,28 @@
 import React from "react";
 import DeleteForm from "../../component/DeleteForm";
 import Header from "../../component/Header";
+import { deletePersonByIdFetch } from "../../component/API/useFetchPerson";
+//import {connect} from 'react-redux';
+import {Navigate, useParams} from 'react-router-dom';
+
+function withParams(Component) {
+  return props => <Component {...props} params={useParams()} />;
+}
+ 
 
 class DeleteUser extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    console.log(this.props);
+    const id = parseInt(this.props.params.id);
     this.state = {};
   }
 
   handlePressDelete(event) {
     event.preventDefault();
-    console.log("Delete user");
+    deletePersonByIdFetch(this.id).then((status) => {
+      console.log(status);
+    });
   }
 
   render() {
@@ -27,4 +39,4 @@ class DeleteUser extends React.Component {
   }
 }
 
-export default DeleteUser;
+export default withParams(DeleteUser);

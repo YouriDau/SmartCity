@@ -2,6 +2,10 @@ module.exports.getReport = async (client, id) => {
   return await client.query("SELECT * FROM report WHERE id = $1", [id]);
 };
 
+module.exports.getAllReports = async (client) => {
+  return await client.query("SELECT * FROM report WHERE is_done = false");
+}
+
 module.exports.getReportsByUser = async (client, userId) => {
   return await client.query("SELECT * FROM report WHERE user_id=$1", [userId]);
 };

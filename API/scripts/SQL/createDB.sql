@@ -83,14 +83,11 @@ VALUES
     (50.46535, 4.85975, 4);
 
 -- REPORT
--- INSERT INTO report (reason, "date", is_done, user_id) 
--- VALUES
---     ('reason 1 short', TO_DATE('2021/11/15', 'YYYY/MM/DD'), TRUE, 1),
---     ('reason 2 more longer than the first', TO_DATE('2022/09/10', 'YYYY/MM/DD'), FALSE, 1),
---     ('reason 3, more more longer than the second one', CURRENT_DATE, FALSE, 2);
--- INSERT INTO report (reason, is_done, user_id)
--- VALUES 
---     ('reason', FALSE, 2);
+INSERT INTO report (reason, "date", is_done, user_id, toilet_id) 
+VALUES
+    ('reason 1 short', TO_DATE('2021/11/15', 'YYYY/MM/DD'), TRUE, 1, 1),
+    ('reason 2 more longer than the first', TO_DATE('2022/09/10', 'YYYY/MM/DD'), FALSE, 1, 1),
+    ('reason 3, more more longer than the second one', CURRENT_DATE, FALSE, 2, 1);
 
 -- REVIEW
 INSERT INTO review (note, comment, user_id, toilet_id)

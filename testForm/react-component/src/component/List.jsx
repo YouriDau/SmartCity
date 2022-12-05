@@ -1,19 +1,13 @@
 import React from "react";
-import { getAllPersonsFetch } from "../component/API/useFetchPerson";
+import {Link} from 'react-router-dom';
+//import { getAllPersonsFetch } from "../component/API/useFetchPerson";
+import UpdateUser from "../screen/account/UpdateUser";
+import DeleteUser from "../screen/account/DeleteUser";
 
 class List extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      persons: [],
-    };
-  }
-
-  componentDidMount() {
-    // se charge au premier chargement de la page puis apres ca ne charge plus
-    getAllPersonsFetch().then((persons) => {
-      this.setState({ persons: persons });
-    });
+    this.state = {};
   }
 
   render() {
@@ -22,23 +16,26 @@ class List extends React.Component {
         <h1>{this.props.title}</h1>
         <div>
           <table>
-            {console.log(this.state.persons)}
-            {this.state.persons.map((person) => {
+            {this.props.tab.map((item) => {
               return (
-                <ul>
-                  <li>{person.id}</li>
-                  <li>{person.pseudo}</li>
-                  <li>{person.firstName}</li>
-                  <li>{person.lastName}</li>
-                  <li>{person.password}</li>
-                </ul>
+                <div class="list">
+                     {`${this.props.name} ${item[this.props.parameter]}`} 
+                    
+                    
+                    <Link to={"/" + this.props.linkSeeMore + "/" + item.id}>
+                        <button class="btnList">see more</button>
+                    </Link>
+                    <Link to={"/" + this.props.linkDelete + "/" + item.id}>
+                        <button class="btnList">delete</button>
+                    </Link>
+                </div>
               );
             })}
           </table>
         </div>
 
         <div>
-          <button>Back</button>
+          <button>Back</button> 
         </div>
       </div>
     );

@@ -1,15 +1,26 @@
 import React from "react";
 import Header from "../../component/Header";
+import { loginFetch } from "../../component/API/useFetchPerson";
 
 class LoginForm extends React.Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      inputPseudo: "",
+      inputPassword: ""
+    };
   }
 
   handlePressLogin(event) {
     event.preventDefault();
-    console.log("Connexion réussie");
+    loginFetch(this.state.inputPseudo, this.state.inputPassword).then((result) => {
+      if (result.status === 200) {
+        console.log("login success");
+        localStorage.setItem("token", result.data);
+      } else {
+        console.log("login failed mskn");
+      }
+    });
   }
 
   render() {
@@ -21,12 +32,22 @@ class LoginForm extends React.Component {
           <div class="divForm">
             <label>Pseudo</label>
             <br />
-            <input type="text" style={{ width: "100%" }}></input>
+            <input 
+              type="text"
+              onChange={(event) => {
+                this.setState({ inputPseudo : event.target.value });
+              }}
+            />
           </div>
           <div class="divForm">
             <label>Password</label>
             <br />
-            <input type="text"></input>
+            <input 
+              type="text"
+              onChange={(event) => {
+                this.setState({ inputPassword : event.target.value });
+              }}
+            />
           </div>
           <div class="divForm">
             <button>Cancel</button>

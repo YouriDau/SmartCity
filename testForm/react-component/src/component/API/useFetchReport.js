@@ -1,6 +1,15 @@
 import axios from "axios";
 import { BASE_URL_API } from "../../config";
 
+const getAllReportsFetch = async () => {
+    try {
+        const response = await axios.get(`${BASE_URL_API}/report`);
+        return response.data;
+    } catch (error) {
+        console.error("getAllReportsFetchError", error);
+    }
+}
+
 const addReportFetch = async (reason) => {
     await axios({
         method: "post",
@@ -13,4 +22,4 @@ const addReportFetch = async (reason) => {
     });
 }
 
-export { addReportFetch };
+export { getAllReportsFetch, addReportFetch };
