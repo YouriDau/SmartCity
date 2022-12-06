@@ -16,7 +16,12 @@ router.post("/login", PersonControleur.login);
 router.post("/", JWTMiddleware.identification, PersonControleur.postPerson);
 //router.post("/", PersonControleur.postPerson);
 router.put("/", JWTMiddleware.identification, PersonControleur.updatePerson);
-router.delete("/user", JWTMiddleware.identification, AuthoMiddleware.mustBeAdmin, PersonControleur.deletePerson);
+router.delete(
+  "/deleteUser",
+  JWTMiddleware.identification,
+  AuthoMiddleware.mustBeAdmin,
+  PersonControleur.deletePersonById
+);
 router.delete("/", JWTMiddleware.identification, PersonControleur.deletePerson);
 
 module.exports = router;

@@ -238,5 +238,4 @@ async function deleteUserId(client, id) {
 
   await PersonModele.deletePerson(client, id);
   client.query("COMMIT TRANSACTION");
-  res.sendStatus(204);
 }
