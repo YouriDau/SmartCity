@@ -13,16 +13,18 @@ function withParams(Component) {
 class DeleteUser extends React.Component {
   constructor(props) {
     super(props);
-    console.log(this.props);
     const id = parseInt(this.props.params.id);
-    this.state = {};
+    this.state = {
+      id,
+    };
   }
 
-  handlePressDelete(event) {
+  async handlePressDelete(event) {
     event.preventDefault();
-    deletePersonByIdFetch(this.id).then((status) => {
-      console.log(status);
-    });
+    console.log(this.state.id);
+    // deletePersonByIdFetch(this.id).then((status) => {
+    //   console.log(status);
+    // });
   }
 
   render() {
@@ -32,7 +34,7 @@ class DeleteUser extends React.Component {
         <DeleteForm
           title={"Delete user"}
           text={"Are you sure you want to delete the user ?"}
-          handlePressDelete={this.handlePressDelete}
+          handlePressDelete={(event) => {this.handlePressDelete(event)}}
         />
       </div>
     );
