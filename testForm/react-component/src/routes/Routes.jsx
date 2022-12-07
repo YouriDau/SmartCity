@@ -24,7 +24,7 @@ export default function Router() {
 
         <Route path={"/listUsers"} element={<ListUsers />} />
         <Route path={"/listReports"} element={<ListReports />} />
-        <Route path={"/listReviews"} element={<ListReviews />} />
+        <Route path={"/listReviews/:toiletId"} element={<ListReviews />} />
 
         <Route path={"/updateUser"} element={<UpdateUser />} />
         <Route path={"/updateUser/:id"} element={<UpdateUser />} />
@@ -35,8 +35,8 @@ export default function Router() {
         <Route path={"/deleteReport/:id"} element={<DeleteReport />} />
 
         <Route path={"/login"} element={<Login />} />
-        <Route path={"/maps"} element={<Maps />} />
-        <Route path={"/"} element={<AddUser />} />
+        <Route path={"/addUser"} element={<AddUser />} />
+        <Route path={"/"} element={<Maps />} />
       </Routes>
     </BrowserRouter>
   );

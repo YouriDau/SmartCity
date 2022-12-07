@@ -94,3 +94,8 @@ form {
   display: flex;
   justify-content: space-around;
 }
+
+.addToiletButton {
+  position: absolute;
+  bottom: 0;
+}

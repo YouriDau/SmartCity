@@ -12,9 +12,7 @@ const getAllPersonsFetch = async () => {
 
 const getPersonById = async (id) => {
   try {
-    const response = await axios.get(`${BASE_URL_API}/person`, {
-      params: { id }, // params --> pour les liens
-    });
+    const response = await axios.get(`${BASE_URL_API}/person/${id}`, {});
     return response.data;
   } catch (error) {
     console.error("getPersonByIdError", error);
@@ -47,14 +45,14 @@ const deletePersonByIdFetch = async (id) => {
       url: `${BASE_URL_API}/person/user`,
       data: { id }, // data car aller voir dans le controller de l'api
       headers: {
-        authorization: `Bearer ${localStorage.getItem("token")}` // récupérer le token dans le localStorage
-      }
+        authorization: `Bearer ${localStorage.getItem("token")}`, // récupérer le token dans le localStorage
+      },
     });
     return response.status;
   } catch (error) {
     console.error("deletePersonFetchError", error);
   }
-}
+};
 
 const loginFetch = async (pseudo, password) => {
   try {
@@ -64,14 +62,20 @@ const loginFetch = async (pseudo, password) => {
       data: {
         pseudo,
         password,
-      }
+      },
     });
     console.log(response);
     // on recoit l'objet status et on prend seulement ce qui nous intéresse
-    return { status: response.status, data : response.data};
-  } catch(error) {
+    return { status: response.status, data: response.data };
+  } catch (error) {
     console.error("loginFetchError", error);
   }
-}
+};
 
-export { getAllPersonsFetch, getPersonById, addPersonFetch, deletePersonByIdFetch, loginFetch };
+export {
+  getAllPersonsFetch,
+  getPersonById,
+  addPersonFetch,
+  deletePersonByIdFetch,
+  loginFetch,
+};

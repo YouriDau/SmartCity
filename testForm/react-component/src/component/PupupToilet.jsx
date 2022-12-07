@@ -44,7 +44,7 @@ class PopupToilet extends React.Component {
             <Link to="/addReview">
               <IoIosAddCircle size={ICONS_SIZE} color="purple"></IoIosAddCircle>
             </Link>
-            <Link to="/listReviews">
+            <Link to={`/listReviews/${this.props.toiletId}`}>
               <IoIosList size={ICONS_SIZE} color="purple" />
             </Link>
           </div>
