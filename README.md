@@ -16,13 +16,13 @@
 // Creation
 npx create-expo-app mobile
 
-    // Installation dépendances
-        npm install redux
-            // => reducers
-            // => actions
-            // => selectors
-            // => Store.js
-        npm install react-redux
+// Installation dépendances
+npm install redux
+// => reducers
+// => actions
+// => selectors
+// => Store.js
+npm install react-redux
 
       // Afficher les cartes, marqueurs, etc
       npm install react-native-maps
@@ -47,10 +47,15 @@ npx create-expo-app mobile
       // Pour la localisation
       npm install expo-location@~14.3.0
 
-npm install react-native-screens react-native-safe-area-context
-// Navigation
+      // Fetch commands
+      npm install axios
 
-        npm install axios
-    	// A voir
+      npx expo install react-native-reanimated@~2.9.1
 
-    npx expo install react-native-reanimated@~2.9.1
+// ---------- WEB ----------
+// Creation
+
+// Installation dépendances
+
+      // map
+      npm i react-leaflet
