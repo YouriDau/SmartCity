@@ -1,6 +1,20 @@
 import axios from "axios";
 import { BASE_URL_API } from "../../config";
 
+const getReviewsByToiletIdFetch = async (id) => {
+    try {
+        const response = await axios({
+            method: "get", 
+            url: `${BASE_URL_API}/review`,
+            params: { id }, // params --> pour les liens
+        });
+        console.log("test");
+        return response.data;
+    } catch (error) {
+        console.error("getReviewsByToiletIdFetchError", error);
+    }
+}
+
 const addReviewFetch = async (comment) => {
     await axios({
         method: "post",
@@ -24,4 +38,4 @@ const addReviewFetch = async (comment) => {
     });
 }
 
-export { addReviewFetch };
+export { getReviewsByToiletIdFetch, addReviewFetch };

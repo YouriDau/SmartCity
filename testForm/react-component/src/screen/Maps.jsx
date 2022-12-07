@@ -16,7 +16,7 @@ class Maps extends React.Component {
 
   componentDidMount() {
     getAllToiletsFetch().then(({ status, data }) => {
-      console.log(data);
+      //console.log(data);
       this.setState({ toilets: data });
     });
   }

@@ -2,13 +2,13 @@ const pool = require("../modele/database");
 const ReviewModele = require("../modele/reviewDB");
 const jwt = require("jsonwebtoken");
 
-module.exports.getReviews = async (req, res) => {
+module.exports.getReviewsByToiletId = async (req, res) => {
+  const client = await pool.connect();
   const toiletIdText = req.params.toiletId;
   const toiletId = parseInt(toiletIdText);
-  const client = await pool.connect();
   try {
     if (!isNaN(toiletId)) {
-      const { rows: reviewRows } = await ReviewModele.getReviews(
+      const { rows: reviewRows } = await ReviewModele.getReviewsByToiletId(
         client,
         toiletId
       );

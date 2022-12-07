@@ -9,7 +9,6 @@ function withParams(Component) {
   return props => <Component {...props} params={useParams()} />;
 }
  
-
 class DeleteUser extends React.Component {
   constructor(props) {
     super(props);

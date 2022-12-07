@@ -1,8 +1,8 @@
 import React from "react";
 import {Link} from 'react-router-dom';
 //import { getAllPersonsFetch } from "../component/API/useFetchPerson";
-import UpdateUser from "../screen/account/UpdateUser";
-import DeleteUser from "../screen/account/DeleteUser";
+//import UpdateUser from "../screen/account/UpdateUser";
+//import DeleteUser from "../screen/account/DeleteUser";
 
 class List extends React.Component {
   constructor(props) {
@@ -20,8 +20,7 @@ class List extends React.Component {
               return (
                 <div class="list">
                      {`${this.props.name} ${item[this.props.parameter]}`} 
-                    
-                    
+                  
                     <Link to={"/" + this.props.linkSeeMore + "/" + item.id}>
                         <button class="btnList">see more</button>
                     </Link>

@@ -11,6 +11,7 @@ import ListReports from "../screen/report/ListReports";
 import UpdateReport from "../screen/report/UpdateReport";
 import UpdateReview from "../screen/review/UpdateReview";
 import DeleteReport from "../screen/report/DeleteReport";
+import ListReviews from "../screen/review/ListReviews";
 import Maps from "../screen/Maps";
 
 export default function Router() {
@@ -23,6 +24,7 @@ export default function Router() {
 
         <Route path={"/listUsers"} element={<ListUsers />} />
         <Route path={"/listReports"} element={<ListReports />} />
+        <Route path={"/listReviews"} element={<ListReviews />} />
 
         <Route path={"/updateUser"} element={<UpdateUser />} />
         <Route path={"/updateUser/:id"} element={<UpdateUser />} />
