@@ -3,6 +3,10 @@ module.exports.getReport = async (client, id) => {
 };
 
 module.exports.getAllReports = async (client) => {
+  return await client.query("SELECT * FROM report");
+}
+
+module.exports.getNotDoneReports = async (client) => {
   return await client.query("SELECT * FROM report WHERE is_done = false");
 }
 

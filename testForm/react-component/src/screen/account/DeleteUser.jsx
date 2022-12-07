@@ -22,9 +22,9 @@ class DeleteUser extends React.Component {
   async handlePressDelete(event) {
     event.preventDefault();
     console.log(this.state.id);
-    // deletePersonByIdFetch(this.id).then((status) => {
-    //   console.log(status);
-    // });
+    deletePersonByIdFetch(this.state.id).then((status) => {
+      console.log(status);
+    });
   }
 
   render() {
@@ -34,7 +34,7 @@ class DeleteUser extends React.Component {
         <DeleteForm
           title={"Delete user"}
           text={"Are you sure you want to delete the user ?"}
-          handlePressDelete={(event) => {this.handlePressDelete(event)}}
+          handlePressDelete={(event) => {this.handlePressDelete(event)}} // callback
         />
       </div>
     );

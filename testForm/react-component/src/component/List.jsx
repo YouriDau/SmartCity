@@ -28,6 +28,7 @@ class List extends React.Component {
                     <Link to={"/" + this.props.linkDelete + "/" + item.id}>
                         <button class="btnList">delete</button>
                     </Link>
+                    
                 </div>
               );
             })}

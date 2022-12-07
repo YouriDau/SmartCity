@@ -1,16 +1,28 @@
 import React from "react";
 import Header from "../../component/Header";
 import DeleteForm from "../../component/DeleteForm";
+import {Navigate, useParams} from 'react-router-dom';
+import { deleteReportFetch } from "../../component/API/useFetchReport";
+
+function withParams(Component) {
+  return props => <Component {...props} params={useParams()} />;
+}
 
 class DeleteReport extends React.Component {
-  constructor() {
-    super();
-    this.state = {};
+  constructor(props) {
+    super(props);
+    const id = parseInt(this.props.params.id);
+    this.state = {
+      id,
+    };
   }
 
-  handlePressDelete(event) {
+  async handlePressDelete(event) {
     event.preventDefault();
-    console.log("Delete report");
+    console.log(this.state.id);
+    deleteReportFetch(this.state.id).then((status) => {
+      console.log(status);
+    }) 
   }
 
   render() {
@@ -20,11 +32,11 @@ class DeleteReport extends React.Component {
         <DeleteForm
           title={"Delete report"}
           text={"Do you really want to delete the report ?"}
-          handlePressDelete={this.handlePressDelete}
+          handlePressDelete={(event) => {this.handlePressDelete(event)}}
         />
       </div>
     );
   }
 }
 
-export default DeleteReport;
+export default withParams(DeleteReport);

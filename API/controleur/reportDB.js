@@ -25,7 +25,38 @@ module.exports.getAllReports = async (req, res) => {
       res.sendStatus(404);
     }
   } catch (error) {
-    console.error("getAllPersonsError", error);
+    console.error("getAllReportsError", error);
+    res.sendStatus(500);
+  } finally {
+    client.release();
+  }
+}
+
+module.exports.getNotDoneReports = async (req, res) => {
+  const client = await pool.connect();
+  try {
+    const { rows: reports } = await ReportModele.getNotDoneReports(client);
+    const allReports = reports;
+    if (allReports !== undefined) {
+      allReports.forEach((report) => {
+        report.isDone = report.is_done;
+        report.toiletId = report.toilet_id;
+        report.userId = report.userId;
+        report.date = report.date.toLocaleDateString("fr", {
+          hour: "numeric",
+          minute: "numeric",
+          second: "numeric",
+        });
+        delete report.is_done;
+        delete report.toilet_id;
+        delete report.user_id;
+      });
+      res.json(allReports);
+    } else {
+      res.sendStatus(404);
+    }
+  } catch (error) {
+    console.error("getNotDoneReportsError", error);
     res.sendStatus(500);
   } finally {
     client.release();

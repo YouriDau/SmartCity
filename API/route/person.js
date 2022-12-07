@@ -14,7 +14,6 @@ router.get("/:pseudo", PersonControleur.getPersonByPseudo);
 router.get("/", PersonControleur.getAllPersons); // Pour le test
 router.post("/login", PersonControleur.login);
 router.post("/", JWTMiddleware.identification, PersonControleur.postPerson);
-//router.post("/", PersonControleur.postPerson);
 router.put("/", JWTMiddleware.identification, PersonControleur.updatePerson);
 router.delete(
   "/deleteUser",
