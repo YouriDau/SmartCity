@@ -86,7 +86,10 @@ module.exports.deleteToilet = async (req, res) => {
   const { id } = req.body;
   const client = await pool.connect();
   try {
+    client.query("START TRANSACTION");
+    await LocationModele.deleteLocation(client, id);
     await ToiletModele.deleteToilet(client, id);
+    client.query("COMMIT TRANSACTION");
     res.sendStatus(204);
   } catch (error) {
     console.error("deleteToiletError", error);

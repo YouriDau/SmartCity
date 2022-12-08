@@ -27,7 +27,7 @@ module.exports.postToilet = async (client, is_reduced_mobility, is_paid) => {
 };
 
 module.exports.deleteToilet = async (client, id) => {
-  return await client.query("DELETE FROM person WHERE id = $1", [id]);
+  return await client.query("DELETE FROM toilet WHERE id = $1", [id]);
 };
 
 module.exports.updateToilet = async (client, id, isPaid, isReducedMobility) => {
