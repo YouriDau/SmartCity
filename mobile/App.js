@@ -28,6 +28,7 @@ const App = () => {
 
   useEffect(() => {
     AsyncStorage.getItem("token").then((token) => {
+      console.log(token !== undefined && token !== null);
       if (token) {
         setInitialMenu("MenuConnected");
       } else {

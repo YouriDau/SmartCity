@@ -1,5 +1,16 @@
 module.exports.getToilets = async (client) => {
-  return await client.query("SELECT * FROM toilet");
+  return await client.query(`
+  SELECT
+    t.id id,
+    t.is_reduced_mobility is_reduced_mobility,
+    t.is_paid is_paid,
+    l.latitude latitude,
+    l.longitude longitude
+  FROM toilet t
+  INNER JOIN location_toilet l
+    ON t.id = l.id
+  WHERE t.id = 1;
+    `);
 };
 
 module.exports.getToilet = async (client, id) => {

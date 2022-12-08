@@ -1,6 +1,8 @@
-module.exports.getLocations = async (client) => {
+module.exports.getLocation = async (client, toiletId) => {
   return await client.query(
-    "SELECT latitude, longitude, toilet_id FROM location_toilet"
+    `SELECT latitude, longitude, toilet_id FROM location_toilet
+     WHERE toilet_id = $1`,
+    [toiletId]
   );
 };
 

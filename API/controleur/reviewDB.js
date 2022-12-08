@@ -12,9 +12,8 @@ module.exports.getReviewsByToiletId = async (req, res) => {
         client,
         toiletId
       );
-      const reviews = reviewRows;
-      if (reviews !== undefined) {
-        reviews.forEach((review) => {
+      if (reviewRows !== undefined) {
+        const reviews = reviewRows.map((review) => {
           review.toiletId = review.toilet_id;
           review.userId = review.userId;
           review.date = review.date.toLocaleDateString("fr", {
@@ -22,8 +21,6 @@ module.exports.getReviewsByToiletId = async (req, res) => {
             minute: "numeric",
             second: "numeric",
           });
-          delete review.toilet_id;
-          delete review.user_id;
         });
         res.json(reviews);
       } else {

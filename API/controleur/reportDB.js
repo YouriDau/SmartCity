@@ -4,10 +4,9 @@ const ReportModele = require("../modele/reportDB");
 module.exports.getAllReports = async (req, res) => {
   const client = await pool.connect();
   try {
-    const { rows: reports } = await ReportModele.getAllReports(client);
-    const allReports = reports;
+    const { rows: allReports } = await ReportModele.getAllReports(client);
     if (allReports !== undefined) {
-      allReports.forEach((report) => {
+      const reports = allReports.map((report) => {
         report.isDone = report.is_done;
         report.toiletId = report.toilet_id;
         report.userId = report.userId;
@@ -16,11 +15,8 @@ module.exports.getAllReports = async (req, res) => {
           minute: "numeric",
           second: "numeric",
         });
-        delete report.is_done;
-        delete report.toilet_id;
-        delete report.user_id;
       });
-      res.json(allReports);
+      res.json(reports);
     } else {
       res.sendStatus(404);
     }
@@ -30,15 +26,14 @@ module.exports.getAllReports = async (req, res) => {
   } finally {
     client.release();
   }
-}
+};
 
 module.exports.getNotDoneReports = async (req, res) => {
   const client = await pool.connect();
   try {
-    const { rows: reports } = await ReportModele.getNotDoneReports(client);
-    const allReports = reports;
+    const { rows: allReports } = await ReportModele.getNotDoneReports(client);
     if (allReports !== undefined) {
-      allReports.forEach((report) => {
+      const reports = allReports.map((report) => {
         report.isDone = report.is_done;
         report.toiletId = report.toilet_id;
         report.userId = report.userId;
@@ -47,11 +42,9 @@ module.exports.getNotDoneReports = async (req, res) => {
           minute: "numeric",
           second: "numeric",
         });
-        delete report.is_done;
-        delete report.toilet_id;
-        delete report.user_id;
       });
-      res.json(allReports);
+
+      res.json(reports);
     } else {
       res.sendStatus(404);
     }
@@ -61,7 +54,7 @@ module.exports.getNotDoneReports = async (req, res) => {
   } finally {
     client.release();
   }
-}
+};
 
 module.exports.getReport = async (req, res) => {
   const client = await pool.connect();

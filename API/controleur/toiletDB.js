@@ -2,24 +2,12 @@ const pool = require("../modele/database");
 const ToiletModele = require("../modele/toiletDB");
 const LocationModele = require("../modele/toiletLocationDB");
 
-module.exports.getToilets = async (req, res) => {
+module.exports.getToiletsAndLocation = async (req, res) => {
   const client = await pool.connect();
   try {
-    const { rows: toilets } = await ToiletModele.getToilets(client);
-    const { rows: locations } = await LocationModele.getLocations(client);
+    const { rows: toiletRows } = await ToiletModele.getToilets(client);
 
-    if (toilets !== undefined && locations !== undefined) {
-      toilets.forEach((toilet) => {
-        toilet.isPaid = toilet.is_paid;
-        toilet.isReducedMobility = toilet.is_reduced_mobility;
-        delete toilet.is_paid;
-        delete toilet.is_reduced_mobility;
-
-        toilet.location = locations.filter(
-          (location) => location.toilet_id === toilet.id
-        )[0];
-        delete toilet.location.toilet_id;
-      });
+    if (toiletRows !== undefined) {
       res.json(toilets);
     } else {
       res.sendStatus(404);

@@ -3,6 +3,10 @@ import Header from "../component/Header";
 import PopupToilet from "../component/PupupToilet";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { getAllToiletsFetch } from "../component/API/useFetchToilet";
+import {
+  IoIosAddCircle, // add circle
+} from "react-icons/io";
+import { Link } from "react-router-dom";
 
 class Maps extends React.Component {
   constructor(props) {
@@ -49,6 +53,9 @@ class Maps extends React.Component {
             );
           })}
         </MapContainer>
+        <Link to="/addToilet" id={"mapAddButton"}>
+          <IoIosAddCircle size={60} />
+        </Link>
       </div>
     );
   }

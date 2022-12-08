@@ -1,5 +1,5 @@
 // Services
-export const BASE_URL_API = "http://192.168.1.53:3001";
+export const BASE_URL_API = "http://172.1.4.21:3001";
 
 export const NEED_CONNEXION_ERROR = "You need to be connected to do this";
 

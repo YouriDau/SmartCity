@@ -99,3 +99,9 @@ form {
   position: absolute;
   bottom: 0;
 }
+
+#mapAddButton {
+  position: absolute;
+  bottom: 0;
+  z-index: 999;
+}
