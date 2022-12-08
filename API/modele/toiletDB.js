@@ -9,8 +9,7 @@ module.exports.getToilets = async (client) => {
   FROM toilet t
   INNER JOIN location_toilet l
     ON t.id = l.id
-  WHERE t.id = 1;
-    `);
+  `);
 };
 
 module.exports.getToilet = async (client, id) => {
