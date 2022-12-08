@@ -8,9 +8,9 @@ module.exports.getAllReports = async (req, res) => {
     if (allReports !== undefined) {
       const reports = allReports.map((report) => {
         return {
+          id: report.id,
           isDone: report.is_done,
           toiletId: report.toilet_id,
-          userId: report.userId,
           date: report.date.toLocaleDateString("fr", {
             hour: "numeric",
             minute: "numeric",
@@ -37,9 +37,9 @@ module.exports.getNotDoneReports = async (req, res) => {
     if (allReports !== undefined) {
       const reports = allReports.map((report) => {
         return {
+          id: report.id,
           isDone: report.is_done,
           toiletId: report.toilet_id,
-          userId: report.userId,
           date: report.date.toLocaleDateString("fr", {
             hour: "numeric",
             minute: "numeric",
