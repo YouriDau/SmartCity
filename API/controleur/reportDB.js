@@ -35,16 +35,16 @@ module.exports.getNotDoneReports = async (req, res) => {
   try {
     const { rows: allReports } = await ReportModele.getNotDoneReports(client);
     if (allReports !== undefined) {
-      const reports = allReports.map((report) => {
-        report.isDone = report.is_done;
-        report.toiletId = report.toilet_id;
-        report.userId = report.userId;
-        report.date = report.date.toLocaleDateString("fr", {
+      return {
+        isDone: report.is_done,
+        toiletId: report.toilet_id,
+        userId: report.userId,
+        date: report.date.toLocaleDateString("fr", {
           hour: "numeric",
           minute: "numeric",
           second: "numeric",
-        });
-      });
+        }),
+      };
 
       res.json(reports);
     } else {
