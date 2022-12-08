@@ -65,10 +65,14 @@ const loginFetch = async (pseudo, password) => {
         password,
       },
     });
-    console.log(response);
     // on recoit l'objet status et on prend seulement ce qui nous intéresse
     return { status: response.status, data: response.data };
   } catch (error) {
+    if (error.response.status == 500) {
+      alert("Error, retry");
+    } else {
+      alert("Error, login or password incorrect");
+    }
     console.error("loginFetchError", error);
   }
 };

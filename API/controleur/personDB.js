@@ -3,7 +3,13 @@ const PersonModele = require("../modele/personDB");
 const ReviewModele = require("../modele/reviewDB");
 const ReportModele = require("../modele/reportDB");
 const jwt = require("jsonwebtoken");
-const { getHash, compareHash } = require("../utils/utils");
+const {
+  getHash,
+  compareHash,
+  emailValidate,
+  pseudoValidate,
+  nameValidate,
+} = require("../utils/utils");
 
 module.exports.getAllPersons = async (req, res) => {
   const client = await pool.connect();
@@ -60,7 +66,14 @@ module.exports.postPerson = async (req, res) => {
   try {
     const pseudoExist = await PersonModele.pseudoExist(client, pseudo);
     const emailExist = await PersonModele.emailExist(client, email);
-    if (!pseudoExist && !emailExist) {
+    if (
+      !pseudoExist &&
+      !emailExist &&
+      pseudoValidate(pseudo) &&
+      emailValidate(email) &&
+      nameValidate(firstName) &&
+      nameValidate(lastName)
+    ) {
       const passwordHashed = await getHash(password);
       await PersonModele.postPerson(
         client,

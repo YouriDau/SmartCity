@@ -1,62 +1,63 @@
 import React from "react";
 import Header from "../../component/Header";
 import { loginFetch } from "../../component/API/useFetchPerson";
-import { Link } from "react-router-dom";
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 class LoginForm extends React.Component {
   constructor() {
     super();
     this.state = {
       inputPseudo: "",
-      inputPassword: ""
+      inputPassword: "",
     };
   }
 
   handlePressLogin(event) {
     event.preventDefault();
-    loginFetch(this.state.inputPseudo, this.state.inputPassword).then((result) => {
-      if (result.status === 200) {
-        console.log("login success");
-        localStorage.setItem("token", result.data);
-        redirect("/maps");
-      } else {
-        console.log("login failed mskn");
+    loginFetch(this.state.inputPseudo, this.state.inputPassword).then(
+      (result) => {
+        if (result.status === 200) {
+          alert("Login success");
+          localStorage.setItem("token", result.data);
+        } else {
+          console.log("Login failed");
+        }
       }
-    });
+    );
   }
 
   render() {
     return (
-      <div class="form">
+      <div className="form">
         <Header />
         <h1>Login</h1>
         <form>
-          <div class="divForm">
+          <div className="divForm">
             <label>Pseudo</label>
             <br />
-            <input 
+            <input
               type="text"
               onChange={(event) => {
-                this.setState({ inputPseudo : event.target.value });
+                this.setState({ inputPseudo: event.target.value });
               }}
             />
           </div>
-          <div class="divForm">
+          <div className="divForm">
             <label>Password</label>
             <br />
-            <input 
-              type="text"
+            <input
+              type="password"
               onChange={(event) => {
-                this.setState({ inputPassword : event.target.value });
+                this.setState({ inputPassword: event.target.value });
               }}
             />
           </div>
-          <div class="divForm">
+          <div className="divForm">
             <button>Cancel</button>
-            
-            <button onClick={(event) => this.handlePressLogin(event)}>Login</button> 
-            
+            <button onClick={(event) => this.handlePressLogin(event)}>
+              Login
+            </button>
+
             {/*-composant redirect pour la redirection
                -onclick devra faire apparaitre composant redirect
                -le navigateur va lire redirect et rediriger vers la bonne adresse*/}
