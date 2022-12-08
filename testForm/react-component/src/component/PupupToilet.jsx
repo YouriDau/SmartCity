@@ -5,6 +5,7 @@ import {
   IoIosCheckmarkCircleOutline, // check circle
   IoIosCloseCircleOutline, // close circle
   IoIosAddCircle, // add circle
+  IoIosRemoveCircle, // remove circle
   IoIosList, // list
 } from "react-icons/io";
 
@@ -42,10 +43,13 @@ class PopupToilet extends React.Component {
           <p class="popupReviewText">Reviews</p>
           <div class="popupReviewContainer">
             <Link to="/addReview">
-              <IoIosAddCircle size={ICONS_SIZE} color="purple"></IoIosAddCircle>
+              <IoIosAddCircle size={ICONS_SIZE} color="blue"></IoIosAddCircle>
+            </Link>
+            <Link to={`/deleteToilet/${this.props.toiletId}`}>
+              <IoIosRemoveCircle size={ICONS_SIZE} color="blue"/>
             </Link>
             <Link to={`/listReviews/${this.props.toiletId}`}>
-              <IoIosList size={ICONS_SIZE} color="purple" />
+              <IoIosList size={ICONS_SIZE} color="blue" />
             </Link>
           </div>
         </div>

@@ -105,3 +105,46 @@ form {
   bottom: 0;
   z-index: 999;
 }
+
+#menuControle {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  height: 250px;
+  width: 300px;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+}
+
+.linkMenu {
+  display: flex;
+  border: 1px solid black;
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+  border-radius: 100px;
+  justify-content: center;
+  align-items: center;
+  background-color: grey;
+  text-decoration: none;
+  color: black
+}
+
+.linkMenu:hover {
+  background-color: #00bfff;
+}
+
+.divMenu {
+  display: flex;
+  border: 1px solid black;
+  width: 80px;
+  height: 80px;
+  margin: 10px;
+  border-radius: 100px;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}

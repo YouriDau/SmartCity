@@ -1,16 +1,27 @@
 import React from "react";
 import Header from "../../component/Header";
 import DeleteForm from "../../component/DeleteForm";
+import { deleteToiletFetch } from "../../component/API/useFetchToilet";
+import {useParams} from 'react-router-dom';
+
+function withParams(Component) {
+  return props => <Component {...props} params={useParams()} />;
+}
 
 class DeleteToilet extends React.Component {
-  constructor() {
-    super();
-    this.state = {};
+  constructor(props) {
+    super(props);
+    const id = parseInt(this.props.params.id);
+    this.state = {
+      id,
+    };
   }
 
-  handlePressDelete(event) {
+  async handlePressDelete(event) {
     event.preventDefault();
-    console.log("Delete toilet");
+    deleteToiletFetch(this.state.id).then((status) => {
+      console.log(status);
+    })
   }
 
   render() {
@@ -20,11 +31,11 @@ class DeleteToilet extends React.Component {
         <DeleteForm
           title={"Delete toilet"}
           text={"Do you really want to delete the toilet ?"}
-          handlePressDelete={this.handlePressDelete}
+          handlePressDelete={(event) => {this.handlePressDelete(event)}}
         />
       </div>
     );
   }
 }
 
-export default DeleteToilet;
+export default withParams(DeleteToilet);

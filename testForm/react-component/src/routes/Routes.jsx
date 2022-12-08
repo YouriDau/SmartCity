@@ -14,6 +14,8 @@ import DeleteReport from "../screen/report/DeleteReport";
 import ListReviews from "../screen/review/ListReviews";
 import Maps from "../screen/Maps";
 import DeleteReview from "../screen/review/DeleteReview";
+import MenuControle from "../screen/MenuControle";
+import DeleteToilet from "../screen/toilet/DeleteToilet";
 
 export default function Router() {
   return (
@@ -35,10 +37,12 @@ export default function Router() {
         <Route path={"/deleteUser/:id"} element={<DeleteUser />} />
         <Route path={"/deleteReport/:id"} element={<DeleteReport />} />
         <Route path={"/deleteReview/:id"} element={<DeleteReview />} />
+        <Route path={"/deleteToilet/:id"} element={<DeleteToilet />} />
 
         <Route path={"/login"} element={<Login />} />
         <Route path={"/addUser"} element={<AddUser />} />
         <Route path={"/maps"} element={<Maps />} />
+        <Route path={"/menuControle"} element={<MenuControle />} />
         <Route path={"/"} element={<Maps />} />
       </Routes>
     </BrowserRouter>

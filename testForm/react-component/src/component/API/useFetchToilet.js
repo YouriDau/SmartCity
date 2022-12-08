@@ -10,4 +10,17 @@ const getAllToiletsFetch = async () => {
   }
 };
 
-export { getAllToiletsFetch };
+const deleteToiletFetch = async (id) => {
+  try {
+    const response = await axios({
+      method: "delete",
+      url: `${BASE_URL_API}/toilet`,
+      data: { id },
+    });
+    return response.status;
+  } catch (error) {
+      console.error("deleteReportFetchError", error);
+  }
+}
+
+export { getAllToiletsFetch, deleteToiletFetch };
