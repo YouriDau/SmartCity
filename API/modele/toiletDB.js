@@ -1,4 +1,4 @@
-module.exports.getToilets = async (client) => {
+module.exports.getToiletsAndLocation = async (client) => {
   return await client.query(`
   SELECT
     t.id id,

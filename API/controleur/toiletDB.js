@@ -5,7 +5,9 @@ const LocationModele = require("../modele/toiletLocationDB");
 module.exports.getToiletsAndLocation = async (req, res) => {
   const client = await pool.connect();
   try {
-    const { rows: toiletRows } = await ToiletModele.getToilets(client);
+    const { rows: toiletRows } = await ToiletModele.getToiletsAndLocation(
+      client
+    );
     if (toiletRows !== undefined) {
       const toilets = toiletRows.map((toilet) => {
         return {
@@ -18,7 +20,6 @@ module.exports.getToiletsAndLocation = async (req, res) => {
           },
         };
       });
-      console.log(toilets);
       res.json(toilets);
     } else {
       res.sendStatus(404);
