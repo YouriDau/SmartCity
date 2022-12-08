@@ -40,12 +40,13 @@ const addPersonFetch = async (pseudo, lastName, firstName, email, password) => {
 
 const deletePersonByIdFetch = async (id) => {
   try {
+    const token = await localStorage.getItem("token");
     const response = await axios({
       method: "delete",
-      url: `${BASE_URL_API}/person/user`,
+      url: `${BASE_URL_API}/person/deleteUser`,
       data: { id }, // data car aller voir dans le controller de l'api
       headers: {
-        authorization: `Bearer ${localStorage.getItem("token")}`, // récupérer le token dans le localStorage
+        authorization: `Bearer ${token}`, // récupérer le token dans le localStorage
       },
     });
     return response.status;
