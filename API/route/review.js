@@ -13,11 +13,12 @@ router.patch(
   AuthoMiddleware.mustBeAdminOrOwnerReview,
   ReviewControleur.updateReview
 );
-router.delete(
+/*router.delete(
   "/",
   JWTMiddleware.identification,
   AuthoMiddleware.mustBeAdminOrOwnerReview,
   ReviewControleur.deleteReview
-);
+);*/
+router.delete("/", ReviewControleur.deleteReview);
 
 module.exports = router;

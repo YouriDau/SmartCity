@@ -22,7 +22,7 @@ class DeleteReport extends React.Component {
     console.log(this.state.id);
     deleteReportFetch(this.state.id).then((status) => {
       console.log(status);
-    }) 
+    });
   }
 
   render() {

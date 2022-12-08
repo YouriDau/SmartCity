@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../../component/Header";
 import { loginFetch } from "../../component/API/useFetchPerson";
+import { Link } from "react-router-dom";
 
 class LoginForm extends React.Component {
   constructor() {
@@ -51,9 +52,12 @@ class LoginForm extends React.Component {
           </div>
           <div class="divForm">
             <button>Cancel</button>
-            <button onClick={(event) => this.handlePressLogin(event)}>
-              Login
-            </button>
+            
+              <button onClick={(event) => this.handlePressLogin(event)}>Login</button> 
+            
+            {/*-composant redirect pour la redirection
+               -onclick devra faire apparaitre comosant redirect
+               -le navigateur va lire redirect et redirieger vers la bonne adresse*/}
           </div>
         </form>
       </div>

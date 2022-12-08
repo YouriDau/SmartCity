@@ -39,4 +39,17 @@ const addReviewFetch = async (comment) => {
     });
 };
 
-export { getReviewsByToiletIdFetch, addReviewFetch };
+const deleteReviewFetch = async (id) => {
+  try {
+    const response = await axios({
+      method: "delete",
+      url: `${BASE_URL_API}/review`,
+      data: { id },
+    });
+    return response.status;
+  } catch (error) {
+    console.error("deleteReviewFetchError", error);
+  }
+}
+
+export { getReviewsByToiletIdFetch, addReviewFetch, deleteReviewFetch };

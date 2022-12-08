@@ -13,6 +13,7 @@ import UpdateReview from "../screen/review/UpdateReview";
 import DeleteReport from "../screen/report/DeleteReport";
 import ListReviews from "../screen/review/ListReviews";
 import Maps from "../screen/Maps";
+import DeleteReview from "../screen/review/DeleteReview";
 
 export default function Router() {
   return (
@@ -33,9 +34,11 @@ export default function Router() {
 
         <Route path={"/deleteUser/:id"} element={<DeleteUser />} />
         <Route path={"/deleteReport/:id"} element={<DeleteReport />} />
+        <Route path={"/deleteReview/:id"} element={<DeleteReview />} />
 
         <Route path={"/login"} element={<Login />} />
         <Route path={"/addUser"} element={<AddUser />} />
+        <Route path={"/maps"} element={<Maps />} />
         <Route path={"/"} element={<Maps />} />
       </Routes>
     </BrowserRouter>
