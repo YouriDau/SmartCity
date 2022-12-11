@@ -14,13 +14,16 @@ module.exports.getReviewsByToiletId = async (req, res) => {
       );
       if (reviewRows !== undefined) {
         const reviews = reviewRows.map((review) => {
-          review.toiletId = review.toilet_id;
-          review.userId = review.userId;
-          review.date = review.date.toLocaleDateString("fr", {
-            hour: "numeric",
-            minute: "numeric",
-            second: "numeric",
-          });
+          return {
+            id: review.id,
+            comment: review.comment,
+            userId: review.user_id,
+            date: review.date.toLocaleDateString("fr", {
+              hour: "numeric",
+              minute: "numeric",
+              second: "numeric",
+            }),
+          };
         });
         res.json(reviews);
       } else {

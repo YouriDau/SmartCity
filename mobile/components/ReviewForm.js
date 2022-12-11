@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { addReview } from "../redux/actions/review";
 import useFetchReviews from "../services/useFetchReviews";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { ADD_REVIEW_SUCCESS } from "../config";
+import { REVIEW_ADD_SUCCESS, REVIEW_MODIFY_SUCCESS } from "../config";
 
 const PLACEHOLDER = "Enter your review here";
 const NOTE_MIN = 1;
@@ -27,19 +27,19 @@ const ReviewForm = ({ isUpdate, navigation, toiletId, review }) => {
 
   const handlePressAdd = () => {
     addReviewFetch(note, comment, toiletId).then(({ status, data }) => {
-      if (status === 204) {
+      if (status === 201) {
         dispatch(addReview(data, note, comment, toiletId));
         Alert.alert(REVIEW_ADD_SUCCESS);
-        navigation.navigate("Maps");
+        navigation.goBack();
       }
     });
   };
 
   const handlePressUpdate = () => {
-    updateReviewFetch(review.id, review.note, review.comment).then((status) => {
+    updateReviewFetch(review.id, note, comment).then((status) => {
       if (status === 204) {
-        Alert.alert(ADD_REVIEW_SUCCESS);
-        navigation.navigate("Maps");
+        Alert.alert(REVIEW_MODIFY_SUCCESS);
+        navigation.goBack();
       }
     });
   };

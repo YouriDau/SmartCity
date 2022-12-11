@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Alert } from "react-native";
 import { BASE_URL_API } from "../config";
 import authHeader from "./authHeader";
 
@@ -9,6 +10,7 @@ export default function useFetchReviews() {
         method: "get",
         url: `${BASE_URL_API}/review/${toiletId}`,
       });
+      console.log(response.data);
       return response.data;
     } catch (error) {
       console.error("getReviewsError", error);
@@ -45,6 +47,15 @@ export default function useFetchReviews() {
       });
       return response.status;
     } catch (error) {
+      switch (error.response.status) {
+        case 401:
+          Alert.alert("Error", "You need to be connected to delete reviews");
+        case 403:
+          Alert.alert(
+            "Error",
+            "You can't delete this review because you are not the owner"
+          );
+      }
       console.error("deleteReviewFetchError", error);
     }
   };
@@ -54,7 +65,7 @@ export default function useFetchReviews() {
       const response = await axios({
         method: "put", // put et pas patch car remplace pas le userId ni l'id
         url: `${BASE_URL_API}/review`,
-        date: {
+        data: {
           id,
           note,
           comment,
@@ -63,6 +74,15 @@ export default function useFetchReviews() {
       });
       return response.status;
     } catch (error) {
+      switch (error.response.status) {
+        case 401:
+          Alert.alert("Error", "You need to be connected to update reviews");
+        case 403:
+          Alert.alert(
+            "Error",
+            "You can't update this review because you are not the owner"
+          );
+      }
       console.error("updateReviewFetchError", error);
     }
   };

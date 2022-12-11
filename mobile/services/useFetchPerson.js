@@ -56,6 +56,9 @@ export default function useFetchPerson() {
       return response.status;
     } catch (error) {
       console.error("deletePersonFetchError", error);
+      if (error.response.status === 400) {
+        Alert.alert("Error, the password is wrong");
+      }
     }
   };
 
@@ -91,14 +94,6 @@ export default function useFetchPerson() {
     return { status: response.status, data: response.data };
   };
 
-  const logoutFetch = async () => {
-    try {
-      localStorage.removeItem("user");
-    } catch (error) {
-      console.error("logoutError", error);
-    }
-  };
-
   const getCurrentUserFetch = async () => {
     try {
       const response = await axios({
@@ -117,7 +112,6 @@ export default function useFetchPerson() {
     deletePersonFetch,
     updatePersonFetch,
     loginFetch,
-    logoutFetch,
     getCurrentUserFetch,
   };
 }

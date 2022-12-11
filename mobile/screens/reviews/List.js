@@ -74,6 +74,7 @@ const List = ({ navigation, route }) => {
 
   useEffect(() => {
     getReviewsFetch(toiletId).then((allReviews) => {
+      console.log(allReviews);
       dispatch(setReviews(allReviews));
     });
   }, []);

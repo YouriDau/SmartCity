@@ -25,7 +25,8 @@ module.exports.deleteReview = async (client, id) => {
 
 module.exports.updateReview = async (client, id, note, comment) => {
   return await client.query(
-    "UPDATE client SET note=$1, comment=$2 WHERE id=$3"[(note, comment, id)]
+    "UPDATE review SET note=$1, comment=$2 WHERE id=$3",
+    [note, comment, id]
   );
 };
 

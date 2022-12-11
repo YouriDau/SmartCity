@@ -13,11 +13,10 @@ import useFetchToilets from "../services/useFetchToilets";
 import ToiletCard from "../components/ToiletCard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+const DEFAULT_POSITION = { latitude: 50.46498, longitude: 4.86529 };
+
 const Maps = ({ navigation }) => {
-  const [initialPosition, setInitialPosition] = useState({
-    latitude: 50.46498,
-    longitude: 4.86529,
-  });
+  const [initialPosition, setInitialPosition] = useState(DEFAULT_POSITION);
   const [canAddToilet, setCanAddToilet] = useState(false);
   const [newCoordinate, setNewCoordinates] = useState();
   const [cardIsVisible, setCardIsVisible] = useState(false);
@@ -29,6 +28,7 @@ const Maps = ({ navigation }) => {
 
   useEffect(() => {
     getCoordinate().then((coordinate) => {
+      console.log(coordinate);
       if (coordinate !== undefined) {
         setInitialPosition({
           latitude: coordinate.latitude,

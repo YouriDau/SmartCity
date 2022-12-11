@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { View, Text, StyleSheet, TextInput, Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { setUser } from "../../redux/actions/account";
 
 import Title from "../../components/Title";
 import Button from "../../components/Button";
 import useFetchPerson from "../../services/useFetchPerson";
 
 import { LOGIN_NOT_FOUND } from "../../config";
+import { useDispatch } from "react-redux";
 
 const PLACEHOLDERS = {
   pseudo: "Your pseudo here",
@@ -20,6 +22,7 @@ const LoginForm = ({ navigation }) => {
   const [pseudo, setPseudo] = useState("");
   const [password, setPassword] = useState("");
   const { loginFetch } = useFetchPerson();
+  const dispatch = useDispatch();
 
   const handlePressCancel = () => {
     navigation.goBack();

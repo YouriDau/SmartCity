@@ -18,9 +18,7 @@ module.exports.mustBeAdminOrOwnerReview = async (req, res, next) => {
   } else {
     const headerAuth = req.get("authorization");
     if (headerAuth !== undefined && headerAuth.includes("Bearer")) {
-      const jwtToken = headerAuth.split(" ")[1];
-      const decodedJwtToken = jwt.verify(jwtToken, process.env.SECRET_TOKEN);
-      const userId = decodedJwtToken.value.id;
+      const userId = req.session.id;
       const reviewId = req.body.id;
 
       if (req.session.authLevel === "user") {

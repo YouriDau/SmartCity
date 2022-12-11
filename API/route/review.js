@@ -7,7 +7,7 @@ const router = new Router();
 
 router.get("/:toiletId", ReviewControleur.getReviewsByToiletId);
 router.post("/", JWTMiddleware.identification, ReviewControleur.postReview);
-router.patch(
+router.put(
   "/",
   JWTMiddleware.identification,
   AuthoMiddleware.mustBeAdminOrOwnerReview,
@@ -19,6 +19,11 @@ router.patch(
   AuthoMiddleware.mustBeAdminOrOwnerReview,
   ReviewControleur.deleteReview
 );*/
-router.delete("/", ReviewControleur.deleteReview);
+router.delete(
+  "/",
+  JWTMiddleware.identification,
+  AuthoMiddleware.mustBeAdminOrOwnerReview,
+  ReviewControleur.deleteReview
+);
 
 module.exports = router;

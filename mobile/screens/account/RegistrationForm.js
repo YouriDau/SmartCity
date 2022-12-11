@@ -50,15 +50,6 @@ const RegistrationForm = ({ navigation }) => {
             } else {
               addPersonFetch(pseudo, lastName, firstName, email, password)
                 .then((status) => {
-                  dispatch(
-                    addUser(
-                      { pseudo },
-                      { lastName },
-                      { firstName },
-                      { email },
-                      { password }
-                    )
-                  );
                   console.log(status);
                   switch (status) {
                     case 201:
@@ -66,7 +57,15 @@ const RegistrationForm = ({ navigation }) => {
                         "Success",
                         "Congratulation, your account was successfully created!"
                       );
-
+                      dispatch(
+                        setUser(
+                          { pseudo },
+                          { lastName },
+                          { firstName },
+                          { email },
+                          { password }
+                        )
+                      );
                       break;
                     default:
                       console.log("Add user default switch");
@@ -111,6 +110,7 @@ const RegistrationForm = ({ navigation }) => {
           placeholder={PLACEHOLDERS.pseudo}
           onChangeText={setPseudo}
           value={pseudo}
+          autoFocus
         />
 
         <Text style={styles.inputText}>Last name</Text>
@@ -133,7 +133,7 @@ const RegistrationForm = ({ navigation }) => {
         <TextInput
           style={styles.input}
           placeholder={PLACEHOLDERS.email}
-          textContentType={"emailAddress"}
+          keyboardType={"email-address"}
           onChangeText={setEmail}
           value={email}
         />

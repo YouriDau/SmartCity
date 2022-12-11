@@ -5,7 +5,12 @@ import Title from "../../components/Title";
 import Button from "../../components/Button";
 
 import useFetchPerson from "../../services/useFetchPerson";
-import { ACCOUNT_DELETE_SUCCESS, PASSWORD_INPUT_EMPTY } from "../../config";
+import {
+  ACCOUNT_DELETE_SUCCESS,
+  DELETE_NOT_CHECK,
+  PASSWORD_INPUT_EMPTY,
+} from "../../config";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const DeleteForm = ({ navigation }) => {
   const [password, setPassword] = useState("");
@@ -23,7 +28,8 @@ const DeleteForm = ({ navigation }) => {
         deletePersonFetch(password).then((status) => {
           if (status === 204) {
             Alert.alert(ACCOUNT_DELETE_SUCCESS);
-            navigation.navigate("Maps");
+            AsyncStorage.removeItem("token");
+            navigation.navigate("MenuDisconnected");
           }
         });
       } else {

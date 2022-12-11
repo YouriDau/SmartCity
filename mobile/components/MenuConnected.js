@@ -1,9 +1,7 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { useEffect, useState } from "react";
 
 import Maps from "../screens/Maps";
 
-import AddPerson from "../screens/account/RegistrationForm";
 import UpdatePerson from "../screens/account/UpdateForm";
 import DeletePerson from "../screens/account/DeleteForm";
 

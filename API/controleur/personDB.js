@@ -118,7 +118,7 @@ module.exports.updatePerson = async (req, res) => {
       expiresIn: "1d",
     });
 
-    res.send(200).json(token);
+    res.status(200).json(token);
   } catch (error) {
     console.error("updatePersonError", error);
     res.sendStatus(500);
@@ -139,7 +139,7 @@ module.exports.deletePerson = async (req, res) => {
         req.session.pseudo
       );
       const person = rows[0];
-      if (compareHash(password, person.password)) {
+      if (await compareHash(password, person.password)) {
         await deleteUserId(client, req.session.id);
         res.sendStatus(204);
       } else {

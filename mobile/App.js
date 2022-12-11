@@ -20,28 +20,30 @@ import AddReport from "./screens/reports/AddForm";
 import AddToilet from "./screens/toilets/AddForm";
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { DEFAULT_MENU } from "./config";
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
-  const [initialMenu, setInitialMenu] = useState();
+  // const [initialMenu, setInitialMenu] = useState("MenuDisconnected");
 
-  useEffect(() => {
-    AsyncStorage.getItem("token").then((token) => {
-      console.log(token !== undefined && token !== null);
-      if (token) {
-        setInitialMenu("MenuConnected");
-      } else {
-        setInitialMenu("MenuDisconnected");
-      }
-    });
-  }, []);
+  // async function setMenu() {
+  //   const token = await AsyncStorage.getItem("token");
+  //   console.log(token);
+  //   if (token) {
+  //     setInitialMenu("MenuConnected");
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   setMenu();
+  // }, []);
 
   return (
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName={initialMenu}
+          initialRouteName={DEFAULT_MENU}
           screenOptions={{ headerShown: false }}
         >
           <Stack.Screen
