@@ -217,7 +217,6 @@ module.exports.getCurrentUser = async (req, res) => {
       person.firstName = person.first_name;
       delete person.last_name;
       delete person.first_name;
-
       res.json(person);
     } else {
       res.sendStatus(400);

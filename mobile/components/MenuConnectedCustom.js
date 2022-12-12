@@ -5,13 +5,7 @@ import {
 } from "@react-navigation/drawer";
 
 import { Octicons } from "@expo/vector-icons";
-
-import Maps from "../screens/Maps";
-
-import UpdateAccount from "../screens/account/UpdateForm";
-import DeleteAccount from "../screens/account/DeleteForm";
-import { Alert, Pressable, View, Text, StyleSheet } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { Alert, View, StyleSheet } from "react-native";
 import Constants from "expo-constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 

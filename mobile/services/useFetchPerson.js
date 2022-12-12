@@ -1,9 +1,13 @@
 import axios from "axios";
 import { Alert } from "react-native";
+import { useSelector } from "react-redux";
 import { BASE_URL_API } from "../config";
+import { getToken } from "../redux/selectors";
 import authHeader from "./authHeader";
 
 export default function useFetchPerson() {
+  const token = useSelector(getToken);
+
   const addPersonFetch = async (
     pseudo,
     lastName,
@@ -23,7 +27,6 @@ export default function useFetchPerson() {
           password,
         },
       });
-      console.log(response.status);
       return response.status;
     } catch (error) {
       console.error("addPersonError", error);
@@ -95,15 +98,20 @@ export default function useFetchPerson() {
   };
 
   const getCurrentUserFetch = async () => {
+    // console.log("début getCurrentUserFetch");
+    console.log(token);
     try {
       const response = await axios({
         method: "get",
         url: `${BASE_URL_API}/person/current`,
-        headers: await authHeader(),
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
       });
+      // console.log("fin getCurrentUserFetch");
       return { status: response.status, user: response.data };
     } catch (error) {
-      console.error("getCurrentUserError", error);
+      console.error("getCurrentUserFetchError", error);
     }
   };
 

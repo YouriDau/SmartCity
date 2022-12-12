@@ -18,28 +18,11 @@ import DeleteReview from "./screens/reviews/DeleteForm";
 import AddReport from "./screens/reports/AddForm";
 
 import AddToilet from "./screens/toilets/AddForm";
-import { useEffect, useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { DEFAULT_MENU } from "./config";
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
-  AsyncStorage.removeItem("token"); // à retirer pour afficher le menu connected
-  // const [initialMenu, setInitialMenu] = useState("MenuDisconnected");
-
-  // async function setMenu() {
-  //   const token = await AsyncStorage.getItem("token");
-  //   console.log(token);
-  //   if (token) {
-  //     setInitialMenu("MenuConnected");
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   setMenu();
-  // }, []);
-
   return (
     <Provider store={store}>
       <NavigationContainer>

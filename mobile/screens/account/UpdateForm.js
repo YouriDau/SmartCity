@@ -6,59 +6,48 @@ import useFetchPerson from "../../services/useFetchPerson";
 import { ScrollView } from "react-native-gesture-handler";
 import { ACCOUNT_MODIFY_SUCCESS } from "../../config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser } from "../../redux/selectors";
+import { setUser } from "../../redux/actions/account";
+import { validAccount } from "../../business/account";
 
 const UpdateForm = ({ navigation }) => {
   const [pseudo, setPseudo] = useState("");
   const [lastName, setLastName] = useState("");
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("****");
+  const user = useSelector(getUser);
 
-  const { getCurrentUserFetch, updatePersonFetch } = useFetchPerson();
+  const { updatePersonFetch } = useFetchPerson();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getCurrentUserFetch().then(({ status, user }) => {
-      setPseudo(user.pseudo);
-      setLastName(user.lastName);
-      setFirstName(user.firstName);
-      setEmail(user.email);
-    });
-  }, []);
+    setPseudo(user.pseudo);
+    setLastName(user.lastName);
+    setFirstName(user.firstName);
+    setEmail(user.email);
+  }, [user]);
 
   const handlePressUpdate = () => {
-    let alert = "Please enter your ";
-    if (pseudo === "") {
-      alert += "pseudo ";
-      Alert.alert(alert);
+    const accountAlert = validAccount(
+      pseudo,
+      lastName,
+      firstName,
+      email,
+      password
+    );
+    if (accountAlert !== undefined) {
+      Alert.alert(accountAlert);
     } else {
-      if (lastName === "") {
-        alert += "last name ";
-        Alert.alert(alert);
-      } else {
-        if (firstName === "") {
-          alert += "first name ";
-          Alert.alert(alert);
-        } else {
-          if (email === "") {
-            alert += "email ";
-            Alert.alert(alert);
-          } else {
-            updatePersonFetch(pseudo, lastName, firstName, email).then(
-              (response) => {
-                if (response.status === 200) {
-                  Alert.alert(ACCOUNT_MODIFY_SUCCESS);
-                  AsyncStorage.setItem("token", response.data);
-                  navigation.navigate("Maps");
-                }
-              }
-            );
-
-            setPseudo("");
-            setLastName("");
-            setFirstName("");
-            setEmail("");
-          }
+      updatePersonFetch(pseudo, lastName, firstName, email).then((response) => {
+        if (response.status === 200) {
+          Alert.alert(ACCOUNT_MODIFY_SUCCESS);
+          AsyncStorage.setItem("token", response.data);
+          dispatch(setUser(pseudo, lastName, firstName, email));
+          navigation.navigate("Maps");
         }
-      }
+      });
     }
   };
 
@@ -97,6 +86,14 @@ const UpdateForm = ({ navigation }) => {
           textContentType={"emailAddress"}
           value={email}
           onChangeText={setEmail}
+        />
+
+        <Text style={styles.inputText}>Password</Text>
+        <TextInput
+          style={styles.input}
+          secureTextEntry
+          onChangeText={setPassword}
+          value={password}
         />
       </ScrollView>
       <View style={styles.buttons}>

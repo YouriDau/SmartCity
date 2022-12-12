@@ -27,16 +27,20 @@ const Maps = ({ navigation }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    getToiletsFetch().then(({ status, data }) => {
+      console.log(data);
+      dispatch(setToilets(data));
+    });
+  }, []);
+
+  useEffect(() => {
     getCoordinate().then((coordinate) => {
-      console.log(coordinate);
       if (coordinate !== undefined) {
         setInitialPosition({
           latitude: coordinate.latitude,
           longitude: coordinate.longitude,
         });
       }
-
-      getToiletsFetch().then(({ status, data }) => dispatch(setToilets(data)));
     });
   }, []);
 
@@ -48,6 +52,7 @@ const Maps = ({ navigation }) => {
         accuracy: Location.ACCESS_COARSE_LOCATION, // pour avoir une localisation approximative
       });
       // coords contient {latitude, longitude}
+      console.log("return");
       return userLocation.coords;
     }
   };
@@ -91,7 +96,7 @@ const Maps = ({ navigation }) => {
   };
 
   const showMarkers = () => {
-    if (toilets !== undefined) {
+    if (toilets) {
       return toilets.map((toilet) => (
         <Marker
           key={toilet.id}

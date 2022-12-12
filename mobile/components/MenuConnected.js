@@ -18,15 +18,9 @@ const MenuConnected = () => {
   const dispatch = useDispatch();
   const { getCurrentUserFetch } = useFetchPerson();
 
-  const getCurrentUser = () => {
-    getCurrentUserFetch().then(({ user }) => {
-      console.log(user);
-    });
-  };
-
   useEffect(() => {
-    getCurrentUser().then((user) => {
-      dispatch(setUser());
+    getCurrentUserFetch().then(({ user }) => {
+      dispatch(setUser(user.pseudo, user.lastName, user.firstName, user.email));
     });
   }, []);
 

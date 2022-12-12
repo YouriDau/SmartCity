@@ -3,10 +3,11 @@ import { View, Text, StyleSheet, TextInput, Alert } from "react-native";
 import Title from "../../components/Title";
 import Button from "../../components/Button";
 import { useDispatch } from "react-redux";
-import { addUser } from "../../redux/actions/account";
+import { addUser, setUser } from "../../redux/actions/account";
 import { ScrollView } from "react-native-gesture-handler";
 import useFetchPerson from "../../services/useFetchPerson";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { validAccount } from "../../business/account";
 
 const PLACEHOLDERS = {
   pseudo: "Your pseudo here",
@@ -27,72 +28,47 @@ const RegistrationForm = ({ navigation }) => {
   const [password, setPassword] = useState("");
 
   const handlePressRegister = () => {
-    let alert = "Please enter your ";
-    if (pseudo === "") {
-      alert += "pseudo ";
-      Alert.alert(alert);
+    const accountAlert = validAccount(
+      pseudo,
+      lastName,
+      firstName,
+      email,
+      password
+    );
+    if (accountAlert !== undefined) {
+      Alert.alert(accountAlert);
     } else {
-      if (lastName === "") {
-        alert += "last name ";
-        Alert.alert(alert);
-      } else {
-        if (firstName === "") {
-          alert += "first name ";
-          Alert.alert(alert);
-        } else {
-          if (email === "") {
-            alert += "email ";
-            Alert.alert(alert);
-          } else {
-            if (password === "") {
-              alert += "password";
-              Alert.alert(alert);
-            } else {
-              addPersonFetch(pseudo, lastName, firstName, email, password)
-                .then((status) => {
-                  console.log(status);
-                  switch (status) {
-                    case 201:
-                      Alert.alert(
-                        "Success",
-                        "Congratulation, your account was successfully created!"
-                      );
-                      dispatch(
-                        setUser(
-                          { pseudo },
-                          { lastName },
-                          { firstName },
-                          { email },
-                          { password }
-                        )
-                      );
-                      break;
-                    default:
-                      console.log("Add user default switch");
-                  }
-                })
-                .then(() => {
-                  loginFetch(pseudo, password)
-                    .then((result) => {
-                      if (result.status === 200) {
-                        AsyncStorage.setItem("token", result.data);
-                        navigation.navigate("MenuConnected");
-                      } else {
-                        Alert.alert("Pseudo or password incorect!");
-                      }
-                    })
-                    .catch((error) => console.error("loginFetchError", error));
-                });
-
-              setPseudo("");
-              setLastName("");
-              setFirstName("");
-              setPassword("");
-              setEmail("");
-            }
+      addPersonFetch(pseudo, lastName, firstName, email, password)
+        .then((status) => {
+          console.log(status);
+          if (status === 201) {
+            Alert.alert(
+              "Success",
+              "Congratulation, your account was successfully created!"
+            );
+            dispatch(
+              setUser(
+                { pseudo },
+                { lastName },
+                { firstName },
+                { email },
+                { password }
+              )
+            );
           }
-        }
-      }
+        })
+        .then(() => {
+          loginFetch(pseudo, password)
+            .then((result) => {
+              if (result.status === 200) {
+                AsyncStorage.setItem("token", result.data);
+                navigation.navigate("MenuConnected");
+              } else {
+                Alert.alert("Pseudo or password incorect!");
+              }
+            })
+            .catch((error) => console.error("loginFetchError", error));
+        });
     }
   };
 
