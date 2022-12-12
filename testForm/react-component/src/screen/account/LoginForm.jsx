@@ -19,6 +19,7 @@ class LoginForm extends React.Component {
         if (result.status === 200) {
           alert("Login success");
           localStorage.setItem("token", result.data);
+          console.log(result.data);
         } else {
           console.log("Login failed");
         }

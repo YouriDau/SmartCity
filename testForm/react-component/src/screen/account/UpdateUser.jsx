@@ -1,19 +1,31 @@
 import React from "react";
 import Header from "../../component/Header";
 import UserForm from "../../component/UserForm";
+import { getPersonByIdFetch } from "../../component/API/useFetchPerson";
+
+function withParams(Component) {
+  return props => <Component {...props} params={useParams()} />;
+}
 
 class UpdateUser extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    const id = parseInt(this.props.params.id);
     this.state = {
-      users: [],
+      id, 
+      user,
       inputPseudo: "",
       inputLastName: "",
       inputFirstName: "",
       inputPassword: "",
       inputEmail: "",
     };
-    //this.state.labels = props.labels
+  }
+
+  componentDidMount() {
+    getPersonByIdFetch(this.state.id).then(() => {
+      this.setState({user : user });
+    })
   }
 
   render() {
@@ -26,10 +38,11 @@ class UpdateUser extends React.Component {
           title={"Update user"}
           titleButton={"Save modifications"}
           isUpdate={true}
+          currentUser={this.state.user}
         />
       </div>
     );
   }
 }
 
-export default UpdateUser;
+export default withParams(UpdateUser);

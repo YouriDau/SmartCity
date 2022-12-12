@@ -51,6 +51,7 @@ class UserForm extends React.Component {
               <br />
               <input
                 type="text"
+                value = {this.props.isUpdate ? this.props.currentUser.pseudo : ""}
                 onChange={(event) => {
                   this.setState({ inputPseudo: event.target.value });
                 }}
@@ -61,6 +62,7 @@ class UserForm extends React.Component {
               <br />
               <input
                 type="text"
+                value = {this.props.isUpdate ? this.props.currentUser.lastName : ""}
                 onChange={(event) => {
                   this.setState({ inputLastName: event.target.value });
                 }}
@@ -71,6 +73,7 @@ class UserForm extends React.Component {
               <br />
               <input
                 type="text"
+                value = {this.props.isUpdate ? this.props.currentUser.firstName : ""}
                 onChange={(event) => {
                   this.setState({ inputFirstName: event.target.value });
                 }}
@@ -91,6 +94,7 @@ class UserForm extends React.Component {
               <br />
               <input
                 type="text"
+                value = {this.props.isUpdate ? this.props.currentUser.email : ""}
                 onChange={(event) => {
                   this.setState({ inputEmail: event.target.value });
                 }}

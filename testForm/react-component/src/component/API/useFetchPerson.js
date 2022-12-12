@@ -10,7 +10,7 @@ const getAllPersonsFetch = async () => {
   }
 };
 
-const getPersonById = async (id) => {
+const getPersonByIdFetch = async (id) => {
   try {
     const response = await axios.get(`${BASE_URL_API}/person/${id}`, {});
     return response.data;
@@ -79,7 +79,7 @@ const loginFetch = async (pseudo, password) => {
 
 export {
   getAllPersonsFetch,
-  getPersonById,
+  getPersonByIdFetch,
   addPersonFetch,
   deletePersonByIdFetch,
   loginFetch,
