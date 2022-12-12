@@ -39,7 +39,7 @@ const ReviewForm = ({ isUpdate, navigation, toiletId, review }) => {
     updateReviewFetch(review.id, note, comment).then((status) => {
       if (status === 204) {
         Alert.alert(REVIEW_MODIFY_SUCCESS);
-        navigation.goBack();
+        navigation.navigate("maps");
       }
     });
   };

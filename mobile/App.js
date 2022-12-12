@@ -25,6 +25,7 @@ import { DEFAULT_MENU } from "./config";
 const Stack = createNativeStackNavigator();
 
 const App = () => {
+  AsyncStorage.removeItem("token"); // à retirer pour afficher le menu connected
   // const [initialMenu, setInitialMenu] = useState("MenuDisconnected");
 
   // async function setMenu() {

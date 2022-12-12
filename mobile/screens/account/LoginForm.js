@@ -22,7 +22,6 @@ const LoginForm = ({ navigation }) => {
   const [pseudo, setPseudo] = useState("");
   const [password, setPassword] = useState("");
   const { loginFetch } = useFetchPerson();
-  const dispatch = useDispatch();
 
   const handlePressCancel = () => {
     navigation.goBack();

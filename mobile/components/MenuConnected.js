@@ -6,10 +6,30 @@ import UpdatePerson from "../screens/account/UpdateForm";
 import DeletePerson from "../screens/account/DeleteForm";
 
 import CustomMenu from "../components/MenuConnectedCustom";
+import { useEffect } from "react";
+
+import useFetchPerson from "../services/useFetchPerson";
+import { useDispatch } from "react-redux";
+import { setUser } from "../redux/actions/account";
 
 const Drawer = createDrawerNavigator();
 
 const MenuConnected = () => {
+  const dispatch = useDispatch();
+  const { getCurrentUserFetch } = useFetchPerson();
+
+  const getCurrentUser = () => {
+    getCurrentUserFetch().then(({ user }) => {
+      console.log(user);
+    });
+  };
+
+  useEffect(() => {
+    getCurrentUser().then((user) => {
+      dispatch(setUser());
+    });
+  }, []);
+
   return (
     <Drawer.Navigator
       initialRouteName="Maps"

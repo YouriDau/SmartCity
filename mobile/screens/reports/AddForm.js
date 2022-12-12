@@ -38,7 +38,7 @@ const AddForm = ({ navigation, route }) => {
         <TextInput
           style={styles.input}
           multiline
-          maxLength={300}
+          maxLength={250}
           placeholder={PLACEHOLDER}
           scrollEnabled={true}
           onChangeText={setReason}
