@@ -70,9 +70,7 @@ module.exports.postPerson = async (req, res) => {
       !pseudoExist &&
       !emailExist &&
       pseudoValidate(pseudo) &&
-      emailValidate(email) &&
-      nameValidate(firstName) &&
-      nameValidate(lastName)
+      emailValidate(email)
     ) {
       const passwordHashed = await getHash(password);
       await PersonModele.postPerson(
