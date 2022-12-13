@@ -1,7 +1,9 @@
 const { compareHash } = require("../utils/utils");
 
 module.exports.getAllPersons = async (client) => {
-  return await client.query("SELECT * FROM person");
+  return await client.query(
+    "SELECT id, pseudo, last_name, first_name, email FROM person"
+  );
 };
 
 module.exports.getPersonById = async (client, id) => {

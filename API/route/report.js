@@ -8,7 +8,7 @@ router.get("/notDone", ReportControleur.getNotDoneReports);
 router.get("/all", ReportControleur.getAllReports);
 router.get("/:toiletId", ReportControleur.getReport);
 router.post("/", JWTMiddleware.identification, ReportControleur.postReport);
-//router.patch("/", ReportControleur.updateReport);
+router.put("/", ReportControleur.updateReport);
 router.delete("/", ReportControleur.deleteReport);
 
 module.exports = router;

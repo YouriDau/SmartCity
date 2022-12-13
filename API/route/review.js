@@ -13,12 +13,6 @@ router.put(
   AuthoMiddleware.mustBeAdminOrOwnerReview,
   ReviewControleur.updateReview
 );
-/*router.delete(
-  "/",
-  JWTMiddleware.identification,
-  AuthoMiddleware.mustBeAdminOrOwnerReview,
-  ReviewControleur.deleteReview
-);*/
 router.delete(
   "/",
   JWTMiddleware.identification,
