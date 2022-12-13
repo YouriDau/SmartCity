@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { addPersonFetch } from "../component/API/useFetchPerson"; // dans l'objet useFetchPerson on prend addPersonFetch
+import { addPersonFetch, updatePersonFetch } from "../component/API/useFetchPerson"; // dans l'objet useFetchPerson on prend addPersonFetch
 
 class UserForm extends React.Component {
   constructor(props) {
@@ -35,9 +35,24 @@ class UserForm extends React.Component {
     });
   }
 
-  handlePressUpdate(event) {
+  async handlePressUpdate(event) {
     event.preventDefault();
-    console.log("Update user");
+    updatePersonFetch(
+      this.state.inputPseudo,
+      this.state.inputLastName,
+      this.state.inputFirstName,
+      this.state.inputEmail,
+      this.state.inputPassword
+    ).then((status) => {
+      console.log(status);
+      switch (status) {
+        case 201:
+          console.log("Update Réussi!");
+          break;
+        default:
+          console.log(`Error ${status}`);
+      }
+    });
   }
 
   render() {
@@ -51,29 +66,29 @@ class UserForm extends React.Component {
               <br />
               <input
                 type="text"
-                value = {this.props.isUpdate ? this.props.currentUser.pseudo : ""}
+                defaultValue = {this.props.isUpdate ? this.props.currentUser.pseudo : ""}
                 onChange={(event) => {
                   this.setState({ inputPseudo: event.target.value });
                 }}
               />
             </div>
             <div class="divForm">
-              <label>Lastname</label>
+              <label>Last name</label>
               <br />
               <input
                 type="text"
-                value = {this.props.isUpdate ? this.props.currentUser.lastName : ""}
+                defaultValue = {this.props.isUpdate ? this.props.currentUser.last_name : ""}
                 onChange={(event) => {
                   this.setState({ inputLastName: event.target.value });
                 }}
               />
             </div>
             <div class="divForm">
-              <label>Firstname</label>
+              <label>First name</label>
               <br />
               <input
                 type="text"
-                value = {this.props.isUpdate ? this.props.currentUser.firstName : ""}
+                defaultValue = {this.props.isUpdate ? this.props.currentUser.first_name : ""}
                 onChange={(event) => {
                   this.setState({ inputFirstName: event.target.value });
                 }}
@@ -94,7 +109,7 @@ class UserForm extends React.Component {
               <br />
               <input
                 type="text"
-                value = {this.props.isUpdate ? this.props.currentUser.email : ""}
+                defaultValue = {this.props.isUpdate ? this.props.currentUser.email : ""}
                 onChange={(event) => {
                   this.setState({ inputEmail: event.target.value });
                 }}

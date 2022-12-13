@@ -1,4 +1,5 @@
 import React from "react";
+import ReactSlider from "react-slider";
 import { addReportFetch } from "../component/API/useFetchReport";
 
 class ReportForm extends React.Component {
@@ -6,6 +7,7 @@ class ReportForm extends React.Component {
     super(props);
     this.state = {
       inputReport: "",
+      isChecked: false,
     };
   }
 
@@ -44,6 +46,26 @@ class ReportForm extends React.Component {
                 this.setState({ inputReport: event.target.value });
               }}
             />
+            <br/>
+            {this.props.isReport ? 
+              <label>
+                <input 
+                  id="reportDone" 
+                  type="checkbox" 
+                  checked={this.state.isChecked}  
+                  onChange={() => {
+                    this.setState(!this.state.isChecked);
+                  }}
+                />
+                Is the report done ?
+              </label>
+              :
+              <ReactSlider 
+                min={0}
+                max={5}
+                step={1}
+              />
+            }
           </div>
           <div>
             <button

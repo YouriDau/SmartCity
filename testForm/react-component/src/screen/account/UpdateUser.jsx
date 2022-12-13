@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../../component/Header";
 import UserForm from "../../component/UserForm";
 import { getPersonByIdFetch } from "../../component/API/useFetchPerson";
+import {useParams} from 'react-router-dom';
 
 function withParams(Component) {
   return props => <Component {...props} params={useParams()} />;
@@ -13,7 +14,7 @@ class UpdateUser extends React.Component {
     const id = parseInt(this.props.params.id);
     this.state = {
       id, 
-      user,
+      user: "",
       inputPseudo: "",
       inputLastName: "",
       inputFirstName: "",
@@ -23,7 +24,7 @@ class UpdateUser extends React.Component {
   }
 
   componentDidMount() {
-    getPersonByIdFetch(this.state.id).then(() => {
+    getPersonByIdFetch(this.state.id).then((user) => {
       this.setState({user : user });
     })
   }

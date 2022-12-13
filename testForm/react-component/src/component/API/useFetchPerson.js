@@ -38,6 +38,25 @@ const addPersonFetch = async (pseudo, lastName, firstName, email, password) => {
   }
 };
 
+const updatePersonFetch = async (pseudo, lastName, firstName, email, password) => {
+  try {
+    const response = await axios({
+      method: "put",
+      url: `${BASE_URL_API}/person`,
+      data: {
+        pseudo,
+        lastName,
+        firstName,
+        email,
+        password,
+      },
+    });
+    return response.status;
+  } catch (error) {
+    console.error("updatePersonFetchError", error);
+  }
+}
+
 const deletePersonByIdFetch = async (id) => {
   try {
     const token = await localStorage.getItem("token");
@@ -81,6 +100,7 @@ export {
   getAllPersonsFetch,
   getPersonByIdFetch,
   addPersonFetch,
+  updatePersonFetch,
   deletePersonByIdFetch,
   loginFetch,
 };

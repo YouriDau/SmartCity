@@ -22,6 +22,7 @@ class UpdateReport extends React.Component {
         <ReportForm
           title={"Update this report"}
           titleButton={"Save"}
+          isReport={true}
           handlePress={this.handlePressUpdate}
         />
       </div>
