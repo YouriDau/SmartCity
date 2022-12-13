@@ -110,6 +110,7 @@ module.exports.updateToilet = async (req, res) => {
   }
 };
 
+// à terminer pour supprimer toutes les reviews/reports associés (plus les id dans personnes)
 module.exports.deleteToilet = async (req, res) => {
   const { id } = req.body;
   if (!isNaN(id)) {
@@ -117,6 +118,7 @@ module.exports.deleteToilet = async (req, res) => {
     try {
       client.query("START TRANSACTION");
       await LocationModele.deleteLocation(client, id);
+
       await ToiletModele.deleteToilet(client, id);
       client.query("COMMIT TRANSACTION");
       res.sendStatus(204);
