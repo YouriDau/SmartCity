@@ -12,6 +12,7 @@ const {
 
 module.exports.getCurrentUser = async (req, res) => {
   const client = await pool.connect();
+  console.log("test");
   try {
     const userId = req.session.id;
     const { rows: persons } = await PersonModele.getPersonById(client, userId);
