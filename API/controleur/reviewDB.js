@@ -46,6 +46,7 @@ module.exports.getReview = async (req, res) => {
 
   const client = await pool.connect();
   try {
+    console.log(id);
     if (!isNaN(id)) {
       const { rows } = await ReviewModele.getReview(client, id);
       const review = rows[0];
