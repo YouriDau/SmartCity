@@ -1,6 +1,7 @@
 import React from "react";
 import ReactSlider from "react-slider";
 import { addReportFetch } from "../component/API/useFetchReport";
+import { updateReportFetch } from "../component/API/useFetchReport";
 
 class ReportForm extends React.Component {
   constructor(props) {
@@ -28,20 +29,33 @@ class ReportForm extends React.Component {
       });
   }
 
-  handlePressUpdate(event) {
+  async handlePressUpdate(event) {
     event.preventDefault();
-    console.log("Update report");
+    updateReportFetch(
+      this.state.inputReport,
+      this.state.isChecked,
+    ).then((status) => {
+      console.log(status);
+      switch (status) {
+        case 201:
+          console.log("Update Réussi!");
+          break;
+        default:
+          console.log(`Error ${status}`);
+      }
+    });
   }
 
   render() {
     return (
       <div>
-        <h1>{this.props.title}</h1>
+        <h1>{this.props.title} {this.props.isUpdate ? this.props.currentReport.id : ""}</h1>
         <form>
           <div>
             <label>{this.props.text}</label>
             <br />
             <textarea
+              defaultValue={this.props.isUpdate ? this.props.currentReport.reason : ""}
               onChange={(event) => {
                 this.setState({ inputReport: event.target.value });
               }}
@@ -54,7 +68,8 @@ class ReportForm extends React.Component {
                   type="checkbox" 
                   checked={this.state.isChecked}  
                   onChange={() => {
-                    this.setState(!this.state.isChecked);
+                    console.log(this.state.isChecked);
+                    this.setState({isChecked : !this.state.isChecked});
                   }}
                 />
                 Is the report done ?

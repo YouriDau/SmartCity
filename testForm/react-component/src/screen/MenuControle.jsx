@@ -34,6 +34,11 @@ class MenuControle extends React.Component {
                             <p>reports</p>
                         </div>
                     </Link>
+                    <Link to={"/updateUser"} className="linkMenu">
+                        <div class="divMenu">
+                            <p>my account</p>
+                        </div>
+                    </Link>
                 </div>
             </div>
             

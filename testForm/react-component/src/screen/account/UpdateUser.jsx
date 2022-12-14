@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../../component/Header";
 import UserForm from "../../component/UserForm";
-import { getPersonByIdFetch } from "../../component/API/useFetchPerson";
+import { getPersonByIdFetch, getCurrentUserFetch } from "../../component/API/useFetchPerson";
 import {useParams} from 'react-router-dom';
 
 function withParams(Component) {
@@ -24,9 +24,13 @@ class UpdateUser extends React.Component {
   }
 
   componentDidMount() {
+    console.log(this.state.id);
     getPersonByIdFetch(this.state.id).then((user) => {
-      this.setState({user : user });
+      this.setState({user : user});
     })
+    /*getCurrentUserFetch().then((user) => {
+      this.setState({user : user});
+    });*/
   }
 
   render() {

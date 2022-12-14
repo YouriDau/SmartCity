@@ -94,16 +94,21 @@ class UserForm extends React.Component {
                 }}
               />
             </div>
-            <div class="divForm">
-              <label>Password</label>
-              <br />
-              <input
-                type="password"
-                onChange={(event) => {
-                  this.setState({ inputPassword: event.target.value });
-                }}
-              />
-            </div>
+            {this.props.registration ? 
+              <div class="divForm">
+                <label>Password</label>
+                <br />
+                <input
+                  type="password"
+                  onChange={(event) => {
+                    this.setState({ inputPassword: event.target.value });
+                  }}
+                />
+              </div>
+              :
+              ""
+            }
+            
             <div class="divForm">
               <label>Email</label>
               <br />

@@ -1,6 +1,14 @@
 import axios from "axios";
 import { BASE_URL_API } from "../../config";
 
+const getCurrentUserFetch = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL_API}/person/current`);
+  } catch (error) {
+    console.error("getCurrentUserFetchError", error);
+  }
+}
+
 const getAllPersonsFetch = async () => {
   try {
     const response = await axios.get(`${BASE_URL_API}/person`);
@@ -12,7 +20,8 @@ const getAllPersonsFetch = async () => {
 
 const getPersonByIdFetch = async (id) => {
   try {
-    const response = await axios.get(`${BASE_URL_API}/person/${id}`, {});
+    const response = await axios.get(`${BASE_URL_API}/person/${id}`);
+    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error("getPersonByIdError", error);
@@ -97,6 +106,7 @@ const loginFetch = async (pseudo, password) => {
 };
 
 export {
+  getCurrentUserFetch,
   getAllPersonsFetch,
   getPersonByIdFetch,
   addPersonFetch,

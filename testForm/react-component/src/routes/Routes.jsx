@@ -16,6 +16,7 @@ import Maps from "../screen/Maps";
 import DeleteReview from "../screen/review/DeleteReview";
 import MenuControle from "../screen/MenuControle";
 import DeleteToilet from "../screen/toilet/DeleteToilet";
+import UpdatePassword from "../screen/account/UpdatePassword";
 
 export default function Router() {
   return (
@@ -33,6 +34,7 @@ export default function Router() {
         <Route path={"/updateUser/:id"} element={<UpdateUser />} />
         <Route path={"/updateReport/:id"} element={<UpdateReport />} />
         <Route path={"/updateReview/:id"} element={<UpdateReview />} />
+        <Route path={"/updatePassword"} element={<UpdatePassword />} />
 
         <Route path={"/deleteUser/:id"} element={<DeleteUser />} />
         <Route path={"/deleteReport/:id"} element={<DeleteReport />} />

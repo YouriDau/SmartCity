@@ -10,7 +10,7 @@ router.get(
   JWTMiddleware.identification,
   PersonControleur.getCurrentUser
 );
-router.get("/:pseudo", PersonControleur.getPersonByPseudo);
+router.get("/:id", PersonControleur.getPersonById);
 router.get("/", PersonControleur.getAllPersons); // Pour le test
 router.post("/login", PersonControleur.login);
 router.post("/", PersonControleur.postPerson);

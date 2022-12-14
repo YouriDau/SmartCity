@@ -22,12 +22,14 @@ class List extends React.Component {
                      {`${this.props.name} ${item[this.props.parameter]}`} 
                   
                     <Link to={"/" + this.props.linkSeeMore + "/" + item.id}>
-                        <button class="btnList">see more</button>
+                      <button class="btnList">see more</button>
                     </Link>
                     <Link to={"/" + this.props.linkDelete + "/" + item.id}>
-                        <button class="btnList">delete</button>
+                      <button class="btnList">delete</button>
                     </Link>
-                    
+                    <Link>
+                      <button class="btnList">change pasword</button>
+                    </Link>
                 </div>
               );
             })}

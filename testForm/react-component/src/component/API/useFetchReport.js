@@ -19,6 +19,15 @@ const getNotDoneReportsFetch = async () => {
     }
 }
 
+const getReportByIdFetch = async (id) => {
+    try {
+        const response = await axios.get(`${BASE_URL_API}/report/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error("getReportByIdFetchError", error);
+    }
+} 
+
 const addReportFetch = async (reason) => {
     await axios({
         method: "post",
@@ -27,6 +36,17 @@ const addReportFetch = async (reason) => {
             reason,
             userId: 1,
             toiletId: 1
+        }
+    });
+}
+
+const updateReportFetch = async (reason, isDone) => {
+    await axios({
+        method: "put",
+        url: `${BASE_URL_API}/report`,
+        data: {
+            reason,
+            isDone,
         }
     });
 }
@@ -44,4 +64,4 @@ const deleteReportFetch = async (id) => {
     }
 }
 
-export { getAllReportsFetch, getNotDoneReportsFetch, addReportFetch, deleteReportFetch };
+export { getAllReportsFetch, getNotDoneReportsFetch, getReportByIdFetch, addReportFetch, updateReportFetch, deleteReportFetch };
