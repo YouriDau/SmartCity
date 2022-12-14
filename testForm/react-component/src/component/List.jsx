@@ -4,44 +4,39 @@ import { Link } from "react-router-dom";
 //import UpdateUser from "../screen/account/UpdateUser";
 //import DeleteUser from "../screen/account/DeleteUser";
 
-class List extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+const List = (props) => {
 
-  render() {
-    return (
+  return (
+    <div>
+      <h1>{props.title}</h1>
       <div>
-        <h1>{this.props.title}</h1>
-        <div>
-          <table>
-            {this.props.tab.map((item) => {
-              return (
-                <div className="list">
-                  {`${this.props.name} ${item[this.props.parameter]}`}
+        <table>
+          {props.tab.map((item) => {
+            return (
+              <div className="list">
+                {`${props.name} ${item[props.parameter]}`}
 
-                  <Link to={"/" + this.props.linkSeeMore + "/" + item.id}>
-                    <button className="btnList">see more</button>
-                  </Link>
-                  <Link to={"/" + this.props.linkDelete + "/" + item.id}>
-                    <button className="btnList">delete</button>
-                  </Link>
-                  <Link>
-                    <button className="btnList">update pasword</button>
-                  </Link>
-                </div>
-              );
-            })}
-          </table>
-        </div>
-
-        <div>
-          <button>Back</button>
-        </div>
+                <Link to={"/" + props.linkSeeMore + "/" + item.id}>
+                  <button className="btnList">see more</button>
+                </Link>
+                <Link to={"/" + props.linkDelete + "/" + item.id}>
+                  <button className="btnList">delete</button>
+                </Link>
+                <Link>
+                  <button className="btnList">update pasword</button>
+                </Link>
+              </div>
+            );
+          })}
+        </table>
       </div>
-    );
-  }
+
+      <div>
+        <button>Back</button>
+      </div>
+    </div>
+  );
+  
 }
 
 export default List;

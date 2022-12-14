@@ -17,9 +17,9 @@ const UpdateUser = (props) => {
   const [user, setUser] = useState("");
 
   useEffect(() => {
-    console.log(this.state.id);
-    getPersonByIdFetch(this.state.id).then((user) => {
-      this.setState({ user: user });
+    console.log(id);
+    getPersonByIdFetch(id).then((user) => {
+      setUser(user);
     });
   }, []);
 

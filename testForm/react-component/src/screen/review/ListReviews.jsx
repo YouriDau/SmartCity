@@ -27,7 +27,7 @@ const ListReviews = (props) => {
       <div>
         <List
           title={"List of reviews for this toilet"}
-          tab={this.state.reviews}
+          tab={reviews}
           name={"review"}
           parameter={"id"}
           linkSeeMore={`updateReview`}
