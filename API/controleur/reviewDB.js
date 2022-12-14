@@ -71,6 +71,7 @@ module.exports.postReview = async (req, res) => {
     note !== undefined &&
     comment !== undefined &&
     toiletId !== undefined &&
+    !isNaN(note) &&
     !isNaN(toiletId)
   ) {
     const client = await pool.connect();
@@ -82,7 +83,8 @@ module.exports.postReview = async (req, res) => {
         req.session.id,
         toiletId
       );
-      res.status(201).send(reviews[0].id);
+      const review = reviews[0];
+      res.status(201).json(review.id);
     } catch (error) {
       console.error("PostReviewError", error);
       res.sendStatus(500);

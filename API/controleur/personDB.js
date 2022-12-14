@@ -66,7 +66,14 @@ module.exports.getPersonById = async (req, res) => {
       const { rows: persons } = await PersonModele.getPersonById(client, id);
       const person = persons[0];
       if (person !== undefined) {
-        res.json(person);
+        const newPerson = {
+          id: person.id,
+          pseudo: person.pseudo,
+          lastName: person.last_name,
+          firstName: person.first_name,
+          email: person.email,
+        };
+        res.json(newPerson);
       } else {
         res.sendStatus(404);
       }
@@ -256,6 +263,7 @@ module.exports.deletePerson = async (req, res) => {
         client,
         req.session.pseudo
       );
+
       const person = rows[0];
       if (await compareHash(password, person.password)) {
         await deleteUserId(client, req.session.id);

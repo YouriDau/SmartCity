@@ -239,8 +239,6 @@
 									"        email: \"josephhalin@gmail.com\",\r",
 									"    };\r",
 									"    const response = pm.response.json()\r",
-									"    console.log(response);\r",
-									"    console.log(jojos);\r",
 									"    pm.expect(response).to.be.eql(jojos);\r",
 									"});"
 								],
@@ -273,6 +271,327 @@
 								"exec": [
 									"pm.test(\"The status code should be 200\", () => {\r",
 									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.environment.set(\"jwt_token\", pm.response.text())"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"pseudo\": \"Jojos1\",\r\n    \"firstName\": \"Joseph\",\r\n    \"lastName\": \"Halinette\",\r\n    \"email\": \"josephhalin@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/person",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"person"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Wrong password current",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"The status code should be 400\", () => {\r",
+									"    pm.response.to.have.status(400);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"wrong\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/person",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"person"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Good current",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"The status code should be 204\", () => {\r",
+									"    pm.response.to.have.status(204);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"monpassword01\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/person",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"person"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Review",
+			"item": [
+				{
+					"name": "Get reviews toilet 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"The status code should be 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"// Nous ne pouvons pas réaliser le get car il contient des dates qui changeront dès la création de la database."
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/review/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"review",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add review not login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"The status code should be 401\", () => {\r",
+									"    pm.response.to.have.status(401);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"note\": 4,\r\n    \"comment\": \"mon commentaire est pas si mal que ça\",\r\n    \"toiletId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/review",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"review"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"The JWT should contain status: user\", () => {\r",
+									"    const text = pm.response.text();\r",
+									"    const payload_string = atob(text.split(\".\")[1]); // see: https://gist.github.com/benhowes/ebf9d2f905d7744e7aa093afe19ddbcd#gistcomment-2811160\r",
+									"    const payload_objet = JSON.parse(payload_string);\r",
+									"    pm.expect(payload_objet.status).to.be.equal(\"user\"); \r",
+									"    pm.environment.set(\"jwt_token\", text.split('\"')[1]);\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"jwt_token\", pm.response.json());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"pseudo\": \"tim\",\r\n    \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/person/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"person",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Good add review",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"The status code should be 201\", () => {\r",
+									"    pm.response.to.have.status(201);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"note\": 5,\r\n    \"comment\": \"mon commentaire est pas si mal que ça version 2\",\r\n    \"toiletId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/review",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"review"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Wrong id update review",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"The status code should be 403\", () => {\r",
+									"    pm.response.to.have.status(403);\r",
 									"})"
 								],
 								"type": "text/javascript"
@@ -294,7 +613,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"pseudo\": \"Jojos1\",\r\n    \"firstName\": \"Joseph\",\r\n    \"lastName\": \"Halinette\",\r\n    \"email\": \"josephhalin@gmail.com\",\r\n    \"password\": \"monpassword0136\"\r\n}",
+							"raw": "{\r\n    \"id\": 12,\r\n    \"note\": 1,\r\n    \"comment\": \"my new comment, because the last one was nos really good\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -302,12 +621,188 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/person",
+							"raw": "{{base_url}}/review",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"person"
+								"review"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Good update review",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"The status code should be 204\", () => {\r",
+									"    pm.response.to.have.status(204);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 6,\r\n    \"note\": 1,\r\n    \"comment\": \"my new comment, because the last one was nos really good\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/review",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"review"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Good delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"The status code should be 204\", () => {\r",
+									"    pm.response.to.have.status(204);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 6\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/review",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"review"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Toilet",
+			"item": [
+				{
+					"name": "Good get all toilets with location",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"The status code should be 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"All toilets should be correctly returned\", () => {\r",
+									"    const toilets = [\r",
+									"        {\r",
+									"            \"id\": 1,\r",
+									"            \"isPaid\": true,\r",
+									"            \"isReducedMobility\": true,\r",
+									"            \"location\": {\r",
+									"                \"latitude\": 50.46535,\r",
+									"                \"longitude\": 4.86461\r",
+									"            }\r",
+									"        },\r",
+									"        {\r",
+									"            \"id\": 2,\r",
+									"            \"isPaid\": false,\r",
+									"            \"isReducedMobility\": false,\r",
+									"            \"location\": {\r",
+									"                \"latitude\": 50.47104,\r",
+									"                \"longitude\": 4.85807\r",
+									"            }\r",
+									"        },\r",
+									"        {\r",
+									"            \"id\": 3,\r",
+									"            \"isPaid\": false,\r",
+									"            \"isReducedMobility\": true,\r",
+									"            \"location\": {\r",
+									"                \"latitude\": 50.47104,\r",
+									"                \"longitude\": 4.86809\r",
+									"            }\r",
+									"        },\r",
+									"        {\r",
+									"            \"id\": 4,\r",
+									"            \"isPaid\": true,\r",
+									"            \"isReducedMobility\": false,\r",
+									"            \"location\": {\r",
+									"                \"latitude\": 50.46535,\r",
+									"                \"longitude\": 4.85975\r",
+									"            }\r",
+									"        }\r",
+									"    ];\r",
+									"    const response = pm.response.json()\r",
+									"    pm.expect(response).to.be.eql(toilets);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/toilet",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"toilet"
 							]
 						}
 					},
