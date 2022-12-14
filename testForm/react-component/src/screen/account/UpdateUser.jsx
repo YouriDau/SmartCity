@@ -15,11 +15,10 @@ class UpdateUser extends React.Component {
     this.state = {
       id, 
       user: "",
-      inputPseudo: "",
+      /*inputPseudo: "",
       inputLastName: "",
       inputFirstName: "",
-      inputPassword: "",
-      inputEmail: "",
+      inputEmail: "",*/
     };
   }
 
