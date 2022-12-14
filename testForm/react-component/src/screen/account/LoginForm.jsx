@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../../component/Header";
 import { loginFetch } from "../../component/API/useFetchPerson";
-import { Redirect, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 
 class LoginForm extends React.Component {
   constructor() {

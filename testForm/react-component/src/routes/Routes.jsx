@@ -21,29 +21,31 @@ import UpdatePassword from "../screen/account/UpdatePassword";
 export default function Router() {
   return (
     <BrowserRouter>
-      <Route path={"/addToilet"} component={AddToilet} />
-      <Route path={"/addReport"} component={AddReport} />
-      <Route path={"/addReview"} component={AddReview} />
+      <Routes>
+        <Route path={"/addToilet"} element={<AddToilet />} />
+        <Route path={"/addReport"} element={<AddReport />} />
+        <Route path={"/addReview"} element={<AddReview />} />
 
-      <Route path={"/listUsers"} component={ListUsers} />
-      <Route path={"/listReports"} component={ListReports} />
-      <Route path={"/listReviews/:toiletId"} component={ListReviews} />
+        <Route path={"/listUsers"} element={<ListUsers />} />
+        <Route path={"/listReports"} element={<ListReports />} />
+        <Route path={"/listReviews/:toiletId"} element={<ListReviews />} />
 
-      <Route path={"/updateUser"} component={UpdateUser} />
-      <Route path={"/updateUser/:id"} component={UpdateUser} />
-      <Route path={"/updateReport/:id"} component={UpdateReport} />
-      <Route path={"/updateReview/:id"} component={UpdateReview} />
-      <Route path={"/updatePassword"} component={UpdatePassword} />
+        <Route path={"/updateUser"} element={<UpdateUser />} />
+        <Route path={"/updateUser/:id"} element={<UpdateUser />} />
+        <Route path={"/updateReport/:id"} element={<UpdateReport />} />
+        <Route path={"/updateReview/:id"} element={<UpdateReview />} />
+        <Route path={"/updatePassword"} element={<UpdatePassword />} />
 
-      <Route path={"/deleteUser/:id"} component={DeleteUser} />
-      <Route path={"/deleteReport/:id"} component={DeleteReport} />
-      <Route path={"/deleteReview/:id"} component={DeleteReview} />
-      <Route path={"/deleteToilet/:id"} component={DeleteToilet} />
+        <Route path={"/deleteUser/:id"} element={<DeleteUser />} />
+        <Route path={"/deleteReport/:id"} element={<DeleteReport />} />
+        <Route path={"/deleteReview/:id"} element={<DeleteReview />} />
+        <Route path={"/deleteToilet/:id"} element={<DeleteToilet />} />
 
-      <Route path={"/addUser"} component={AddUser} />
-      <Route path={"/maps"} component={Maps} />
-      <Route path={"/menuControle"} component={MenuControle} />
-      <Route exact path={"/"} component={Login} />
+        <Route path={"/addUser"} element={<AddUser />} />
+        <Route path={"/maps"} element={<Maps />} />
+        <Route path={"/menuControle"} element={<MenuControle />} />
+        <Route path={"/"} element={<Login />} />
+      </Routes>
     </BrowserRouter>
   );
 }
