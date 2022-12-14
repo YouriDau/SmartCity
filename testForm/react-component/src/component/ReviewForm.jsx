@@ -1,18 +1,14 @@
 import React from "react";
 import { addReviewFetch } from "../component/API/useFetchReview";
+import { useState, useEffect } from "react";
+import ReactSlider from "react-slider";
 
+const ReviewForm = (props) => {
+    const [inputReview, setInputReview] = useState("");
 
-class ReviewForm extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            inputReview: ""
-        };
-    }
-
-    async handlePressAdd(event) {
+    const handlePressAdd = (event) => {
         event.preventDefault();
-        addReviewFetch(this.state.inputReview)
+        addReviewFetch(inputReview)
         .then((status) => {
             switch (status) {
                 case 201:
@@ -27,43 +23,41 @@ class ReviewForm extends React.Component {
           });
     }
 
-    handlePressUpdate(event) {
+    const handlePressUpdate = (event) => {
         event.preventDefault();
         console.log("Update review");
     }
 
-    render() {
-        return (
-            <div>
-                <h1>{this.props.title}</h1>
-                <form>
-                    <div>
-                        
-
-                        <br/>
-                        <textarea
-                            onChange={(event) => {
-                                this.setState({ inputReview: event.target.value });
-                            }} 
-                        />
-                    </div>
-                    <div>
-                        <button
-                            onClick={(event) =>
-                                this.props.isUpdate 
-                                    ? this.handlePressUpdate(event)
-                                    : this.handlePressAdd(event)
-                            }
-                        >
-                            {this.props.titleButton}
-                        </button>
-                        <button style={{backgroundColor:'grey'}}>Cancel</button>
-                    </div>
-                </form>
-            </div>
-           
-        );
-    }
+    
+    return (
+        <div>
+            <h1>{props.title}</h1>
+            <form>
+                <div>
+                    <br/>
+                    <textarea
+                        onChange={(event) => {
+                            setInputReview(inputReview);
+                        }} 
+                    />
+                </div>
+                <div>
+                    <button
+                        onClick={(event) =>
+                            props.isUpdate 
+                                ? handlePressUpdate(event)
+                                : handlePressAdd(event)
+                        }
+                    >
+                        {props.titleButton}
+                    </button>
+                    <button style={{backgroundColor:'grey'}}>Cancel</button>
+                </div>
+            </form>
+        </div>
+        
+    );
+    
 }
 
 export default ReviewForm;

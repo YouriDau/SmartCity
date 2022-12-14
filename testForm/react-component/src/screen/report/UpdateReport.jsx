@@ -1,4 +1,5 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import Header from "../../component/Header";
 import ReportForm from "../../component/ReportForm";
 //import { updateReportFetch } from "../../component/API/useFetchReport";
@@ -9,39 +10,32 @@ function withParams(Component) {
   return props => <Component {...props} params={useParams()} />;
 }
 
-class UpdateReport extends React.Component {
-  constructor(props) {
-    super(props);
-    const id = parseInt(this.props.params.id)
-    this.state = {
-      id,
-      report: "",
-    };
-  }
+const UpdateReport = (props) => {
+  const id = parseInt(props.params.id)
+  const [report, setReport] = useState("");
 
-  componentDidMount() {
-    getReportByIdFetch(this.state.id).then((report) => {
-      this.setState({report : report});
+  useEffect(() => {
+    getReportByIdFetch(id).then((report) => {
+      setReport(report);
     })
-  }
+  }, []) 
 
-  render() {
-    return (
+  return (
+    <div>
       <div>
-        <div>
-          <Header />
-        </div>
-        <ReportForm
-          title={"Update this report"}
-          titleButton={"Save"}
-          isReport={true}
-          handlePress={this.handlePressUpdate}
-          isUpdate={true}
-          currentReport={this.state.report}
-        />
+        <Header />
       </div>
-    );
-  }
+      <ReportForm
+        title={"Update this report"}
+        titleButton={"Save"}
+        isReport={true}
+        // handlePress={handlePressUpdate}
+        isUpdate={true}
+        currentReport={report}
+      />
+    </div>
+  );
+  
 }
 
 export default withParams(UpdateReport);

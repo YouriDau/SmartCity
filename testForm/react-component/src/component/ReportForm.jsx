@@ -1,20 +1,15 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import ReactSlider from "react-slider";
-import { addReportFetch } from "../component/API/useFetchReport";
-import { updateReportFetch } from "../component/API/useFetchReport";
+import { addReportFetch, updateReportFetch, getReportByIdFetch } from "../component/API/useFetchReport";
 
-class ReportForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      inputReport: "",
-      isChecked: false,
-    };
-  }
+const ReportForm = (props) => {
+  const [inputReport, setInputReport] = useState("");
+  const [isChecked, setIsChecked] = useState(props.currentUser?.isDone || false);
 
-  async handlePressAdd(event) {
+  const handlePressAdd = (event) => {
     event.preventDefault();
-    addReportFetch(this.state.inputReport)
+    addReportFetch(inputReport)
       .then((status) => {
         switch (status) {
           case 201:
@@ -29,12 +24,9 @@ class ReportForm extends React.Component {
       });
   }
 
-  async handlePressUpdate(event) {
+  const handlePressUpdate = (event) => {
     event.preventDefault();
-    updateReportFetch(
-      this.state.inputReport,
-      this.state.isChecked,
-    ).then((status) => {
+    updateReportFetch(inputReport, isChecked).then((status) => {
       console.log(status);
       switch (status) {
         case 201:
@@ -46,58 +38,53 @@ class ReportForm extends React.Component {
     });
   }
 
-  render() {
-    return (
-      <div>
-        <h1>{this.props.title} {this.props.isUpdate ? this.props.currentReport.id : ""}</h1>
-        <form>
-          <div>
-            <label>{this.props.text}</label>
-            <br />
-            <textarea
-              defaultValue={this.props.isUpdate ? this.props.currentReport.reason : ""}
-              onChange={(event) => {
-                this.setState({ inputReport: event.target.value });
-              }}
-            />
-            <br/>
-            {this.props.isReport ? 
-              <label>
-                <input 
-                  id="reportDone" 
-                  type="checkbox" 
-                  checked={this.state.isChecked}  
-                  onChange={() => {
-                    console.log(this.state.isChecked);
-                    this.setState({isChecked : !this.state.isChecked});
-                  }}
-                />
-                Is the report done ?
-              </label>
-              :
-              <ReactSlider 
-                min={0}
-                max={5}
-                step={1}
+  return (
+    <div>
+      <h1>{props.title} {props.isUpdate ? props.currentReport.id : ""}</h1>
+      <form>
+        <div>
+          <label>{props.text}</label>
+          <br />
+          <textarea
+            defaultValue={props.isUpdate ? props.currentReport.reason : ""}
+            onChange={(event) => {
+              setInputReport(inputReport);
+            }}
+          />
+          <br/>
+          {props.isUpdate ? 
+            <label>
+              <input 
+                id="reportDone" 
+                type="checkbox" 
+                checked={isChecked}  
+                onChange={() => {
+                  console.log(isChecked);
+                  setIsChecked(!isChecked);
+                }}
               />
+              Is the report done ?
+            </label>
+            :
+            ""
+          }
+        </div>
+        <div>
+          <button
+            onClick={(event) =>
+              props.isUpdate
+                ? handlePressUpdate(event)
+                : handlePressAdd(event)
             }
-          </div>
-          <div>
-            <button
-              onClick={(event) =>
-                this.props.isUpdate
-                  ? this.handlePressUpdate(event)
-                  : this.handlePressAdd(event)
-              }
-            >
-              {this.props.titleButton}
-            </button>
-            <button style={{ backgroundColor: "grey" }}>Cancel</button>
-          </div>
-        </form>
-      </div>
+          >
+            {props.titleButton}
+          </button>
+          <button style={{ backgroundColor: "grey" }}>Cancel</button>
+        </div>
+      </form>
+    </div>
     );
-  }
+  
 }
 
 export default ReportForm;

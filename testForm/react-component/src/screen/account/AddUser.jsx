@@ -9,7 +9,12 @@ const AddUser = () => {
       <div class="header">
         <Header />
       </div>
-      <UserForm title={"Add user"} titleButton={"Register"} isUpdate={false} />
+      <UserForm 
+        title={"Add user"} 
+        titleButton={"Register"} 
+        isUpdate={false} 
+        registration={true}
+        />
     </div>
   );
 };
