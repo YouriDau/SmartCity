@@ -2,71 +2,62 @@ import React from "react";
 import Header from "../../component/Header";
 import { loginFetch } from "../../component/API/useFetchPerson";
 import { Route } from "react-router-dom";
+import { useState } from "react";
 
-class LoginForm extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      inputPseudo: "",
-      inputPassword: "",
-    };
-  }
+const LoginForm = () => {
+  const [inputPseudo, setInputPseudo] = useState("");
+  const [inputPassword, setInputPassword] = useState("");
 
-  handlePressLogin(event) {
+  const handlePressLogin = (event) => {
     event.preventDefault();
-    loginFetch(this.state.inputPseudo, this.state.inputPassword).then(
-      (result) => {
-        if (result.status === 200) {
-          alert("Login success");
-          localStorage.setItem("token", result.data);
-          console.log(result.data);
-        } else {
-          console.log("Login failed");
-        }
+    console.log(inputPseudo);
+    loginFetch(inputPseudo, inputPassword).then((result) => {
+      if (result.status === 200) {
+        alert("Login success");
+        localStorage.setItem("token", result.data);
+        console.log(result.data);
+      } else {
+        console.log("Login failed");
       }
-    );
-  }
+    });
+  };
 
-  render() {
-    return (
-      <div className="form">
-        <Header />
-        <h1>Login</h1>
-        <form>
-          <div className="divForm">
-            <label>Pseudo</label>
-            <br />
-            <input
-              type="text"
-              onChange={(event) => {
-                this.setState({ inputPseudo: event.target.value });
-              }}
-            />
-          </div>
-          <div className="divForm">
-            <label>Password</label>
-            <br />
-            <input
-              type="password"
-              onChange={(event) => {
-                this.setState({ inputPassword: event.target.value });
-              }}
-            />
-          </div>
-          <div className="divForm">
-            <button>Cancel</button>
-            <button onClick={(event) => this.handlePressLogin(event)}>
-              Login
-            </button>
+  return (
+    <div className="form">
+      <Header />
+      <h1>Login</h1>
+      <form>
+        <div className="divForm">
+          <label>Pseudo</label>
+          <br />
+          <input
+            type="text"
+            onChange={(event) => {
+              setInputPseudo(event.target.value);
+            }}
+          />
+        </div>
+        <div className="divForm">
+          <label>Password</label>
+          <br />
+          <input
+            type="password"
+            onChange={(event) => {
+              setInputPassword(event.target.value);
+            }}
+          />
+        </div>
+        <div className="divForm">
+          <button>Cancel</button>
+          <button onClick={(event) => handlePressLogin(event)}>Login</button>
 
-            {/*-composant redirect pour la redirection
+          {/*-composant redirect pour la redirection
                -onclick devra faire apparaitre composant redirect
                -le navigateur va lire redirect et rediriger vers la bonne adresse*/}
-          </div>
-        </form>
-      </div>
-    );
-  }
-}
+        </div>
+      </form>
+    </div>
+  );
+};
 
 export default LoginForm;
