@@ -61,19 +61,23 @@ module.exports.getPersonById = async (req, res) => {
   const idText = req.params.id; //attention ! Il s'agit de texte !
   const id = parseInt(idText);
 
-  try {
-    const { rows: persons } = await PersonModele.getPersonById(client, id);
-    const person = persons[0];
-    if (person !== undefined) {
-      res.json(person);
-    } else {
-      res.sendStatus(404);
+  if (!isNaN(id)) {
+    try {
+      const { rows: persons } = await PersonModele.getPersonById(client, id);
+      const person = persons[0];
+      if (person !== undefined) {
+        res.json(person);
+      } else {
+        res.sendStatus(404);
+      }
+    } catch (error) {
+      console.error("getPersonByIdError", error);
+      res.sendStatus(500);
+    } finally {
+      client.release();
     }
-  } catch (error) {
-    console.error("getPersonByIdError", error);
-    res.sendStatus(500);
-  } finally {
-    client.release();
+  } else {
+    res.sendStatus(404);
   }
 };
 
@@ -190,8 +194,7 @@ module.exports.updatePerson = async (req, res) => {
     pseudo === undefined ||
     lastName === undefined ||
     firstName === undefined ||
-    email === undefined ||
-    password === undefined
+    email === undefined
   ) {
     res.sendStatus(400);
   } else {
