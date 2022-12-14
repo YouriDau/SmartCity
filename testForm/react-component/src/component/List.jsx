@@ -1,5 +1,5 @@
 import React from "react";
-import {Link} from 'react-router-dom';
+import { Link } from "react-router-dom";
 //import { getAllPersonsFetch } from "../component/API/useFetchPerson";
 //import UpdateUser from "../screen/account/UpdateUser";
 //import DeleteUser from "../screen/account/DeleteUser";
@@ -18,18 +18,18 @@ class List extends React.Component {
           <table>
             {this.props.tab.map((item) => {
               return (
-                <div class="list">
-                     {`${this.props.name} ${item[this.props.parameter]}`} 
-                  
-                    <Link to={"/" + this.props.linkSeeMore + "/" + item.id}>
-                      <button class="btnList">see more</button>
-                    </Link>
-                    <Link to={"/" + this.props.linkDelete + "/" + item.id}>
-                      <button class="btnList">delete</button>
-                    </Link>
-                    <Link>
-                      <button class="btnList">change pasword</button>
-                    </Link>
+                <div className="list">
+                  {`${this.props.name} ${item[this.props.parameter]}`}
+
+                  <Link to={"/" + this.props.linkSeeMore + "/" + item.id}>
+                    <button className="btnList">see more</button>
+                  </Link>
+                  <Link to={"/" + this.props.linkDelete + "/" + item.id}>
+                    <button className="btnList">delete</button>
+                  </Link>
+                  <Link>
+                    <button className="btnList">update pasword</button>
+                  </Link>
                 </div>
               );
             })}
@@ -37,7 +37,7 @@ class List extends React.Component {
         </div>
 
         <div>
-          <button>Back</button> 
+          <button>Back</button>
         </div>
       </div>
     );
