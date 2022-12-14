@@ -1,4 +1,5 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import List from "../../component/List";
 import Header from "../../component/Header";
 import { getReviewsByToiletIdFetch } from "../../component/API/useFetchReview";
@@ -10,40 +11,32 @@ function withParams(Component) {
   return (props) => <Component {...props} params={useParams()} />;
 }
 
-class ListReviews extends React.Component {
-  constructor(props) {
-    super(props);
-    const toiletId = parseInt(this.props.params.toiletId);
-    this.state = {
-      reviews: [],
-      toiletId,
-    };
-  }
+const ListReviews = (props) => {
+  const toiletId = parseInt(props.params.toiletId);
+  const [reviews, setReviews] = useState([]);
 
-  componentDidMount() {
-    getReviewsByToiletIdFetch(this.state.toiletId).then((reviews) => {
-      this.setState({ reviews: reviews });
-      //   console.log(reviews);
+  useEffect(() => {
+    getReviewsByToiletIdFetch(toiletId).then((reviews) => {
+      setReviews(reviews);
     });
-  }
+  }, []) 
 
-  render() {
-    return (
+  return (
+    <div>
+      <Header />
       <div>
-        <Header />
-        <div>
-          <List
-            title={"List of reviews for this toilet"}
-            tab={this.state.reviews}
-            name={"review"}
-            parameter={"id"}
-            linkSeeMore={`updateReview`}
-            linkDelete={`deleteReview`}
-          />
-        </div>
+        <List
+          title={"List of reviews for this toilet"}
+          tab={this.state.reviews}
+          name={"review"}
+          parameter={"id"}
+          linkSeeMore={`updateReview`}
+          linkDelete={`deleteReview`}
+        />
       </div>
-    );
-  }
+    </div>
+  );
+  
 }
 
 export default withParams(ListReviews);

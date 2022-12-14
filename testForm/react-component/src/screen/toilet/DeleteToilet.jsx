@@ -8,34 +8,28 @@ function withParams(Component) {
   return props => <Component {...props} params={useParams()} />;
 }
 
-class DeleteToilet extends React.Component {
-  constructor(props) {
-    super(props);
-    const id = parseInt(this.props.params.id);
-    this.state = {
-      id,
-    };
-  }
-
-  async handlePressDelete(event) {
+const DeleteToilet = (props) => {
+  const id = parseInt(props.params.id);
+ 
+  const handlePressDelete = (event) => {
     event.preventDefault();
-    deleteToiletFetch(this.state.id).then((status) => {
+    deleteToiletFetch(id).then((status) => {
       console.log(status);
     })
   }
 
-  render() {
-    return (
-      <div>
-        <Header />
-        <DeleteForm
-          title={"Delete toilet"}
-          text={"Do you really want to delete the toilet ?"}
-          handlePressDelete={(event) => {this.handlePressDelete(event)}}
-        />
-      </div>
-    );
-  }
+  
+  return (
+    <div>
+      <Header />
+      <DeleteForm
+        title={"Delete toilet"}
+        text={"Do you really want to delete the toilet ?"}
+        handlePressDelete={(event) => {handlePressDelete(event)}}
+      />
+    </div>
+  );
+  
 }
 
 export default withParams(DeleteToilet);

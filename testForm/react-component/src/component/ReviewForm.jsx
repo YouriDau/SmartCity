@@ -1,5 +1,6 @@
 import React from "react";
-import { addReviewFetch } from "../component/API/useFetchReview"
+import { addReviewFetch } from "../component/API/useFetchReview";
+
 
 class ReviewForm extends React.Component {
     constructor(props) {
@@ -37,7 +38,8 @@ class ReviewForm extends React.Component {
                 <h1>{this.props.title}</h1>
                 <form>
                     <div>
-                        <label>blablabla</label>
+                        
+
                         <br/>
                         <textarea
                             onChange={(event) => {
