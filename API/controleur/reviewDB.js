@@ -46,12 +46,13 @@ module.exports.getReview = async (req, res) => {
 
   const client = await pool.connect();
   try {
-    console.log(id);
     if (!isNaN(id)) {
       const { rows } = await ReviewModele.getReview(client, id);
       const review = rows[0];
       if (review !== undefined) {
-        res.sendStatus(200).json(review);
+        //TODO: devrait générer un warning. La méthode sendStatus() envoie une réponse et la méthode json() idem
+        //Tu devrais utiliser une autre méthode pour changer le status code sans envoyer la réponse
+        res.status(200).json(review);
       }
     } else {
       res.sendStatus(400);

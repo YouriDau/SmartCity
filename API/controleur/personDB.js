@@ -12,7 +12,6 @@ const {
 
 module.exports.getCurrentUser = async (req, res) => {
   const client = await pool.connect();
-  console.log("test");
   try {
     const userId = req.session.id;
     const { rows: persons } = await PersonModele.getPersonById(client, userId);
@@ -63,10 +62,7 @@ module.exports.getPersonById = async (req, res) => {
   const id = parseInt(idText);
 
   try {
-    const { rows: persons } = await PersonModele.getPersonById(
-      client,
-      id
-    );
+    const { rows: persons } = await PersonModele.getPersonById(client, id);
     const person = persons[0];
     if (person !== undefined) {
       res.json(person);
@@ -188,6 +184,7 @@ module.exports.postPerson = async (req, res) => {
 
 module.exports.updatePerson = async (req, res) => {
   // Comment gérer le cas du changement du mdp?
+  // TODO: supprimer les questions dans les commentaires que le prof pourrait utiliser à l'examen ;)
   const { pseudo, lastName, firstName, email } = req.body;
   if (
     pseudo === undefined ||
