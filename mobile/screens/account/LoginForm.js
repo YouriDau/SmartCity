@@ -43,11 +43,7 @@ const LoginForm = ({ navigation }) => {
         }
       })
       .catch((error) => {
-        console.error("loginFetchError", error);
-        switch (error.response.status) {
-          case 404:
-            Alert.alert(LOGIN_NOT_FOUND);
-        }
+        Alert.alert(error.message);
       });
   };
 

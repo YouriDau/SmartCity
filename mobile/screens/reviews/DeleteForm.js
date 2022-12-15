@@ -26,19 +26,7 @@ const DeleteForm = ({ navigation, route }) => {
         }
       })
       .catch((error) => {
-        console.log(error);
-        switch (error.response.status) {
-          case 400:
-            Alert.alert("Login needed");
-            navigation.navigate("Login");
-            break;
-          case 403:
-            Alert.alert(
-              "Error",
-              "You do not have the necessary rights to delete this review"
-            );
-            break;
-        }
+        Alert.alert(error.message);
       });
   };
 

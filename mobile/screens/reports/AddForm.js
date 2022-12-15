@@ -19,12 +19,16 @@ const AddForm = ({ navigation, route }) => {
 
   const handlePressSubmit = () => {
     if (reason) {
-      addReportFetch(reason, toiletId).then((status) => {
-        if (status === 201) {
-          Alert.alert(REPORT_ADD_SUCCESS);
-          navigation.navigate("Maps");
-        }
-      });
+      addReportFetch(reason, toiletId)
+        .then((status) => {
+          if (status === 201) {
+            Alert.alert(REPORT_ADD_SUCCESS);
+            navigation.navigate("Maps");
+          }
+        })
+        .catch((error) => {
+          Alert.alert(error.message);
+        });
     } else {
       Alert.alert(REASON_INPUT_EMPTY);
     }

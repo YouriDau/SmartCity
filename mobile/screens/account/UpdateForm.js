@@ -41,15 +41,19 @@ const UpdateForm = ({ navigation }) => {
     if (accountAlert !== undefined) {
       Alert.alert(accountAlert);
     } else {
-      updatePersonFetch(pseudo, lastName, firstName, email).then((response) => {
-        if (response.status === 200) {
-          Alert.alert(ACCOUNT_MODIFY_SUCCESS);
-          AsyncStorage.setItem("token", response.token);
-          dispatch(setUser(pseudo, lastName, firstName, email));
-          dispatch(setToken(response.token));
-          navigation.navigate("Maps");
-        }
-      });
+      updatePersonFetch(pseudo, lastName, firstName, email)
+        .then((response) => {
+          if (response.status === 200) {
+            Alert.alert(ACCOUNT_MODIFY_SUCCESS);
+            AsyncStorage.setItem("token", response.token);
+            dispatch(setUser(pseudo, lastName, firstName, email));
+            dispatch(setToken(response.token));
+            navigation.navigate("Maps");
+          }
+        })
+        .catch((error) => {
+          Alert.alert(error.message);
+        });
     }
   };
 

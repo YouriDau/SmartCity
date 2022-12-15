@@ -9,8 +9,10 @@ export function errorMessage(statusCode, errorMessage, subject) {
       break;
     case 403:
       message += "you don't have permissions to do this!";
+      break;
     case 404:
       message += `${subject} not found!`;
+      break;
   }
   return message;
 }

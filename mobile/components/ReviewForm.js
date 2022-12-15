@@ -26,22 +26,30 @@ const ReviewForm = ({ isUpdate, navigation, toiletId, review }) => {
   };
 
   const handlePressAdd = () => {
-    addReviewFetch(note, comment, toiletId).then(({ status, data }) => {
-      if (status === 201) {
-        dispatch(addReview(data, note, comment, toiletId));
-        Alert.alert(REVIEW_ADD_SUCCESS);
-        navigation.goBack();
-      }
-    });
+    addReviewFetch(note, comment, toiletId)
+      .then(({ status, data }) => {
+        if (status === 201) {
+          dispatch(addReview(data, note, comment, toiletId));
+          Alert.alert(REVIEW_ADD_SUCCESS);
+          navigation.goBack();
+        }
+      })
+      .catch((error) => {
+        Alert.alert(error.message);
+      });
   };
 
   const handlePressUpdate = () => {
-    updateReviewFetch(review.id, note, comment).then((status) => {
-      if (status === 204) {
-        Alert.alert(REVIEW_MODIFY_SUCCESS);
-        navigation.navigate("maps");
-      }
-    });
+    updateReviewFetch(review.id, note, comment)
+      .then((status) => {
+        if (status === 204) {
+          Alert.alert(REVIEW_MODIFY_SUCCESS);
+          navigation.navigate("maps");
+        }
+      })
+      .catch((error) => {
+        Alert.alert(error.message);
+      });
   };
 
   const showButton = () => {

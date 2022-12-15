@@ -4,11 +4,20 @@ import { BASE_URL_API } from "../config";
 
 export default function useFetchToilet() {
   const getToiletsFetch = async () => {
-    const response = await axios({
-      method: "get",
-      url: `${BASE_URL_API}/toilet`,
-    });
-    return { status: response.status, data: response.data };
+    try {
+      const response = await axios({
+        method: "get",
+        url: `${BASE_URL_API}/toilet`,
+      });
+      return { status: response.status, data: response.data };
+    } catch (error) {
+      const message = errorMessage(
+        error.response.status,
+        error.response.data,
+        "toilets"
+      );
+      throw new Error(message);
+    }
   };
 
   const addToiletFetch = async (
@@ -17,12 +26,21 @@ export default function useFetchToilet() {
     isPaid,
     isReducedMobility
   ) => {
-    const response = await axios({
-      method: "post",
-      url: `${BASE_URL_API}/toilet`,
-      data: { latitude, longitude, isPaid, isReducedMobility },
-    });
-    return { status: response.status, data: response.data };
+    try {
+      const response = await axios({
+        method: "post",
+        url: `${BASE_URL_API}/toilet`,
+        data: { latitude, longitude, isPaid, isReducedMobility },
+      });
+      return { status: response.status, data: response.data };
+    } catch (error) {
+      const message = errorMessage(
+        error.response.status,
+        error.response.data,
+        "toilet"
+      );
+      throw new Error(message);
+    }
   };
 
   return {

@@ -1,19 +1,27 @@
 import axios from "axios";
 import { Alert } from "react-native";
+import { useSelector } from "react-redux";
 import { BASE_URL_API } from "../config";
+import { getToken } from "../redux/selectors";
 import authHeader from "./authHeader";
 
 export default function useFetchReviews() {
+  const token = useSelector(getToken);
+
   const getReviewsFetch = async (toiletId) => {
     try {
       const response = await axios({
         method: "get",
         url: `${BASE_URL_API}/review/${toiletId}`,
       });
-      console.log(response.data);
       return response.data;
     } catch (error) {
-      console.error("getReviewsError", error);
+      const message = errorMessage(
+        error.response.status,
+        error.response.data,
+        "Reviews"
+      );
+      throw new Error(message);
     }
   };
 
@@ -27,11 +35,18 @@ export default function useFetchReviews() {
           comment,
           toiletId,
         },
-        headers: await authHeader(),
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
       });
       return { status: response.status, data: response.data };
     } catch (error) {
-      console.error("addReviewFetchError", error);
+      const message = errorMessage(
+        error.response.status,
+        error.response.data,
+        "Review"
+      );
+      throw new Error(message);
     }
   };
 
@@ -43,20 +58,18 @@ export default function useFetchReviews() {
         data: {
           id,
         },
-        headers: await authHeader(),
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
       });
       return response.status;
     } catch (error) {
-      switch (error.response.status) {
-        case 401:
-          Alert.alert("Error", "You need to be connected to delete reviews");
-        case 403:
-          Alert.alert(
-            "Error",
-            "You can't delete this review because you are not the owner"
-          );
-      }
-      console.error("deleteReviewFetchError", error);
+      const message = errorMessage(
+        error.response.status,
+        error.response.data,
+        "Review"
+      );
+      throw new Error(message);
     }
   };
 
@@ -70,20 +83,18 @@ export default function useFetchReviews() {
           note,
           comment,
         },
-        headers: await authHeader(),
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
       });
       return response.status;
     } catch (error) {
-      switch (error.response.status) {
-        case 401:
-          Alert.alert("Error", "You need to be connected to update reviews");
-        case 403:
-          Alert.alert(
-            "Error",
-            "You can't update this review because you are not the owner"
-          );
-      }
-      console.error("updateReviewFetchError", error);
+      const message = errorMessage(
+        error.response.status,
+        error.response.data,
+        "Review"
+      );
+      throw new Error(message);
     }
   };
 

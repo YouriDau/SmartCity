@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Alert } from "react-native";
 import CheckBox from "expo-checkbox";
 import Title from "../../components/Title";
 import Button from "../../components/Button";
@@ -43,7 +43,7 @@ const AddToilet = ({ navigation, route }) => {
         }
       })
       .catch((error) => {
-        console.error("addToiletFetchError", error);
+        Alert.alert(error.message);
       });
 
     navigation.navigate("Maps");

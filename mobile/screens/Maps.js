@@ -25,10 +25,14 @@ const Maps = ({ navigation }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getToiletsFetch().then(({ status, data }) => {
-      console.log(data);
-      dispatch(setToilets(data));
-    });
+    getToiletsFetch()
+      .then(({ status, data }) => {
+        console.log(data);
+        dispatch(setToilets(data));
+      })
+      .catch((error) => {
+        Alert.alert(error.message);
+      });
   }, []);
 
   const handlePressMap = (coordinate) => {

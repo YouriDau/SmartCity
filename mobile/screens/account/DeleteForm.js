@@ -25,13 +25,17 @@ const DeleteForm = ({ navigation }) => {
   const handlePressDelete = () => {
     if (password !== "") {
       if (isChecked) {
-        deletePersonFetch(password).then((status) => {
-          if (status === 204) {
-            Alert.alert(ACCOUNT_DELETE_SUCCESS);
-            AsyncStorage.removeItem("token");
-            navigation.navigate("MenuDisconnected");
-          }
-        });
+        deletePersonFetch(password)
+          .then((status) => {
+            if (status === 204) {
+              Alert.alert(ACCOUNT_DELETE_SUCCESS);
+              AsyncStorage.removeItem("token");
+              navigation.navigate("MenuDisconnected");
+            }
+          })
+          .catch((error) => {
+            Alert.alert(error.message);
+          });
       } else {
         Alert.alert(DELETE_NOT_CHECK);
       }

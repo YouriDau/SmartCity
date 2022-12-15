@@ -31,8 +31,8 @@ const MenuConnected = () => {
           dispatch(setToken(token));
         });
       })
-      .catch((errorMessage) => {
-        console.log(errorMessage);
+      .catch((error) => {
+        Alert.alert(error.message);
       });
   }, []);
 

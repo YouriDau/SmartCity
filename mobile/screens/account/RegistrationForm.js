@@ -67,7 +67,10 @@ const RegistrationForm = ({ navigation }) => {
                 Alert.alert("Pseudo or password incorect!");
               }
             })
-            .catch((error) => console.error("loginFetchError", error));
+            .catch((error) => Alert.alert(error.message));
+        })
+        .catch((error) => {
+          Alert.alert(error.message);
         });
     }
   };

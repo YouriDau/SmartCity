@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import { BASE_URL_API } from "../config";
 import { getToken } from "../redux/selectors";
 import { errorMessage } from "../utils/utils";
-import authHeader from "./authHeader";
 
 export default function useFetchPerson() {
   const token = useSelector(getToken);
@@ -30,20 +29,12 @@ export default function useFetchPerson() {
       });
       return response.status;
     } catch (error) {
-      console.error("addPersonError", error);
-      switch (error.response.status) {
-        case 409:
-          Alert.alert("Retry", "This pseudo is already used!");
-          break;
-        case 500:
-          Alert.alert(
-            "Error",
-            "There was an error during the creation, retry!"
-          );
-          break;
-        default:
-          console.log("Add user error default switch");
-      }
+      const message = errorMessage(
+        error.response.status,
+        error.response.data,
+        "Account"
+      );
+      throw new Error(message);
     }
   };
 
@@ -55,7 +46,9 @@ export default function useFetchPerson() {
         data: {
           password,
         },
-        headers: await authHeader(),
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
       });
       return response.status;
     } catch (error) {
@@ -79,7 +72,9 @@ export default function useFetchPerson() {
           firstName,
           email,
         },
-        headers: await authHeader(),
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
       });
 
       return { status: response.status, token: response.data };
@@ -115,7 +110,6 @@ export default function useFetchPerson() {
   };
 
   const getCurrentUserFetch = async () => {
-    console.log(token);
     try {
       const response = await axios({
         method: "get",
