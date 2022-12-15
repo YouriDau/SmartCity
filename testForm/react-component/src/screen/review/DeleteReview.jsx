@@ -9,7 +9,7 @@ function withParams(Component) {
 }
 
 const DeleteReview = (props) => {
-  const id = parseInt(this.props.params.id);
+  const id = parseInt(props.params.id);
 
   const handlePressDelete = (event) => {
     event.preventDefault();

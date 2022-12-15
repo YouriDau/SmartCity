@@ -14,7 +14,7 @@ const AddUser = () => {
         titleButton={"Register"} 
         isUpdate={false} 
         registration={true}
-        />
+      />
     </div>
   );
 };

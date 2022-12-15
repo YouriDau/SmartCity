@@ -22,9 +22,10 @@ export default function Router() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path={"/addUser"} element={<AddUser />} />
         <Route path={"/addToilet"} element={<AddToilet />} />
         <Route path={"/addReport"} element={<AddReport />} />
-        <Route path={"/addReview"} element={<AddReview />} />
+        <Route path={"/addReview/:toiletId"} element={<AddReview />} />
 
         <Route path={"/listUsers"} element={<ListUsers />} />
         <Route path={"/listReports"} element={<ListReports />} />
@@ -41,7 +42,6 @@ export default function Router() {
         <Route path={"/deleteReview/:id"} element={<DeleteReview />} />
         <Route path={"/deleteToilet/:id"} element={<DeleteToilet />} />
 
-        <Route path={"/addUser"} element={<AddUser />} />
         <Route path={"/maps"} element={<Maps />} />
         <Route path={"/menuControle"} element={<MenuControle />} />
         <Route path={"/"} element={<Login />} />

@@ -14,14 +14,14 @@ const getReviewsByToiletIdFetch = async (id) => {
   }
 };
 
-const addReviewFetch = async (comment) => {
+const addReviewFetch = async (note, comment, toiletId) => {
   await axios({
     method: "post",
     url: `${BASE_URL_API}/review`,
     data: {
-      note: 1,
+      note,
       comment,
-      toiletId: 1,
+      toiletId,
       userId: 1,
     },
   })

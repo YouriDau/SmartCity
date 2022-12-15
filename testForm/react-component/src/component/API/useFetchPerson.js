@@ -47,8 +47,9 @@ const addPersonFetch = async (pseudo, lastName, firstName, email, password) => {
   }
 };
 
-const updatePersonFetch = async (pseudo, lastName, firstName, email, password) => {
+const updatePersonFetch = async (pseudo, lastName, firstName, email) => {
   try {
+    console.log("test");
     const response = await axios({
       method: "put",
       url: `${BASE_URL_API}/person`,
@@ -57,7 +58,6 @@ const updatePersonFetch = async (pseudo, lastName, firstName, email, password) =
         lastName,
         firstName,
         email,
-        password,
       },
     });
     return response.status;

@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   addPersonFetch,
   updatePersonFetch,
@@ -13,6 +13,7 @@ const UserForm = (props) => {
   const [inputFirstName, setInputFirstName] = useState("");
   const [inputPassword, setInputPassword] = useState("");
   const [inputEmail, setInputEmail] = useState("");
+  const navigate = useNavigate();
 
   const handlePressAdd = (event) => {
     event.preventDefault();
@@ -27,6 +28,7 @@ const UserForm = (props) => {
       switch (status) {
         case 201:
           console.log("Insert Réussi!");
+          navigate("/listUsers");
           break;
         default:
           console.log(`Error ${status}`);
@@ -41,7 +43,6 @@ const UserForm = (props) => {
       inputLastName,
       inputFirstName,
       inputEmail,
-      inputPassword
     ).then((status) => {
       console.log(status);
       switch (status) {
@@ -128,7 +129,7 @@ const UserForm = (props) => {
             {/* <Link to={`/addToilet`}><button onClick={(event) => (this.props.isUpdate?handlePressUpdate(event):this.handlePressAdd(event) )}>{this.props.titleButton}</button></Link> */}
             <button
               onClick={(event) =>
-                this.props.isUpdate
+                props.isUpdate
                   ? handlePressUpdate(event)
                   : handlePressAdd(event)
               }

@@ -37,7 +37,7 @@ const PopupToilet = (props) => {
       <div class="popupSubcontent">
         <p class="popupReviewText">Reviews</p>
         <div class="popupReviewContainer">
-          <Link to="/addReview">
+          <Link to={`/addReview/${props.toiletId}`}>
             <IoIosAddCircle size={ICONS_SIZE} color="blue"></IoIosAddCircle>
           </Link>
           <Link to={`/deleteToilet/${props.toiletId}`}>
