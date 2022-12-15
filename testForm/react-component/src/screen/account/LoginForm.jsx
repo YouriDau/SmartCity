@@ -4,7 +4,6 @@ import { loginFetch } from "../../component/API/useFetchPerson";
 import { Route, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-
 const LoginForm = () => {
   const [inputPseudo, setInputPseudo] = useState("");
   const [inputPassword, setInputPassword] = useState("");
@@ -12,17 +11,16 @@ const LoginForm = () => {
 
   const handlePressLogin = (event) => {
     event.preventDefault();
-    console.log(inputPseudo);
-    // loginFetch(inputPseudo, inputPassword).then((result) => {
-    //   if (result.status === 200) {
-    //     alert("Login success");
-    //     localStorage.setItem("token", result.data);
-    //     //navigate("/maps");
-    //     console.log(result.data);
-    //   } else {
-    //     console.log("Login failed");
-    //   }
-    // });
+    loginFetch(inputPseudo, inputPassword).then((result) => {
+      if (result.status === 200) {
+        alert("Login success");
+        console.log(result.data);
+        localStorage.setItem("token", result.data);
+        navigate("/maps");
+      } else {
+        console.log("Login failed");
+      }
+    });
   };
 
   return (
