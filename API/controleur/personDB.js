@@ -117,7 +117,7 @@ module.exports.getAllPersons = async (req, res) => {
 module.exports.login = async (req, res) => {
   const { pseudo, password } = req.body;
   if (pseudo === undefined || password === undefined) {
-    res.status(400).json("pseudo of password is undefined");
+    res.status(400).json("pseudo of password is undefined!");
   } else {
     const client = await pool.connect();
     try {
@@ -161,34 +161,39 @@ module.exports.postPerson = async (req, res) => {
   ) {
     res
       .status(400)
-      .json("pseudo or lastName or firstName or email is undefined");
+      .json("pseudo or lastName or firstName or email is undefined!");
   } else {
     const client = await pool.connect();
     try {
       if (pseudoValidate(pseudo)) {
         if (emailValidate(email)) {
           const pseudoExist = await PersonModele.pseudoExist(client, pseudo);
-          const emailExist = await PersonModele.emailExist(client, email);
-          if (!pseudoExist && !emailExist) {
-            const passwordHashed = await getHash(password);
-            await PersonModele.postPerson(
-              client,
-              pseudo,
-              lastName,
-              firstName,
-              email,
-              passwordHashed
-            );
-            res.sendStatus(201);
+
+          if (!pseudoExist) {
+            const emailExist = await PersonModele.emailExist(client, email);
+            if (!emailExist) {
+              const passwordHashed = await getHash(password);
+              await PersonModele.postPerson(
+                client,
+                pseudo,
+                lastName,
+                firstName,
+                email,
+                passwordHashed
+              );
+              res.sendStatus(201);
+            } else {
+              res.status(409).json("email already exist!");
+            }
           } else {
             // 409 = conflict
-            res.sendStatus(409);
+            res.status(409).json("pseudo already exist!");
           }
         } else {
-          res.status(400).json("email incorrect");
+          res.status(400).json("email incorrect!");
         }
       } else {
-        res.status(400).json("pseudo incorrect");
+        res.status(400).json("pseudo incorrect!");
       }
     } catch (error) {
       console.error("postPersonError", error);
@@ -211,7 +216,7 @@ module.exports.updatePerson = async (req, res) => {
   ) {
     res
       .status(400)
-      .json("pseudo or lastName or firstName or email is undefined");
+      .json("pseudo or lastName or firstName or email is undefined!");
   } else {
     const client = await pool.connect();
     try {
@@ -245,7 +250,7 @@ module.exports.updatePerson = async (req, res) => {
 module.exports.deletePersonById = async (req, res) => {
   const { id } = req.body;
   if (id === undefined) {
-    res.status(400).json("id is undefined");
+    res.status(400).json("id is undefined!");
   } else {
     const client = await pool.connect();
     try {

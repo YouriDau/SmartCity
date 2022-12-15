@@ -1,9 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getReviews } from "../../redux/selectors";
-import { useNavigation } from "@react-navigation/native";
 import { setReviews } from "../../redux/actions/review";
-
 import {
   View,
   Text,
@@ -45,6 +43,7 @@ const Item = ({ navigation, toiletId, review }) => {
         <Text>review {review.id}</Text>
         <Text>{review.date}</Text>
         <Text style={styles.comment}>{review.comment}</Text>
+        <Text>{review.note}/5</Text>
       </View>
 
       <View style={styles.pressables}>
@@ -74,7 +73,6 @@ const List = ({ navigation, route }) => {
 
   useEffect(() => {
     getReviewsFetch(toiletId).then((allReviews) => {
-      console.log(allReviews);
       dispatch(setReviews(allReviews));
     });
   }, []);

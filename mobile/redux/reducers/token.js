@@ -8,6 +8,6 @@ export const token = (state = initialState, action) => {
       state = action.payload.token;
       return state;
     default:
-      return initialState;
+      return state;
   }
 };

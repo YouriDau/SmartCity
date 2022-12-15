@@ -8,7 +8,6 @@ import { ACCOUNT_MODIFY_SUCCESS } from "../../config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../../redux/selectors";
-import { setUser } from "../../redux/actions/account";
 import { validAccount } from "../../business/account";
 import { setToken } from "../../redux/actions/token";
 
@@ -17,11 +16,10 @@ const UpdateForm = ({ navigation }) => {
   const [lastName, setLastName] = useState("");
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("****");
-  const user = useSelector(getUser);
 
   const { updatePersonFetch } = useFetchPerson();
   const dispatch = useDispatch();
+  const user = useSelector(getUser);
 
   useEffect(() => {
     setPseudo(user.pseudo);
@@ -31,13 +29,7 @@ const UpdateForm = ({ navigation }) => {
   }, [user]);
 
   const handlePressUpdate = () => {
-    const accountAlert = validAccount(
-      pseudo,
-      lastName,
-      firstName,
-      email,
-      password
-    );
+    const accountAlert = validAccount(pseudo, lastName, firstName, email);
     if (accountAlert !== undefined) {
       Alert.alert(accountAlert);
     } else {
@@ -46,7 +38,6 @@ const UpdateForm = ({ navigation }) => {
           if (response.status === 200) {
             Alert.alert(ACCOUNT_MODIFY_SUCCESS);
             AsyncStorage.setItem("token", response.token);
-            dispatch(setUser(pseudo, lastName, firstName, email));
             dispatch(setToken(response.token));
             navigation.navigate("Maps");
           }
@@ -92,14 +83,6 @@ const UpdateForm = ({ navigation }) => {
           textContentType={"emailAddress"}
           value={email}
           onChangeText={setEmail}
-        />
-
-        <Text style={styles.inputText}>Password</Text>
-        <TextInput
-          style={styles.input}
-          secureTextEntry
-          onChangeText={setPassword}
-          value={password}
         />
       </ScrollView>
       <View style={styles.buttons}>

@@ -4,9 +4,8 @@ import Slider from "@react-native-community/slider";
 import { useState } from "react";
 import Button from "./Button";
 import { useDispatch } from "react-redux";
-import { addReview } from "../redux/actions/review";
+import { addReview, updateReview } from "../redux/actions/review";
 import useFetchReviews from "../services/useFetchReviews";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { REVIEW_ADD_SUCCESS, REVIEW_MODIFY_SUCCESS } from "../config";
 
 const PLACEHOLDER = "Enter your review here";
@@ -14,8 +13,8 @@ const NOTE_MIN = 1;
 const NOTE_MAX = 5;
 
 const ReviewForm = ({ isUpdate, navigation, toiletId, review }) => {
-  const [note, setNote] = useState(review?.note);
-  const [comment, setComment] = useState(review?.comment);
+  const [note, setNote] = useState(review?.note || 1);
+  const [comment, setComment] = useState(review?.comment || "");
   const title = isUpdate ? "Update review " + review.id : "Add Review";
 
   const dispatch = useDispatch();
@@ -26,30 +25,39 @@ const ReviewForm = ({ isUpdate, navigation, toiletId, review }) => {
   };
 
   const handlePressAdd = () => {
-    addReviewFetch(note, comment, toiletId)
-      .then(({ status, data }) => {
-        if (status === 201) {
-          dispatch(addReview(data, note, comment, toiletId));
-          Alert.alert(REVIEW_ADD_SUCCESS);
-          navigation.goBack();
-        }
-      })
-      .catch((error) => {
-        Alert.alert(error.message);
-      });
+    if (comment === "") {
+      Alert.alert("Please enter a comment");
+    } else {
+      addReviewFetch(note, comment, toiletId)
+        .then(({ status, data }) => {
+          if (status === 201) {
+            dispatch(addReview(data, note, comment, toiletId));
+            Alert.alert(REVIEW_ADD_SUCCESS);
+            navigation.navigate("ListReviews", { toiletId });
+          }
+        })
+        .catch((error) => {
+          Alert.alert(error.message);
+        });
+    }
   };
 
   const handlePressUpdate = () => {
-    updateReviewFetch(review.id, note, comment)
-      .then((status) => {
-        if (status === 204) {
-          Alert.alert(REVIEW_MODIFY_SUCCESS);
-          navigation.navigate("maps");
-        }
-      })
-      .catch((error) => {
-        Alert.alert(error.message);
-      });
+    if (comment === "") {
+      Alert.alert("Please enter a comment");
+    } else {
+      updateReviewFetch(review.id, note, comment)
+        .then((status) => {
+          if (status === 204) {
+            Alert.alert(REVIEW_MODIFY_SUCCESS);
+            dispatch(updateReview(review.id, note, comment));
+            navigation.navigate("ListReviews", { toiletId });
+          }
+        })
+        .catch((error) => {
+          Alert.alert(error.message);
+        });
+    }
   };
 
   const showButton = () => {

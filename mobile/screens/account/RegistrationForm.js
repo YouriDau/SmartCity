@@ -8,6 +8,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import useFetchPerson from "../../services/useFetchPerson";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { validAccount } from "../../business/account";
+import { setToken } from "../../redux/actions/token";
 
 const PLACEHOLDERS = {
   pseudo: "Your pseudo here",
@@ -59,12 +60,12 @@ const RegistrationForm = ({ navigation }) => {
         })
         .then(() => {
           loginFetch(pseudo, password)
-            .then((result) => {
-              if (result.status === 200) {
-                AsyncStorage.setItem("token", result.data);
+            .then((response) => {
+              if (response.status === 200) {
+                console.log(response.token);
+                AsyncStorage.setItem("token", response.token);
+                dispatch(setToken(response.token));
                 navigation.navigate("MenuConnected");
-              } else {
-                Alert.alert("Pseudo or password incorect!");
               }
             })
             .catch((error) => Alert.alert(error.message));

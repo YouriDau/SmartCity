@@ -7,7 +7,7 @@ const getCurrentUserFetch = async () => {
   } catch (error) {
     console.error("getCurrentUserFetchError", error);
   }
-}
+};
 
 const getAllPersonsFetch = async () => {
   try {
@@ -64,7 +64,7 @@ const updatePersonFetch = async (pseudo, lastName, firstName, email) => {
   } catch (error) {
     console.error("updatePersonFetchError", error);
   }
-}
+};
 
 const deletePersonByIdFetch = async (id) => {
   try {

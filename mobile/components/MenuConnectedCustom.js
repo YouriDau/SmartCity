@@ -8,12 +8,16 @@ import { Octicons } from "@expo/vector-icons";
 import { Alert, View, StyleSheet } from "react-native";
 import Constants from "expo-constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useDispatch } from "react-redux";
+import { setToken } from "../redux/actions/token";
 
 const MenuConnectedCustom = (props) => {
+  const dispatch = useDispatch();
   const navigation = props.navigation;
 
   const handlePressLogout = () => {
     AsyncStorage.removeItem("token");
+    dispatch(setToken(""));
     Alert.alert("You are Disconnected");
     navigation.navigate("MenuDisconnected");
   };

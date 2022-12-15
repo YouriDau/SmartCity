@@ -1,7 +1,6 @@
 export const SET_TOKEN = "SET_TOKEN";
 
 export const SET_USER = "SET_USER";
-export const DELETE_USER = "DELETE_USER";
 
 export const SET_REVIEWS = "SET_REVIEWS";
 export const ADD_REVIEW = "ADD_REVIEW";

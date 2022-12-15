@@ -1,6 +1,6 @@
 import axios from "axios";
-import { Alert } from "react-native";
 import { BASE_URL_API } from "../config";
+import { errorMessage } from "../utils/utils";
 
 export default function useFetchToilet() {
   const getToiletsFetch = async () => {

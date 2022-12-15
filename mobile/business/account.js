@@ -1,4 +1,4 @@
-export const validAccount = (pseudo, lastName, firstName, email, password) => {
+export const validAccount = (pseudo, lastName, firstName, email) => {
   let alert = "Please enter your ";
   if (pseudo === "") {
     return (alert += "pseudo ");
@@ -12,11 +12,7 @@ export const validAccount = (pseudo, lastName, firstName, email, password) => {
         if (email === "") {
           return (alert += "email ");
         } else {
-          if (password === "") {
-            return (alert += "password");
-          } else {
-            return;
-          }
+          return;
         }
       }
     }

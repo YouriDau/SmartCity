@@ -1,9 +1,8 @@
 import axios from "axios";
-import { Alert } from "react-native";
 import { useSelector } from "react-redux";
 import { BASE_URL_API } from "../config";
 import { getToken } from "../redux/selectors";
-import authHeader from "./authHeader";
+import { errorMessage } from "../utils/utils";
 
 export default function useFetchReviews() {
   const token = useSelector(getToken);
@@ -89,6 +88,7 @@ export default function useFetchReviews() {
       });
       return response.status;
     } catch (error) {
+      console.log(error.response.status);
       const message = errorMessage(
         error.response.status,
         error.response.data,

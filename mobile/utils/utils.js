@@ -13,6 +13,9 @@ export function errorMessage(statusCode, errorMessage, subject) {
     case 404:
       message += `${subject} not found!`;
       break;
+    case 409:
+      message += errorMessage;
+      break;
   }
   return message;
 }

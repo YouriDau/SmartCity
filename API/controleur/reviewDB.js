@@ -16,6 +16,7 @@ module.exports.getReviewsByToiletId = async (req, res) => {
         const reviews = reviewRows.map((review) => {
           return {
             id: review.id,
+            note: review.note,
             comment: review.comment,
             userId: review.user_id,
             date: review.date.toLocaleDateString("fr", {

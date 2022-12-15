@@ -17,13 +17,13 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Drawer = createDrawerNavigator();
 
-const MenuConnected = () => {
+const MenuConnected = ({ navigation }) => {
   const dispatch = useDispatch();
   const { getCurrentUserFetch } = useFetchPerson();
 
   useEffect(() => {
     getCurrentUserFetch()
-      .then((user) => {
+      .then(({ user }) => {
         dispatch(
           setUser(user.pseudo, user.lastName, user.firstName, user.email)
         );
@@ -32,6 +32,11 @@ const MenuConnected = () => {
         });
       })
       .catch((error) => {
+        if (error.message === "Error, login needed!") {
+          AsyncStorage.removeItem("token");
+          dispatch(setToken(""));
+          navigation.navigate("MenuDisconnected");
+        }
         Alert.alert(error.message);
       });
   }, []);

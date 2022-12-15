@@ -18,7 +18,6 @@ const DeleteForm = ({ navigation, route }) => {
   const handlePressDelete = () => {
     deleteReviewFetch(id)
       .then((status) => {
-        console.log(status);
         if (status === 204) {
           Alert.alert("Success", "Delete with success!");
           dispatch(deleteReview(id));

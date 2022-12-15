@@ -11,10 +11,13 @@ import {
   PASSWORD_INPUT_EMPTY,
 } from "../../config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useDispatch } from "react-redux";
+import { setToken } from "../../redux/actions/token";
 
 const DeleteForm = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [isChecked, setIsChecked] = useState(false);
+  const dispatch = useDispatch();
 
   const { deletePersonFetch } = useFetchPerson();
 
@@ -30,10 +33,14 @@ const DeleteForm = ({ navigation }) => {
             if (status === 204) {
               Alert.alert(ACCOUNT_DELETE_SUCCESS);
               AsyncStorage.removeItem("token");
+              dispatch(setToken(""));
               navigation.navigate("MenuDisconnected");
             }
           })
           .catch((error) => {
+            if (error.message === "Error, login needed!") {
+              console.log("test");
+            }
             Alert.alert(error.message);
           });
       } else {

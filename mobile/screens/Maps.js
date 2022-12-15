@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Alert, Pressable, StyleSheet, View, Text } from "react-native";
+import { Alert, Pressable, StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import * as Location from "expo-location";
 import { getToilets } from "../redux/selectors";
@@ -27,7 +27,6 @@ const Maps = ({ navigation }) => {
   useEffect(() => {
     getToiletsFetch()
       .then(({ status, data }) => {
-        console.log(data);
         dispatch(setToilets(data));
       })
       .catch((error) => {

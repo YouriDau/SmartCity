@@ -1,5 +1,4 @@
 import axios from "axios";
-import { Alert } from "react-native";
 import { useSelector } from "react-redux";
 import { BASE_URL_API } from "../config";
 import { getToken } from "../redux/selectors";
@@ -29,6 +28,7 @@ export default function useFetchPerson() {
       });
       return response.status;
     } catch (error) {
+      console.log(error.response.status);
       const message = errorMessage(
         error.response.status,
         error.response.data,
