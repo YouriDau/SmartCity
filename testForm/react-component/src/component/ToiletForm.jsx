@@ -18,8 +18,8 @@ const ToiletForm = (props) => {
                 </p>
             </div>
             <div>
-                <button style={{backgroundColor: 'green'}} onClick={(event) => props.handlePress(event)}>{props.titleButton}</button>
-                <button style={{backgroundColor: 'grey'}}>Cancel</button>
+                <button style={{backgroundColor: 'green'}} onClick={(event) => props.handlePressAdd(event)}>{props.titleButton}</button>
+                <button style={{backgroundColor: 'grey'}} onClick={(event) => props.handlePressCancel(event)}>Cancel</button>
             </div>
         </div>
     );

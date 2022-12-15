@@ -3,7 +3,7 @@ import DeleteForm from "../../component/DeleteForm";
 import Header from "../../component/Header";
 import { deletePersonByIdFetch } from "../../component/API/useFetchPerson";
 //import {connect} from 'react-redux';
-import { Navigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 
 function withParams(Component) {
@@ -12,6 +12,7 @@ function withParams(Component) {
 
 const DeleteUser = (props) => {
   const id = parseInt(props.params.id);
+  const navigate = useNavigate();
 
   const handlePressDelete = (event) => {
     event.preventDefault();
@@ -20,15 +21,19 @@ const DeleteUser = (props) => {
     });
   };
 
+  const handlePressCancel = (event) => {
+    event.preventDefault();
+    navigate("/listUsers");
+  }
+
   return (
     <div>
       <Header />
       <DeleteForm
         title={`Delete user ${id}`}
         text={"Are you sure you want to delete the user ?"}
-        handlePressDelete={(event) => {
-          handlePressDelete(event);
-        }} // callback
+        handlePressDelete={(event) => {handlePressDelete(event)}} // callback
+        handlePressCancel={(event) => {handlePressCancel(event)}}
       />
     </div>
   );

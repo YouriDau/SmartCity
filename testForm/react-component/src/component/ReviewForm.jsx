@@ -1,7 +1,7 @@
 import React from "react";
 import { addReviewFetch } from "../component/API/useFetchReview";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 function withParams(Component) {
     return props => <Component {...props} params={useParams()} />;
@@ -11,6 +11,7 @@ const ReviewForm = (props) => {
     const toiletId = parseInt(props.params.id);
     const [inputReview, setInputReview] = useState("");
     const [note, setNote] = useState(0);
+    const navigate = useNavigate();
 
     const handlePressAdd = (event) => {
         console.log(note);
@@ -33,6 +34,10 @@ const ReviewForm = (props) => {
     const handlePressUpdate = (event) => {
         event.preventDefault();
         console.log("Update review");
+    }
+
+    const handlePressCancel = (event) => {
+        navigate("/maps");
     }
     
     return (
@@ -68,7 +73,7 @@ const ReviewForm = (props) => {
                     >
                         {props.titleButton}
                     </button>
-                    <button style={{backgroundColor:'grey'}}>Cancel</button>
+                    <button style={{backgroundColor:'grey'}} onClick={(event) => handlePressCancel(event)}>Cancel</button>
                 </div>
             </form>
         </div>

@@ -1,11 +1,13 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import ReactSlider from "react-slider";
+import { useNavigate } from "react-router-dom";
 import { addReportFetch, updateReportFetch, getReportByIdFetch } from "../component/API/useFetchReport";
 
 const ReportForm = (props) => {
   const [inputReport, setInputReport] = useState("");
   const [isChecked, setIsChecked] = useState(props.currentUser?.isDone || false);
+  const navigate = useNavigate();
 
   const handlePressAdd = (event) => {
     event.preventDefault();
@@ -36,6 +38,10 @@ const ReportForm = (props) => {
           console.log(`Error ${status}`);
       }
     });
+  }
+
+  const handlePressCancel = (event) => {
+    navigate("/listReports");
   }
 
   return (
@@ -79,7 +85,7 @@ const ReportForm = (props) => {
           >
             {props.titleButton}
           </button>
-          <button style={{ backgroundColor: "grey" }}>Cancel</button>
+          <button style={{ backgroundColor: "grey" }} onClick={(event) => {handlePressCancel(event)}}>Cancel</button>
         </div>
       </form>
     </div>

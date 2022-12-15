@@ -54,6 +54,7 @@ class ListReports extends React.Component {
                         parameter={"id"}
                         linkSeeMore={`updateReport`}
                         linkDelete={`deleteReport`}
+                        isUsersList={false}
                     />
                     :
                     ""

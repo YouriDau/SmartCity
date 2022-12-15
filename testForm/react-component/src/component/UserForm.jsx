@@ -48,11 +48,16 @@ const UserForm = (props) => {
       switch (status) {
         case 201:
           console.log("Update Réussi!");
+          navigate("/listUsers");
           break;
         default:
           console.log(`Error ${status}`);
       }
     });
+  }
+
+  const handlePressCancel = (event) => {
+    navigate("/listUsers");
   }
 
   return (
@@ -124,7 +129,6 @@ const UserForm = (props) => {
             />
           </div>
           <div class="divForm">
-            <button>Cancel</button>
             {/* <button onClick={(event) => this.props.handlePress(event)}><Link to={`/addToilet`}>{this.props.titleButton}</Link></button> */}
             {/* <Link to={`/addToilet`}><button onClick={(event) => (this.props.isUpdate?handlePressUpdate(event):this.handlePressAdd(event) )}>{this.props.titleButton}</button></Link> */}
             <button
@@ -136,6 +140,7 @@ const UserForm = (props) => {
             >
               {props.titleButton}
             </button>
+            <button onClick={(event) => {handlePressCancel(event)}}>Cancel</button>
           </div>
         </form>
       </div>

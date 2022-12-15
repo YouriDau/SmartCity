@@ -11,12 +11,13 @@ const LoginForm = () => {
 
   const handlePressLogin = (event) => {
     event.preventDefault();
+    console.log(inputPseudo);
     loginFetch(inputPseudo, inputPassword).then((result) => {
       if (result.status === 200) {
         alert("Login success");
         console.log(result.data);
         localStorage.setItem("token", result.data);
-        navigate("/maps");
+        navigate("/menuControle");
       } else {
         console.log("Login failed");
       }

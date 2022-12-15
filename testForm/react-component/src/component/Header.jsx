@@ -11,7 +11,7 @@ const Header = () => {
           <button>maps</button>
         </Link>
         <Link to="/menuControle">
-          <button id="btnHeader2">home</button>
+          <button id="btnHeader2">Controle panel</button>
         </Link>
       </div>
     </div>

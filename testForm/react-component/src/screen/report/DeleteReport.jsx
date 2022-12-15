@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../../component/Header";
 import DeleteForm from "../../component/DeleteForm";
-import { Navigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { deleteReportFetch } from "../../component/API/useFetchReport";
 
 function withParams(Component) {
@@ -10,6 +10,7 @@ function withParams(Component) {
 
 const DeleteReport = (props) => {
   const id = parseInt(props.params.id);
+  const navigate = useNavigate();
 
   const handlePressDelete = (event) => {
     event.preventDefault();
@@ -19,15 +20,19 @@ const DeleteReport = (props) => {
     });
   };
 
+  const handlePressCancel = (event) => {
+    event.preventDefault();
+    navigate("/listReports");
+  }
+
   return (
     <div>
       <Header />
       <DeleteForm
         title={"Delete report"}
         text={"Do you really want to delete the report ?"}
-        handlePressDelete={(event) => {
-          handlePressDelete(event);
-        }}
+        handlePressDelete={(event) => {handlePressDelete(event)}}
+        handlePressCancel={(event) => {handlePressCancel(event)}}
       />
     </div>
   );

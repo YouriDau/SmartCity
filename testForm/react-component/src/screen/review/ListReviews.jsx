@@ -32,6 +32,7 @@ const ListReviews = (props) => {
           parameter={"id"}
           linkSeeMore={`updateReview`}
           linkDelete={`deleteReview`}
+          isUsersList={false}
         />
       </div>
     </div>

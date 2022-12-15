@@ -10,7 +10,7 @@ const DeleteForm = (props) => {
             </div>
             <div>
                 <button style={{backgroundColor:'green'}} onClick={(event) => props.handlePressDelete(event)}>Yes</button>
-                <button style={{backgroundColor:'grey'}}>No</button>
+                <button style={{backgroundColor:'grey'}} onClick={(event) => props.handlePressCancel(event)}>No</button>
             </div>
         </div>
         
