@@ -13,7 +13,7 @@ module.exports.identification = async (req, res, next) => {
       next();
     } catch (error) {
       console.error("IdentificationError", error);
-      res.status(400).send("JWT_ERROR");
+      res.status(400).json("login needed");
     }
   } else {
     res.sendStatus(401);

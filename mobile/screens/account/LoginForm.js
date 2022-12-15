@@ -1,14 +1,15 @@
 import { useState } from "react";
 import { View, Text, StyleSheet, TextInput, Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { setUser } from "../../redux/actions/account";
 
 import Title from "../../components/Title";
 import Button from "../../components/Button";
 import useFetchPerson from "../../services/useFetchPerson";
 
 import { LOGIN_NOT_FOUND } from "../../config";
+import { setToken } from "../../redux/actions/token";
 import { useDispatch } from "react-redux";
+import { setUser } from "../../redux/actions/account";
 
 const PLACEHOLDERS = {
   pseudo: "Your pseudo here",
@@ -23,6 +24,8 @@ const LoginForm = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const { loginFetch } = useFetchPerson();
 
+  const dispatch = useDispatch();
+
   const handlePressCancel = () => {
     navigation.goBack();
   };
@@ -32,7 +35,8 @@ const LoginForm = ({ navigation }) => {
       .then((result) => {
         if (result.status === 200) {
           Alert.alert("Login success!");
-          AsyncStorage.setItem("token", result.data);
+          AsyncStorage.setItem("token", result.token);
+          dispatch(setToken(result.token));
           navigation.navigate("MenuConnected");
         } else {
           Alert.alert("Pseudo or password incorect!");

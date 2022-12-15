@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../../redux/selectors";
 import { setUser } from "../../redux/actions/account";
 import { validAccount } from "../../business/account";
+import { setToken } from "../../redux/actions/token";
 
 const UpdateForm = ({ navigation }) => {
   const [pseudo, setPseudo] = useState("");
@@ -43,8 +44,9 @@ const UpdateForm = ({ navigation }) => {
       updatePersonFetch(pseudo, lastName, firstName, email).then((response) => {
         if (response.status === 200) {
           Alert.alert(ACCOUNT_MODIFY_SUCCESS);
-          AsyncStorage.setItem("token", response.data);
+          AsyncStorage.setItem("token", response.token);
           dispatch(setUser(pseudo, lastName, firstName, email));
+          dispatch(setToken(response.token));
           navigation.navigate("Maps");
         }
       });

@@ -3,6 +3,7 @@ import { Alert } from "react-native";
 import { useSelector } from "react-redux";
 import { BASE_URL_API } from "../config";
 import { getToken } from "../redux/selectors";
+import { errorMessage } from "../utils/utils";
 import authHeader from "./authHeader";
 
 export default function useFetchPerson() {
@@ -58,10 +59,12 @@ export default function useFetchPerson() {
       });
       return response.status;
     } catch (error) {
-      console.error("deletePersonFetchError", error);
-      if (error.response.status === 400) {
-        Alert.alert("Error, the password is wrong");
-      }
+      const message = errorMessage(
+        error.response.status,
+        error.response.data,
+        "Account"
+      );
+      throw new Error(message);
     }
   };
 
@@ -79,26 +82,39 @@ export default function useFetchPerson() {
         headers: await authHeader(),
       });
 
-      return { status: response.status, data: response.data };
+      return { status: response.status, token: response.data };
     } catch (error) {
-      console.error("updatePersonFetch", error);
+      const message = errorMessage(
+        error.response.status,
+        error.response.data,
+        "Account"
+      );
+      throw new Error(message);
     }
   };
 
   const loginFetch = async (pseudo, password) => {
-    const response = await axios({
-      method: "post",
-      url: `${BASE_URL_API}/person/login`,
-      data: {
-        pseudo,
-        password,
-      },
-    });
-    return { status: response.status, data: response.data };
+    try {
+      const response = await axios({
+        method: "post",
+        url: `${BASE_URL_API}/person/login`,
+        data: {
+          pseudo,
+          password,
+        },
+      });
+      return { status: response.status, token: response.data };
+    } catch (error) {
+      const message = errorMessage(
+        error.response.status,
+        error.response.data,
+        "Account"
+      );
+      throw new Error(message);
+    }
   };
 
   const getCurrentUserFetch = async () => {
-    // console.log("début getCurrentUserFetch");
     console.log(token);
     try {
       const response = await axios({
@@ -108,10 +124,14 @@ export default function useFetchPerson() {
           authorization: `Bearer ${token}`,
         },
       });
-      // console.log("fin getCurrentUserFetch");
       return { status: response.status, user: response.data };
     } catch (error) {
-      console.error("getCurrentUserFetchError", error);
+      const message = errorMessage(
+        error.response.status,
+        error.response.data,
+        "Account"
+      );
+      throw new Error(message);
     }
   };
 

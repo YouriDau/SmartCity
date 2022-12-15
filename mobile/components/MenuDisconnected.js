@@ -7,6 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setToken } from "../redux/actions/token";
+import useFetchPerson from "../services/useFetchPerson";
 
 const MenuDisconnected = ({ navigation }) => {
   const Drawer = createDrawerNavigator();

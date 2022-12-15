@@ -12,11 +12,9 @@ import { setToilets } from "../redux/actions/maps";
 import useFetchToilets from "../services/useFetchToilets";
 import ToiletCard from "../components/ToiletCard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
-const DEFAULT_POSITION = { latitude: 50.46498, longitude: 4.86529 };
+import { DEFAULT_POSITION } from "../config";
 
 const Maps = ({ navigation }) => {
-  const [initialPosition, setInitialPosition] = useState(DEFAULT_POSITION);
   const [canAddToilet, setCanAddToilet] = useState(false);
   const [newCoordinate, setNewCoordinates] = useState();
   const [cardIsVisible, setCardIsVisible] = useState(false);
@@ -32,30 +30,6 @@ const Maps = ({ navigation }) => {
       dispatch(setToilets(data));
     });
   }, []);
-
-  useEffect(() => {
-    getCoordinate().then((coordinate) => {
-      if (coordinate !== undefined) {
-        setInitialPosition({
-          latitude: coordinate.latitude,
-          longitude: coordinate.longitude,
-        });
-      }
-    });
-  }, []);
-
-  const getCoordinate = async () => {
-    // demander authorisation pour la localisation
-    const { status } = await Location.requestForegroundPermissionsAsync();
-    if (status === "granted") {
-      const userLocation = await Location.getCurrentPositionAsync({
-        accuracy: Location.ACCESS_COARSE_LOCATION, // pour avoir une localisation approximative
-      });
-      // coords contient {latitude, longitude}
-      console.log("return");
-      return userLocation.coords;
-    }
-  };
 
   const handlePressMap = (coordinate) => {
     if (cardIsVisible) {
@@ -163,7 +137,7 @@ const Maps = ({ navigation }) => {
         style={styles.map}
         initialRegion={{
           // Latitude et longitude de Namur
-          ...initialPosition,
+          ...DEFAULT_POSITION,
           // LatitudeDelta and LongitudeDelta to the size of the map
           latitudeDelta: 0.02,
           longitudeDelta: 0.02,

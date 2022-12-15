@@ -11,6 +11,9 @@ import { useEffect } from "react";
 import useFetchPerson from "../services/useFetchPerson";
 import { useDispatch } from "react-redux";
 import { setUser } from "../redux/actions/account";
+import { setToken } from "../redux/actions/token";
+import { Alert } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Drawer = createDrawerNavigator();
 
@@ -19,9 +22,18 @@ const MenuConnected = () => {
   const { getCurrentUserFetch } = useFetchPerson();
 
   useEffect(() => {
-    getCurrentUserFetch().then(({ user }) => {
-      dispatch(setUser(user.pseudo, user.lastName, user.firstName, user.email));
-    });
+    getCurrentUserFetch()
+      .then((user) => {
+        dispatch(
+          setUser(user.pseudo, user.lastName, user.firstName, user.email)
+        );
+        AsyncStorage.getItem("token").then((token) => {
+          dispatch(setToken(token));
+        });
+      })
+      .catch((errorMessage) => {
+        console.log(errorMessage);
+      });
   }, []);
 
   return (

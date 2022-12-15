@@ -3,6 +3,8 @@ export const BASE_URL_API = "http://192.168.1.53:3001";
 
 export const DEFAULT_MENU = "MenuDisconnected";
 
+export const DEFAULT_POSITION = { latitude: 50.46498, longitude: 4.86529 };
+
 export const NEED_CONNEXION_ERROR = "You need to be connected to do this";
 
 export const LOGIN_SUCCESS = "Login success!";
