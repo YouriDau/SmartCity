@@ -31,7 +31,7 @@ module.exports.getReviewsByToiletId = async (req, res) => {
         res.sendStatus(404);
       }
     } else {
-      res.sendStatus(400);
+      res.status(400).json("toilet id is not a number!");
     }
   } catch (error) {
     console.error("getReviewError", error);
@@ -56,7 +56,7 @@ module.exports.getReview = async (req, res) => {
         res.status(200).json(review);
       }
     } else {
-      res.sendStatus(400);
+      res.status(400).json("review id is not a number!");
     }
   } catch (error) {
     console.error("mustBeAdminError", error);
@@ -68,32 +68,30 @@ module.exports.getReview = async (req, res) => {
 module.exports.postReview = async (req, res) => {
   const { note, comment, toiletId } = req.body;
 
-  if (
-    note !== undefined &&
-    comment !== undefined &&
-    toiletId !== undefined &&
-    !isNaN(note) &&
-    !isNaN(toiletId)
-  ) {
-    const client = await pool.connect();
-    try {
-      const { rows: reviews } = await ReviewModele.postReview(
-        client,
-        note,
-        comment,
-        req.session.id,
-        toiletId
-      );
-      const review = reviews[0];
-      res.status(201).json(review.id);
-    } catch (error) {
-      console.error("PostReviewError", error);
-      res.sendStatus(500);
-    } finally {
-      client.release();
+  if (!isNaN(note) && !isNaN(toiletId)) {
+    if (note !== undefined && comment !== undefined && toiletId !== undefined) {
+      const client = await pool.connect();
+      try {
+        const { rows: reviews } = await ReviewModele.postReview(
+          client,
+          note,
+          comment,
+          req.session.id,
+          toiletId
+        );
+        const review = reviews[0];
+        res.status(201).json(review.id);
+      } catch (error) {
+        console.error("PostReviewError", error);
+        res.sendStatus(500);
+      } finally {
+        client.release();
+      }
+    } else {
+      res.status(400).json("note or comment or toiletId is undefined!");
     }
   } else {
-    res.sendStatus(400);
+    res.status(400).json("note or toiletId is not a nubmer!");
   }
 };
 

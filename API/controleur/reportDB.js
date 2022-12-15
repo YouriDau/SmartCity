@@ -5,7 +5,6 @@ module.exports.getNotDoneReports = async (req, res) => {
   const client = await pool.connect();
   try {
     const { rows: allReports } = await ReportModele.getNotDoneReports(client);
-    // 404 si liste est vide?
     if (allReports !== undefined) {
       const reports = allReports.map((report) => {
         return {
@@ -35,7 +34,6 @@ module.exports.getAllReports = async (req, res) => {
   const client = await pool.connect();
   try {
     const { rows: allReports } = await ReportModele.getAllReports(client);
-    // idem, 404 si liste vide?
     if (allReports !== undefined) {
       const reports = allReports.map((report) => {
         return {
@@ -67,7 +65,7 @@ module.exports.getReport = async (req, res) => {
   const id = parseInt(idTexte);
   try {
     if (isNaN(id)) {
-      res.sendStatus(400);
+      res.status(400).json("report id is not a number");
     } else {
       const { rows: reports } = await ReportModele.getReport(client, id);
       const report = reports[0];
@@ -88,7 +86,7 @@ module.exports.getReport = async (req, res) => {
 module.exports.postReport = async (req, res) => {
   const { reason, toiletId } = req.body;
   if (reason === undefined || toiletId === undefined) {
-    res.sendStatus(404);
+    res.status(400).json("reason or toiletId is undefined");
   } else {
     const userId = req.session.id;
     const client = await pool.connect();
@@ -116,22 +114,26 @@ module.exports.postReport = async (req, res) => {
 
 module.exports.updateReport = async (req, res) => {
   const { id, reason, isDone } = req.body;
-  const client = await pool.connect();
-  try {
-    await ReportModele.updateReport(client, id, reason, isDone);
-    res.sendStatus(204);
-  } catch (error) {
-    console.error(error);
-    res.sendStatus(500);
-  } finally {
-    client.release();
+  if (id === undefined || isDone === undefined || reason === undefined) {
+    res.status(400).json("report id or isDone or reason is undefined!");
+  } else {
+    const client = await pool.connect();
+    try {
+      await ReportModele.updateReport(client, id, reason, isDone);
+      res.sendStatus(204);
+    } catch (error) {
+      console.error(error);
+      res.sendStatus(500);
+    } finally {
+      client.release();
+    }
   }
 };
 
 module.exports.deleteReport = async (req, res) => {
   const { id } = req.body;
   if (id === undefined) {
-    res.sendStatus(404);
+    res.status(400).json("report id is undefined!");
   } else {
     const client = await pool.connect();
     try {

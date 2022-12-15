@@ -22,7 +22,7 @@ module.exports.getToilet = async (req, res) => {
       client.release();
     }
   } else {
-    res.sendStatus(400);
+    res.status(400).json("toiletId is not a number!");
   }
 };
 
@@ -87,7 +87,11 @@ module.exports.postToilet = async (req, res) => {
       client.release();
     }
   } else {
-    res.sendStatus(400);
+    res
+      .status(400)
+      .json(
+        "latitude or longitude or isReducedMobility or isPaid is undefined!"
+      );
   }
 };
 
@@ -106,7 +110,7 @@ module.exports.updateToilet = async (req, res) => {
       client.release();
     }
   } else {
-    res.sendStatus(400);
+    res.status(400).json("toiletId is undefined");
   }
 };
 

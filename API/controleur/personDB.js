@@ -61,7 +61,9 @@ module.exports.getPersonById = async (req, res) => {
   const idText = req.params.id; //attention ! Il s'agit de texte !
   const id = parseInt(idText);
 
-  if (!isNaN(id)) {
+  if (isNaN(id)) {
+    res.status(400).json("person id is not a number!");
+  } else {
     try {
       const { rows: persons } = await PersonModele.getPersonById(client, id);
       const person = persons[0];
@@ -83,8 +85,6 @@ module.exports.getPersonById = async (req, res) => {
     } finally {
       client.release();
     }
-  } else {
-    res.sendStatus(404);
   }
 };
 
