@@ -56,6 +56,40 @@ module.exports.getPersonByPseudo = async (req, res) => {
   }
 };
 
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *    Person:
+ *      type: object
+ *      properties:
+ *        id:
+ *          type: integer
+ *        pseudo:
+ *          type: string
+ *        lastName:
+ *          type: string
+ *        firstName:
+ *          type: string
+ *        email:
+ *          type: string
+ *        password:
+ *          type: string
+ *          format: password
+ */
+/**
+ * @swagger
+ * components:
+ *  responses:
+ *    PersonFound:
+ *      description: renvoie une personne
+ *    '400':
+ *      description: l'id de la personne n'est pas un nombre
+ *    '404':
+ *      description: aucune personne ne correspond à cette id
+ *    '500':
+ *      description: ???
+ */
 module.exports.getPersonById = async (req, res) => {
   const client = await pool.connect();
   const idText = req.params.id; //attention ! Il s'agit de texte !
@@ -114,6 +148,23 @@ module.exports.getAllPersons = async (req, res) => {
   }
 };
 
+/**
+ * @swagger
+ * components :
+ *  schemas:
+ *    Login:
+ *      type: object
+ *      properties:
+ *        pseudo:
+ *          type: string
+ *        password:
+ *          type: string
+ *          format: password
+ *      required:
+ *        - pseudo
+ *        - password
+ */
+
 module.exports.login = async (req, res) => {
   const { pseudo, password } = req.body;
   if (pseudo === undefined || password === undefined) {
@@ -150,6 +201,33 @@ module.exports.login = async (req, res) => {
   }
 };
 
+/**
+ * @swagger
+ * components:
+ *  responses:
+ *    '201':
+ *      description: la personne a été ajoutée
+ *    --todo--
+ *  requestBodies:
+ *    PersonneAAjoute:
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              pseudo:
+ *                type: string
+ *              lastName:
+ *                type: string
+*               firstName:
+*                 type: string
+*               email:
+*                 type: string
+*               password: 
+*                 type: string
+*                 format: password
+ *      
+ */
 module.exports.postPerson = async (req, res) => {
   const { pseudo, lastName, firstName, email, password } = req.body;
   if (
@@ -204,6 +282,32 @@ module.exports.postPerson = async (req, res) => {
   }
 };
 
+/**
+ * @swagger
+ * components:
+ *  responses:
+ *    '200':
+ *      description: la personne a été mise à jour
+ *    '400':
+ *      description: le pseudo, le lastName, le firstName ou l'email est undefined
+ *    '500':
+ *      description: --todo--
+ *  requestBodies:
+ *    PersonneAUpdate:
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              pseudo:
+ *                type: string
+ *              lastName:
+ *                type: string
+*               firstName:
+*                 type: string
+*               email:
+*                 type: string
+ */
 module.exports.updatePerson = async (req, res) => {
   // Comment gérer le cas du changement du mdp?
   // TODO: supprimer les questions dans les commentaires que le prof pourrait utiliser à l'examen ;)
@@ -247,6 +351,17 @@ module.exports.updatePerson = async (req, res) => {
   }
 };
 
+/**
+ * @swagger
+ * components:
+ *  responses:
+ *    '204': 
+ *      description: la personne à été supprimée 
+ *    '400':
+ *      description: l'id est undefined
+ *    '500':
+ *      description: --todo--
+ */
 module.exports.deletePersonById = async (req, res) => {
   const { id } = req.body;
   if (id === undefined) {
