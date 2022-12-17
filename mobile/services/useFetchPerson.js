@@ -88,6 +88,30 @@ export default function useFetchPerson() {
     }
   };
 
+  const updatePasswordFetch = async (firstPassword, secondPassword) => {
+    try {
+      const response = await axios({
+        method: "put",
+        url: `${BASE_URL_API}/person/password`,
+        data: {
+          firstPassword,
+          secondPassword,
+        },
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      });
+      return response.status;
+    } catch (error) {
+      const message = errorMessage(
+        error.response.status,
+        error.response.data,
+        "Account"
+      );
+      throw new Error(message);
+    }
+  };
+
   const loginFetch = async (pseudo, password) => {
     try {
       const response = await axios({
@@ -111,7 +135,6 @@ export default function useFetchPerson() {
 
   const getCurrentUserFetch = async () => {
     try {
-      console.log("test");
       const response = await axios({
         method: "get",
         url: `${BASE_URL_API}/person/current`,
@@ -135,6 +158,7 @@ export default function useFetchPerson() {
     deletePersonFetch,
     updatePersonFetch,
     loginFetch,
+    updatePasswordFetch,
     getCurrentUserFetch,
   };
 }

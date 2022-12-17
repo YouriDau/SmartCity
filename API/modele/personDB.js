@@ -50,6 +50,15 @@ module.exports.updatePerson = async (
   );
 };
 
+module.exports.updatePassword = async (client, id, password) => {
+  return await client.query(
+    `UPDATE person
+     SET password=$1
+     WHERE id=$2`,
+    [password, id]
+  );
+};
+
 module.exports.deletePerson = async (client, id) => {
   return await client.query("DELETE FROM person WHERE id = $1", [id]);
 };

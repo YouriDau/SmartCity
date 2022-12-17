@@ -3,6 +3,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import Maps from "../screens/Maps";
 
 import UpdatePerson from "../screens/account/UpdateForm";
+import UpdatePassword from "../screens/account/UpdatePassword";
 import DeletePerson from "../screens/account/DeleteForm";
 
 import CustomMenu from "../components/MenuConnectedCustom";
@@ -62,6 +63,11 @@ const MenuConnected = ({ navigation }) => {
         key="UpdatePerson"
         name="Update account"
         component={UpdatePerson}
+      />
+      <Drawer.Screen
+        key="UpdatePassword"
+        name="Update password"
+        component={UpdatePassword}
       />
       <Drawer.Screen
         key="DeletePerson"

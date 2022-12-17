@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TextInput, Alert } from "react-native";
 import Title from "../../components/Title";
 import Button from "../../components/Button";
 import { useDispatch } from "react-redux";
-import { addUser, setUser } from "../../redux/actions/account";
+import { setUser } from "../../redux/actions/account";
 import { ScrollView } from "react-native-gesture-handler";
 import useFetchPerson from "../../services/useFetchPerson";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -41,34 +41,26 @@ const RegistrationForm = ({ navigation }) => {
     } else {
       addPersonFetch(pseudo, lastName, firstName, email, password)
         .then((status) => {
-          console.log(status);
           if (status === 201) {
             Alert.alert(
               "Success",
               "Congratulation, your account was successfully created!"
             );
-            dispatch(
-              setUser(
-                { pseudo },
-                { lastName },
-                { firstName },
-                { email },
-                { password }
-              )
-            );
+            dispatch(setUser(pseudo, lastName, firstName, email));
           }
         })
         .then(() => {
           loginFetch(pseudo, password)
             .then((response) => {
               if (response.status === 200) {
-                console.log(response.token);
                 AsyncStorage.setItem("token", response.token);
                 dispatch(setToken(response.token));
                 navigation.navigate("MenuConnected");
               }
             })
-            .catch((error) => Alert.alert(error.message));
+            .catch((error) => {
+              Alert.alert(error.message);
+            });
         })
         .catch((error) => {
           Alert.alert(error.message);

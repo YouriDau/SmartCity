@@ -15,7 +15,7 @@ router.get(
  * @swagger
  * /person/{id}:
  *  get:
- *    tags: 
+ *    tags:
  *      - Person
  *    parameters:
  *      name: id
@@ -31,12 +31,17 @@ router.get(
  *        description: Personne non trouvée
  *      '500':
  *        description: Erreur serveur
- *    
+ *
  */
 router.get("/:id", PersonControleur.getPersonById);
 router.get("/", PersonControleur.getAllPersons); // Pour le test
 router.post("/login", PersonControleur.login);
 router.post("/", PersonControleur.postPerson);
+router.put(
+  "/password",
+  JWTMiddleware.identification,
+  PersonControleur.updatePassword
+);
 router.put("/", JWTMiddleware.identification, PersonControleur.updatePerson);
 router.delete(
   "/deleteUser",

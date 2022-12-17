@@ -5,13 +5,15 @@ import {
 } from "@react-navigation/drawer";
 
 import { Octicons } from "@expo/vector-icons";
-import { Alert, View, StyleSheet } from "react-native";
+import { Alert, View, StyleSheet, Text } from "react-native";
 import Constants from "expo-constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "../redux/actions/token";
+import { getUser } from "../redux/selectors";
 
 const MenuConnectedCustom = (props) => {
+  const user = useSelector(getUser);
   const dispatch = useDispatch();
   const navigation = props.navigation;
 
@@ -24,6 +26,7 @@ const MenuConnectedCustom = (props) => {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.welcome}>Welcome {user.pseudo}</Text>
       <View>
         <DrawerItem
           icon={() => <Octicons name="sign-out" size={30} color="black" />}
@@ -43,6 +46,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: Constants.statusBarHeight,
+  },
+  welcome: {
+    marginTop: 10,
+    textAlign: "center",
+    borderBottomColor: "lightgrey",
+    fontStyle: "italic",
+    borderBottomWidth: 1,
+    paddingBottom: 10,
+    fontSize: 23,
   },
   logout: {
     height: 50,

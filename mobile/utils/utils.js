@@ -18,7 +18,7 @@ export function errorMessage(statusCode, errorMessage, subject) {
       message += errorMessage;
       break;
     case 500:
-      message += "retry later, there is an error with the server";
+      message += "something went wrong, retry later";
       break;
   }
   return message;
