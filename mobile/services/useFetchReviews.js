@@ -88,7 +88,6 @@ export default function useFetchReviews() {
       });
       return response.status;
     } catch (error) {
-      console.log(error.response.status);
       const message = errorMessage(
         error.response.status,
         error.response.data,

@@ -21,6 +21,7 @@ export const review = (state = initialState, action) => {
       const note = action.payload.note;
       const comment = action.payload.comment;
       const toiletId = action.payload.toiletId;
+      const userId = action.payload.userId;
 
       return [
         ...state,
@@ -30,6 +31,7 @@ export const review = (state = initialState, action) => {
           note,
           comment,
           toiletId,
+          userId,
         },
       ];
     case DELETE_REVIEW:

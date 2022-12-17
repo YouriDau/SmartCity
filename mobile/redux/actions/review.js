@@ -12,10 +12,10 @@ export function setReviews(reviews) {
   };
 }
 
-export function addReview(id, note, comment, toiletId) {
+export function addReview(id, note, comment, toiletId, userId) {
   return {
     type: ADD_REVIEW,
-    payload: { id, note, comment, toiletId },
+    payload: { id, note, comment, toiletId, userId },
   };
 }
 

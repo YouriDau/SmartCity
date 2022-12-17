@@ -25,7 +25,13 @@ const MenuConnected = ({ navigation }) => {
     getCurrentUserFetch()
       .then(({ user }) => {
         dispatch(
-          setUser(user.pseudo, user.lastName, user.firstName, user.email)
+          setUser(
+            user.id,
+            user.pseudo,
+            user.lastName,
+            user.firstName,
+            user.email
+          )
         );
         AsyncStorage.getItem("token").then((token) => {
           dispatch(setToken(token));
@@ -35,9 +41,10 @@ const MenuConnected = ({ navigation }) => {
         if (error.message === "Error, login needed!") {
           AsyncStorage.removeItem("token");
           dispatch(setToken(""));
-          navigation.navigate("MenuDisconnected");
+          navigation.navigate("Login");
+        } else {
+          Alert.alert(error.message);
         }
-        Alert.alert(error.message);
       });
   }, []);
 

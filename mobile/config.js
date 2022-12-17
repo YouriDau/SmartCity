@@ -1,5 +1,5 @@
 // Services
-export const BASE_URL_API = "http://192.168.1.53:3001";
+export const BASE_URL_API = "http://192.168.1.55:3001";
 
 export const DEFAULT_MENU = "MenuDisconnected";
 

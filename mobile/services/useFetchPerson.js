@@ -1,4 +1,5 @@
 import axios from "axios";
+import { backOff } from "exponential-backoff";
 import { useSelector } from "react-redux";
 import { BASE_URL_API } from "../config";
 import { getToken } from "../redux/selectors";
@@ -28,7 +29,6 @@ export default function useFetchPerson() {
       });
       return response.status;
     } catch (error) {
-      console.log(error.response.status);
       const message = errorMessage(
         error.response.status,
         error.response.data,
@@ -111,6 +111,7 @@ export default function useFetchPerson() {
 
   const getCurrentUserFetch = async () => {
     try {
+      console.log("test");
       const response = await axios({
         method: "get",
         url: `${BASE_URL_API}/person/current`,

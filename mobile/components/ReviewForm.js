@@ -1,12 +1,13 @@
 import { View, Text, StyleSheet, TextInput, Alert } from "react-native";
 import Title from "./Title";
-import Slider from "@react-native-community/slider";
+import { Slider } from "@miblanchard/react-native-slider";
 import { useState } from "react";
 import Button from "./Button";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addReview, updateReview } from "../redux/actions/review";
 import useFetchReviews from "../services/useFetchReviews";
 import { REVIEW_ADD_SUCCESS, REVIEW_MODIFY_SUCCESS } from "../config";
+import { getUser } from "../redux/selectors";
 
 const PLACEHOLDER = "Enter your review here";
 const NOTE_MIN = 1;
@@ -16,6 +17,7 @@ const ReviewForm = ({ isUpdate, navigation, toiletId, review }) => {
   const [note, setNote] = useState(review?.note || 1);
   const [comment, setComment] = useState(review?.comment || "");
   const title = isUpdate ? "Update review " + review.id : "Add Review";
+  const user = useSelector(getUser);
 
   const dispatch = useDispatch();
   const { addReviewFetch, updateReviewFetch } = useFetchReviews();
@@ -31,7 +33,7 @@ const ReviewForm = ({ isUpdate, navigation, toiletId, review }) => {
       addReviewFetch(note, comment, toiletId)
         .then(({ status, data }) => {
           if (status === 201) {
-            dispatch(addReview(data, note, comment, toiletId));
+            dispatch(addReview(data, note, comment, toiletId, user.id));
             Alert.alert(REVIEW_ADD_SUCCESS);
             navigation.navigate("ListReviews", { toiletId });
           }
@@ -79,14 +81,13 @@ const ReviewForm = ({ isUpdate, navigation, toiletId, review }) => {
       <View style={styles.content}>
         <Title text={title} />
         <View style={styles.slideContainer}>
-          <Text>{note}</Text>
+          <Text style={styles.sliderNote}>{note}</Text>
           <Slider
-            style={styles.slider}
             minimumValue={NOTE_MIN}
             maximumValue={NOTE_MAX}
             step={1}
             value={note}
-            onValueChange={setNote}
+            onValueChange={(value) => setNote(value[0])}
           />
         </View>
 
@@ -125,11 +126,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   slideContainer: {
-    alignItems: "center",
+    width: 200,
+    alignContent: "stretch",
+  },
+  sliderNote: {
+    textAlign: "center",
   },
   slider: {
-    width: 200,
-    height: 20,
+    backgroundColor: "red",
   },
   inputContainer: {
     marginTop: 20,

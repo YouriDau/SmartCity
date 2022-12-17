@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getReviews } from "../../redux/selectors";
+import { getReviews, getUser } from "../../redux/selectors";
 import { setReviews } from "../../redux/actions/review";
+import { Slider } from "@miblanchard/react-native-slider";
 import {
   View,
   Text,
@@ -17,6 +18,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NEED_CONNEXION_ERROR } from "../../config";
 
 const Item = ({ navigation, toiletId, review }) => {
+  const user = useSelector(getUser);
+
   const handlePressUpdate = () => {
     AsyncStorage.getItem("token").then((token) => {
       if (token) {
@@ -37,15 +40,8 @@ const Item = ({ navigation, toiletId, review }) => {
     });
   };
 
-  return (
-    <View style={styles.item}>
-      <View style={styles.leftPart}>
-        <Text>review {review.id}</Text>
-        <Text>{review.date}</Text>
-        <Text style={styles.comment}>{review.comment}</Text>
-        <Text>{review.note}/5</Text>
-      </View>
-
+  const showButtons = () => {
+    return (
       <View style={styles.pressables}>
         <Pressable
           style={[styles.pressable, styles.update]}
@@ -60,6 +56,35 @@ const Item = ({ navigation, toiletId, review }) => {
           <Text style={styles.button}>Delete</Text>
         </Pressable>
       </View>
+    );
+  };
+
+  return (
+    <View
+      style={[
+        styles.item,
+        user.id === review.userId ? styles.userItem : styles.item,
+      ]}
+    >
+      <View style={styles.leftPart}>
+        <Text>review {review.id}</Text>
+        <Text>{review.date}</Text>
+        <Text style={styles.comment}>{review.comment}</Text>
+        <Text style={styles.noteTitle}>note:</Text>
+        <Slider
+          minimumValue={0}
+          maximumValue={5}
+          value={review.note}
+          disabled
+          thumbStyle={
+            user.id === review.userId ? styles.userSliderBtn : styles.sliderBtn
+          }
+          maximumTrackTintColor={
+            user.id === review.userId ? "lightblue" : "lightgrey"
+          }
+        />
+      </View>
+      {showButtons()}
     </View>
   );
 };
@@ -82,7 +107,7 @@ const List = ({ navigation, route }) => {
   };
 
   const handlePressCancel = () => {
-    navigation.goBack();
+    navigation.navigate("Maps");
   };
 
   const showReviews = () => {
@@ -137,6 +162,26 @@ const styles = StyleSheet.create({
     margin: 5,
     flexDirection: "row",
     justifyContent: "space-between",
+  },
+  userItem: {
+    backgroundColor: "lightblue",
+    borderRadius: 15,
+    margin: 5,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  noteTitle: {
+    fontWeight: "bold",
+    marginTop: 10,
+  },
+  sliderBtn: {
+    backgroundColor: "lightgrey",
+  },
+  userSliderBtn: {
+    backgroundColor: "lightblue",
+  },
+  sliderRightPart: {
+    backgroundColor: "lightgrey",
   },
   leftPart: {
     flex: 1,
