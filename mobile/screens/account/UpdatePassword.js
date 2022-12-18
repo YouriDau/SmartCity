@@ -5,6 +5,7 @@ import Title from "../../components/Title";
 import useFetchPerson from "../../services/useFetchPerson";
 
 const UpdatePassword = ({ navigation }) => {
+  const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [newPasswordConfirm, setNewPasswordConfirm] = useState("");
 
@@ -16,10 +17,11 @@ const UpdatePassword = ({ navigation }) => {
     if (newPassword !== newPasswordConfirm) {
       Alert.alert("The first password is not the same as the second one!");
     } else {
-      updatePasswordFetch(newPassword, newPasswordConfirm)
+      updatePasswordFetch(currentPassword, newPasswordConfirm)
         .then((status) => {
           if (status === 204) {
-            console.log("réussi");
+            Alert.alert("Success, your password has been successfully modify");
+            navigation.navigate("Maps");
           }
         })
         .catch((error) => {
@@ -31,10 +33,18 @@ const UpdatePassword = ({ navigation }) => {
     <View style={styles.container}>
       <Title text={"Modify password"} />
       <View style={styles.form}>
-        <Text style={styles.inputText}>Password</Text>
+        <Text style={styles.inputText}>Current password</Text>
         <TextInput
           style={styles.input}
-          textContentType={"emailAddress"}
+          value={currentPassword}
+          keyboardType={"visible-password"}
+          onChangeText={setCurrentPassword}
+          secureTextEntry
+          autoFocus
+        />
+        <Text style={styles.inputText}>New password</Text>
+        <TextInput
+          style={styles.input}
           value={newPassword}
           onChangeText={setNewPassword}
           secureTextEntry
@@ -42,7 +52,6 @@ const UpdatePassword = ({ navigation }) => {
         <Text style={styles.inputText}>Confirm new password</Text>
         <TextInput
           style={styles.input}
-          textContentType={"emailAddress"}
           value={newPasswordConfirm}
           onChangeText={setNewPasswordConfirm}
           secureTextEntry

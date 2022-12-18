@@ -88,14 +88,14 @@ export default function useFetchPerson() {
     }
   };
 
-  const updatePasswordFetch = async (firstPassword, secondPassword) => {
+  const updatePasswordFetch = async (currentPassword, newPassword) => {
     try {
       const response = await axios({
         method: "put",
         url: `${BASE_URL_API}/person/password`,
         data: {
-          firstPassword,
-          secondPassword,
+          password: currentPassword,
+          newPassword,
         },
         headers: {
           authorization: `Bearer ${token}`,

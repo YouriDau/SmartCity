@@ -61,6 +61,7 @@ const UpdateForm = ({ navigation }) => {
           style={styles.input}
           value={pseudo}
           onChangeText={setPseudo}
+          autoFocus
         />
 
         <Text style={styles.inputText}>Last name</Text>
@@ -80,7 +81,7 @@ const UpdateForm = ({ navigation }) => {
         <Text style={styles.inputText}>Email</Text>
         <TextInput
           style={styles.input}
-          textContentType={"emailAddress"}
+          keyboardType={"email-address"}
           value={email}
           onChangeText={setEmail}
         />
