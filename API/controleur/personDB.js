@@ -83,12 +83,10 @@ module.exports.getPersonByPseudo = async (req, res) => {
  *  responses:
  *    PersonFound:
  *      description: renvoie une personne
- *    '400':
- *      description: l'id de la personne n'est pas un nombre
- *    '404':
- *      description: aucune personne ne correspond à cette id
- *    '500':
- *      description: ???
+ *      content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/Person'
  */
 module.exports.getPersonById = async (req, res) => {
   const client = await pool.connect();
@@ -205,9 +203,8 @@ module.exports.login = async (req, res) => {
  * @swagger
  * components:
  *  responses:
- *    '201':
+ *    PersonneAjoute:
  *      description: la personne a été ajoutée
- *    --todo--
  *  requestBodies:
  *    PersonneAAjoute:
  *      content:
@@ -226,7 +223,6 @@ module.exports.login = async (req, res) => {
  *               password:
  *                 type: string
  *                 format: password
- *
  */
 module.exports.postPerson = async (req, res) => {
   const { pseudo, lastName, firstName, email, password } = req.body;
@@ -321,12 +317,8 @@ module.exports.updatePassword = async (req, res) => {
  * @swagger
  * components:
  *  responses:
- *    '200':
+ *    PersonneUpdated:
  *      description: la personne a été mise à jour
- *    '400':
- *      description: le pseudo, le lastName, le firstName ou l'email est undefined
- *    '500':
- *      description: --todo--
  *  requestBodies:
  *    PersonneAUpdate:
  *      content:
@@ -386,16 +378,46 @@ module.exports.updatePerson = async (req, res) => {
   }
 };
 
+module.exports.updatePassword = async (req, res) => {
+  const { password, newPassword } = req.body;
+  if (password !== undefined && newPassword !== undefined) {
+    const client = await pool.connect();
+    try {
+      const { rows } = await PersonModele.getPersonByPseudo(
+        client,
+        req.session.pseudo
+      );
+      const currentUser = rows[0];
+
+      const currentPassword = currentUser.password;
+      if (await compareHash(password, currentPassword)) {
+        const newPasswordHashed = await getHash(newPassword);
+        await PersonModele.updatePassword(
+          client,
+          req.session.id,
+          newPasswordHashed
+        );
+        res.sendStatus(204);
+      } else {
+        res.status(400).json("you didn't entered the correct user password");
+      }
+    } catch (error) {
+      console.error("updatePasswordError", error);
+      res.sendStatus(500);
+    } finally {
+      client.release();
+    }
+  } else {
+    res.status(400).json("one of the passwords is undefined!");
+  }
+};
+
 /**
  * @swagger
  * components:
  *  responses:
- *    '204':
- *      description: la personne à été supprimée
- *    '400':
- *      description: l'id est undefined
- *    '500':
- *      description: --todo--
+ *    PersonneDeleted:
+ *      description: la personne a été supprimé
  */
 module.exports.deletePersonById = async (req, res) => {
   const { id } = req.body;

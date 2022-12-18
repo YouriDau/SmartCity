@@ -4,6 +4,13 @@ const pool = require("../modele/database");
 const jwt = require("jsonwebtoken");
 const process = require("process");
 
+/**
+ *@swagger
+ * components:
+ *  responses:
+ *      mustBeManager:
+ *          description: L'action demandée ne peut être réalisée que par un manager
+ */
 module.exports.mustBeAdmin = (req, res, next) => {
   if (req.session !== undefined && req.session.authLevel === "admin") {
     next();

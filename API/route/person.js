@@ -25,24 +25,87 @@ router.get(
  *      schema:
  *        type: integer
  *    responses:
- *      '400':
+ *      200:
+ *        $ref: '#/components/responses/PersonFound'
+ *      400:
  *        description: l'id de la personne n'est pas un nombre
- *      '404':
+ *      404:
  *        description: Personne non trouvée
- *      '500':
+ *      500:
  *        description: Erreur serveur
  *
  */
 router.get("/:id", PersonControleur.getPersonById);
 router.get("/", PersonControleur.getAllPersons); // Pour le test
 router.post("/login", PersonControleur.login);
+
+/**
+ * @swagger
+ * /person:
+ *  post:
+ *    tags:
+ *      - Person
+ *    requestBody:
+ *      $ref: '#/components/requestBodies/PersonneAAjoute'
+ *    responses: 
+ *      201: 
+ *        '#/components/requestBodies/PersonAjoute'
+ *      400:
+ *        description: l'email et/ou le password est incorrect
+ *      409:
+ *        description: l'email et/ou le pseudo existe deja
+ *      500:
+ *        description: Erreur serveur
+ */
 router.post("/", PersonControleur.postPerson);
 router.put(
   "/password",
   JWTMiddleware.identification,
   PersonControleur.updatePassword
 );
+
+/**
+ * @swagger
+ * /person:
+ *  put:
+ *    tags:
+ *      - Person
+ *    security:
+ *      - bearerAuth: []
+ *    requestBody:
+ *      $ref: '#/components/requestBodies/PersonneAUpdate'
+ *    responses:
+ *      200:
+ *        $ref: '#/components/responses/PersonneUpdated
+ *      400:
+ *        $ref: '#/components/responses/ErrorJWT
+ *      401:
+ *        $ref: '#/components/responses/MissingJWT
+ *      500:
+ *        description: Erreur serveur
+ */
 router.put("/", JWTMiddleware.identification, PersonControleur.updatePerson);
+
+/**
+ * @swagger
+ * /person:
+ *  delete:
+ *      tags:
+ *        - Person
+ *      security:
+ *        - bearerAuth: []
+ *      responses:
+ *        200:
+ *          $ref: '#/components/responses/PersonneDeleted'
+ *        400:
+ *          $ref: '#/components/responses/ErrorJWT'
+ *        401:
+ *          $ref: '#/components/responses/MissingJWT'
+ *        403:
+ *          $ref: '#/components/responses/mustBeManager'
+ *        500:
+ *          description: Erreur serveur     
+ */
 router.delete(
   "/deleteUser",
   JWTMiddleware.identification,
