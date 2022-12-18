@@ -23,18 +23,15 @@ const UserForm = (props) => {
       inputFirstName,
       inputEmail,
       inputPassword
-    ).then((status) => {
-      console.log(status);
-      switch (status) {
-        case 201:
-          console.log("Insert Réussi!");
-          navigate("/listUsers");
-          break;
-        default:
-          console.log(`Error ${status}`);
-      }
-    });
-  }
+    )
+      .then((status) => {
+        alert("Account successfully added");
+        navigate("/listUsers");
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  };
 
   const handlePressUpdate = (event) => {
     event.preventDefault();
@@ -42,7 +39,7 @@ const UserForm = (props) => {
       inputPseudo,
       inputLastName,
       inputFirstName,
-      inputEmail,
+      inputEmail
     ).then((status) => {
       console.log(status);
       switch (status) {
@@ -54,62 +51,58 @@ const UserForm = (props) => {
           console.log(`Error ${status}`);
       }
     });
-  }
+  };
 
   const handlePressCancel = (event) => {
     navigate("/listUsers");
-  }
+  };
 
   return (
-    <div class="form">
-      <div class="content">
+    <div className="form">
+      <div className="content">
         <h1>{props.title}</h1>
         <form>
-          <div class="divForm">
-            <label class="lblForm">Pseudo</label>
+          <div className="divForm">
+            <label className="lblForm">Pseudo</label>
             <br />
             <input
               type="text"
               defaultValue={props.isUpdate ? props.user.pseudo : ""}
               onChange={(event) => {
-                setInputPseudo(inputPseudo);
+                setInputPseudo(event.target.value);
               }}
             />
           </div>
-          <div class="divForm">
+          <div className="divForm">
             <label>Last name</label>
             <br />
             <input
               type="text"
-              defaultValue={
-                props.isUpdate ? props.user.last_name : ""
-              }
+              defaultValue={props.isUpdate ? props.user.last_name : ""}
               onChange={(event) => {
-                setInputLastName(inputLastName);
+                setInputLastName(event.target.value);
               }}
             />
           </div>
-          <div class="divForm">
+          <div className="divForm">
             <label>First name</label>
             <br />
             <input
               type="text"
-              defaultValue={
-                props.isUpdate ? props.user.first_name : ""
-              }
+              defaultValue={props.isUpdate ? props.user.first_name : ""}
               onChange={(event) => {
-                setInputFirstName(inputFirstName);
+                setInputFirstName(event.target.value);
               }}
             />
           </div>
           {props.registration ? (
-            <div class="divForm">
+            <div className="divForm">
               <label>Password</label>
               <br />
               <input
                 type="password"
                 onChange={(event) => {
-                  setInputPassword(inputPassword);
+                  setInputPassword(event.target.value);
                 }}
               />
             </div>
@@ -117,18 +110,18 @@ const UserForm = (props) => {
             ""
           )}
 
-          <div class="divForm">
+          <div className="divForm">
             <label>Email</label>
             <br />
             <input
               type="text"
               defaultValue={props.isUpdate ? props.user.email : ""}
               onChange={(event) => {
-                setInputEmail(inputEmail);
+                setInputEmail(event.target.value);
               }}
             />
           </div>
-          <div class="divForm">
+          <div className="divForm">
             {/* <button onClick={(event) => this.props.handlePress(event)}><Link to={`/addToilet`}>{this.props.titleButton}</Link></button> */}
             {/* <Link to={`/addToilet`}><button onClick={(event) => (this.props.isUpdate?handlePressUpdate(event):this.handlePressAdd(event) )}>{this.props.titleButton}</button></Link> */}
             <button
@@ -140,13 +133,18 @@ const UserForm = (props) => {
             >
               {props.titleButton}
             </button>
-            <button onClick={(event) => {handlePressCancel(event)}}>Cancel</button>
+            <button
+              onClick={(event) => {
+                handlePressCancel(event);
+              }}
+            >
+              Cancel
+            </button>
           </div>
         </form>
       </div>
     </div>
   );
-  
-}
+};
 
 export default UserForm;

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { BASE_URL_API } from "../../config";
+import { errorMessage } from "../../utils/utils";
 
 const getReviewsByToiletIdFetch = async (id) => {
   try {
@@ -10,33 +11,36 @@ const getReviewsByToiletIdFetch = async (id) => {
     });
     return response.data;
   } catch (error) {
-    console.error("getReviewsByToiletIdFetchError", error);
+    const message = errorMessage(
+      error.response.status,
+      error.response.data,
+      "Account"
+    );
+    throw new Error(message);
   }
 };
 
 const addReviewFetch = async (note, comment, toiletId) => {
-  await axios({
-    method: "post",
-    url: `${BASE_URL_API}/review`,
-    data: {
-      note,
-      comment,
-      toiletId,
-      userId: 1,
-    },
-  })
-    .then((response) => {
-      switch (response.status) {
-        case 201:
-          console.log("Insert Réussi!");
-          break;
-        default:
-          console.log("Add review default switch");
-      }
-    })
-    .catch((error) => {
-      console.log(error.response.status);
+  try {
+    const response = await axios({
+      method: "post",
+      url: `${BASE_URL_API}/review`,
+      data: {
+        note,
+        comment,
+        toiletId,
+        userId: 1,
+      },
     });
+    return response.status;
+  } catch (error) {
+    const message = errorMessage(
+      error.response.status,
+      error.response.data,
+      "Account"
+    );
+    throw new Error(message);
+  }
 };
 
 const deleteReviewFetch = async (id) => {
@@ -48,8 +52,13 @@ const deleteReviewFetch = async (id) => {
     });
     return response.status;
   } catch (error) {
-    console.error("deleteReviewFetchError", error);
+    const message = errorMessage(
+      error.response.status,
+      error.response.data,
+      "Account"
+    );
+    throw new Error(message);
   }
-}
+};
 
 export { getReviewsByToiletIdFetch, addReviewFetch, deleteReviewFetch };

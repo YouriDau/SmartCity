@@ -18,14 +18,18 @@ const UpdateUser = (props) => {
 
   useEffect(() => {
     console.log(id);
-    getPersonByIdFetch(id).then((user) => {
-      setUser(user);
-    });
+    getPersonByIdFetch(id)
+      .then((user) => {
+        setUser(user);
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
   }, []);
 
   return (
-    <div class="form">
-      <div class="header">
+    <div className="form">
+      <div className="header">
         <Header />
       </div>
       <UserForm

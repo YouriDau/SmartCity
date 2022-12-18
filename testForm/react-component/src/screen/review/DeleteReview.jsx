@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { deleteReviewFetch } from "../../component/API/useFetchReview";
 
 function withParams(Component) {
-  return props => <Component {...props} params={useParams()} />;
+  return (props) => <Component {...props} params={useParams()} />;
 }
 
 const DeleteReview = (props) => {
@@ -13,23 +13,27 @@ const DeleteReview = (props) => {
 
   const handlePressDelete = (event) => {
     event.preventDefault();
-    console.log(id);
-    deleteReviewFetch(id).then((status) => {
-      console.log(status);
-    });
-  }
-  
+    deleteReviewFetch(id)
+      .then((status) => {
+        alert("Success, delete review successfully!");
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  };
+
   return (
     <div>
       <Header />
       <DeleteForm
         title={"Delete review"}
         text={"Do you really want to delete the review ?"}
-        handlePressDelete={(event) => {handlePressDelete(event)}}
+        handlePressDelete={(event) => {
+          handlePressDelete(event);
+        }}
       />
     </div>
   );
-  
-}
+};
 
 export default withParams(DeleteReview);

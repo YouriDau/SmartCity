@@ -18,10 +18,14 @@ const Maps = () => {
   const [toilets, setToilets] = useState([]);
 
   useEffect(() => {
-    getAllToiletsFetch().then(({ status, data }) => {
-      console.log(data);
-      setToilets(data);
-    });
+    getAllToiletsFetch()
+      .then(({ status, data }) => {
+        console.log(data);
+        setToilets(data);
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
   }, []);
 
   return (

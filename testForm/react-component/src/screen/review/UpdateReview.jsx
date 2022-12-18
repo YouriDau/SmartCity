@@ -3,16 +3,14 @@ import Header from "../../component/Header";
 import ReviewForm from "../../component/ReviewForm";
 
 const UpdateReview = () => {
-
   const handlePressUpdate = (event) => {
     event.preventDefault();
     console.log("Update review");
-  }
+  };
 
-  
   return (
-    <div class="form">
-      <div class="header">
+    <div className="form">
+      <div className="header">
         <Header />
       </div>
       <ReviewForm
@@ -22,6 +20,6 @@ const UpdateReview = () => {
       />
     </div>
   );
-}
+};
 
 export default UpdateReview;

@@ -1,67 +1,113 @@
 import axios from "axios";
 import { BASE_URL_API } from "../../config";
+import { errorMessage } from "../../utils/utils";
 
 const getAllReportsFetch = async () => {
-    try {
-        const response = await axios.get(`${BASE_URL_API}/report/all`);
-        return response.data;
-    } catch (error) {
-        console.error("getAllReportsFetchError", error);
-    }
-}
+  try {
+    const response = await axios.get(`${BASE_URL_API}/report/all`);
+    return response.data;
+  } catch (error) {
+    const message = errorMessage(
+      error.response.status,
+      error.response.data,
+      "Account"
+    );
+    throw new Error(message);
+  }
+};
 
 const getNotDoneReportsFetch = async () => {
-    try {
-        const response = await axios.get(`${BASE_URL_API}/report/notDone`);
-        return response.data;
-    } catch (error) {
-        console.error("getNotDoneReportsFetchError", error);
-    }
-}
+  try {
+    const response = await axios.get(`${BASE_URL_API}/report/notDone`);
+    return response.data;
+  } catch (error) {
+    const message = errorMessage(
+      error.response.status,
+      error.response.data,
+      "Account"
+    );
+    throw new Error(message);
+  }
+};
 
 const getReportByIdFetch = async (id) => {
-    try {
-        const response = await axios.get(`${BASE_URL_API}/report/${id}`);
-        return response.data;
-    } catch (error) {
-        console.error("getReportByIdFetchError", error);
-    }
-} 
+  try {
+    const response = await axios.get(`${BASE_URL_API}/report/${id}`);
+    return response.data;
+  } catch (error) {
+    const message = errorMessage(
+      error.response.status,
+      error.response.data,
+      "Account"
+    );
+    throw new Error(message);
+  }
+};
 
 const addReportFetch = async (reason) => {
+  try {
     await axios({
-        method: "post",
-        url: `${BASE_URL_API}/report`,
-        data: {
-            reason,
-            userId: 1,
-            toiletId: 1
-        }
+      method: "post",
+      url: `${BASE_URL_API}/report`,
+      data: {
+        reason,
+        userId: 1,
+        toiletId: 1,
+      },
     });
-}
+  } catch (error) {
+    const message = errorMessage(
+      error.response.status,
+      error.response.data,
+      "Account"
+    );
+    throw new Error(message);
+  }
+};
 
 const updateReportFetch = async (reason, isDone) => {
+  try {
     await axios({
-        method: "put",
-        url: `${BASE_URL_API}/report`,
-        data: {
-            reason,
-            isDone,
-        }
+      method: "put",
+      url: `${BASE_URL_API}/report`,
+      data: {
+        reason,
+        isDone,
+      },
     });
-}
+  } catch (error) {
+    const message = errorMessage(
+      error.response.status,
+      error.response.data,
+      "Account"
+    );
+    throw new Error(message);
+  }
+};
 
 const deleteReportFetch = async (id) => {
-    try {
-        const response = await axios({
-            method: "delete",
-            url: `${BASE_URL_API}/report`,
-            data: { id },
-        });
-        return response.status;
-    } catch (error) {
-        console.error("deleteReportFetchError", error);
-    }
-}
+  try {
+    const response = await axios({
+      method: "delete",
+      url: `${BASE_URL_API}/report`,
+      data: { id },
+    });
+    return response.status;
+  } catch (error) {
+    const message = errorMessage(
+      error.response.status,
+      error.response.data,
+      "Account"
+    );
+    throw new Error(message);
+  }
+};
 
-export { getAllReportsFetch, getNotDoneReportsFetch, getReportByIdFetch, addReportFetch, updateReportFetch, deleteReportFetch };
+export {
+  getAllReportsFetch,
+  getNotDoneReportsFetch,
+  getReportByIdFetch,
+  addReportFetch,
+  updateReportFetch,
+  deleteReportFetch,
+};

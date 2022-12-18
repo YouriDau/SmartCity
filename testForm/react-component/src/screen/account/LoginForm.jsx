@@ -12,16 +12,16 @@ const LoginForm = () => {
   const handlePressLogin = (event) => {
     event.preventDefault();
     console.log(inputPseudo);
-    loginFetch(inputPseudo, inputPassword).then((result) => {
-      if (result.status === 200) {
+    loginFetch(inputPseudo, inputPassword)
+      .then((result) => {
         alert("Login success");
         console.log(result.data);
         localStorage.setItem("token", result.data);
         navigate("/menuControle");
-      } else {
-        console.log("Login failed");
-      }
-    });
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
   };
 
   return (

@@ -14,16 +14,19 @@ const DeleteReport = (props) => {
 
   const handlePressDelete = (event) => {
     event.preventDefault();
-    console.log(id);
-    deleteReportFetch(id).then((status) => {
-      console.log(status);
-    });
+    deleteReportFetch(id)
+      .then((status) => {
+        alert("Success, delete report successfully!");
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
   };
 
   const handlePressCancel = (event) => {
     event.preventDefault();
     navigate("/listReports");
-  }
+  };
 
   return (
     <div>
@@ -31,8 +34,12 @@ const DeleteReport = (props) => {
       <DeleteForm
         title={"Delete report"}
         text={"Do you really want to delete the report ?"}
-        handlePressDelete={(event) => {handlePressDelete(event)}}
-        handlePressCancel={(event) => {handlePressCancel(event)}}
+        handlePressDelete={(event) => {
+          handlePressDelete(event);
+        }}
+        handlePressCancel={(event) => {
+          handlePressCancel(event);
+        }}
       />
     </div>
   );

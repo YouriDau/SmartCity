@@ -278,41 +278,6 @@ module.exports.postPerson = async (req, res) => {
   }
 };
 
-module.exports.updatePassword = async (req, res) => {
-  const { password, newPassword1, newPassword2 } = req.body;
-  if (newPassword1 !== undefined && newPassword2 !== undefined) {
-    if (newPassword1 === newPassword2) {
-      const client = await pool.connect();
-      try {
-        const currentUser = await PersonModele.getPersonByPseudo(
-          client,
-          req.session.pseudo
-        );
-        const curentPassword = currentUser.password;
-        if (currentPassword === currentPasswordHashed) {
-          await PersonModele.updatePassword(
-            client,
-            req.session.id,
-            passwordHashed
-          );
-          res.sendStatus(204);
-        } else {
-          res.status(400).json("");
-        }
-      } catch (error) {
-        console.error("updatePasswordError", error);
-        res.sendStatus(500);
-      } finally {
-        client.release();
-      }
-    } else {
-      res.status(400).json("the passwords are not the same!");
-    }
-  } else {
-    res.status(400).json("one of the passwords is undefined!");
-  }
-};
-
 /**
  * @swagger
  * components:

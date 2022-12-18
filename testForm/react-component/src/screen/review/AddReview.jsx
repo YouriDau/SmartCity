@@ -3,10 +3,9 @@ import Header from "../../component/Header";
 import ReviewForm from "../../component/ReviewForm";
 
 const AddReview = () => {
-
   return (
-    <div class="form">
-      <div class="header">
+    <div className="form">
+      <div className="header">
         <Header />
       </div>
       <ReviewForm
@@ -16,6 +15,6 @@ const AddReview = () => {
       />
     </div>
   );
-}
+};
 
 export default AddReview;

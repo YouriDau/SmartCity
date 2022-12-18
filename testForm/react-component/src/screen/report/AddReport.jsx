@@ -4,8 +4,8 @@ import ReportForm from "../../component/ReportForm";
 
 const AddReport = () => {
   return (
-    <div class="form">
-      <div class="header">
+    <div className="form">
+      <div className="header">
         <Header />
       </div>
       <ReportForm

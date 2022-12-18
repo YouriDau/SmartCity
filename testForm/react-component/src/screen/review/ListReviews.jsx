@@ -16,10 +16,14 @@ const ListReviews = (props) => {
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-    getReviewsByToiletIdFetch(toiletId).then((reviews) => {
-      setReviews(reviews);
-    });
-  }, []) 
+    getReviewsByToiletIdFetch(toiletId)
+      .then((reviews) => {
+        setReviews(reviews);
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  }, []);
 
   return (
     <div>
@@ -37,7 +41,6 @@ const ListReviews = (props) => {
       </div>
     </div>
   );
-  
-}
+};
 
 export default withParams(ListReviews);

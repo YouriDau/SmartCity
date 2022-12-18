@@ -9,27 +9,27 @@ const MenuControle = () => {
       <h1>Controle panel</h1>
       <div id="menuControle">
         <Link to={"/listUsers"} className="linkMenu">
-          <div class="divMenu">
+          <div className="divMenu">
             <p>users</p>
           </div>
         </Link>
         <Link className="linkMenu">
-          <div class="divMenu">
+          <div className="divMenu">
             <p>reviews</p>
           </div>
         </Link>
         <Link to={"/maps"} className="linkMenu">
-          <div class="divMenu">
+          <div className="divMenu">
             <p>toilets</p>
           </div>
         </Link>
         <Link to={"/listReports"} className="linkMenu">
-          <div class="divMenu">
+          <div className="divMenu">
             <p>reports</p>
           </div>
         </Link>
         <Link to={"/updateUser"} className="linkMenu">
-          <div class="divMenu">
+          <div className="divMenu">
             <p>my account</p>
           </div>
         </Link>

@@ -1,12 +1,18 @@
 import axios from "axios";
 import { BASE_URL_API } from "../../config";
+import { errorMessage } from "../../utils/utils";
 
 const getAllToiletsFetch = async () => {
   try {
     const response = await axios.get(`${BASE_URL_API}/toilet`);
     return { status: response.status, data: response.data };
   } catch (error) {
-    console.error("getAllPersonsFetchError", error);
+    const message = errorMessage(
+      error.response.status,
+      error.response.data,
+      "Account"
+    );
+    throw new Error(message);
   }
 };
 
@@ -19,8 +25,13 @@ const deleteToiletFetch = async (id) => {
     });
     return response.status;
   } catch (error) {
-      console.error("deleteReportFetchError", error);
+    const message = errorMessage(
+      error.response.status,
+      error.response.data,
+      "Account"
+    );
+    throw new Error(message);
   }
-}
+};
 
 export { getAllToiletsFetch, deleteToiletFetch };

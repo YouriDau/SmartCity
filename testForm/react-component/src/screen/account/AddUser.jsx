@@ -5,14 +5,14 @@ import UserForm from "../../component/UserForm";
 
 const AddUser = () => {
   return (
-    <div class="form">
-      <div class="header">
+    <div className="form">
+      <div className="header">
         <Header />
       </div>
-      <UserForm 
-        title={"Add user"} 
-        titleButton={"Register"} 
-        isUpdate={false} 
+      <UserForm
+        title={"Add user"}
+        titleButton={"Register"}
+        isUpdate={false}
         registration={true}
       />
     </div>

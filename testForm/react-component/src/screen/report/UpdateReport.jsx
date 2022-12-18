@@ -4,21 +4,25 @@ import Header from "../../component/Header";
 import ReportForm from "../../component/ReportForm";
 //import { updateReportFetch } from "../../component/API/useFetchReport";
 import { getReportByIdFetch } from "../../component/API/useFetchReport";
-import {useParams} from 'react-router-dom';
+import { useParams } from "react-router-dom";
 
 function withParams(Component) {
-  return props => <Component {...props} params={useParams()} />;
+  return (props) => <Component {...props} params={useParams()} />;
 }
 
 const UpdateReport = (props) => {
-  const id = parseInt(props.params.id)
+  const id = parseInt(props.params.id);
   const [report, setReport] = useState("");
 
   useEffect(() => {
-    getReportByIdFetch(id).then((report) => {
-      setReport(report);
-    })
-  }, []) 
+    getReportByIdFetch(id)
+      .then((report) => {
+        setReport(report);
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  }, []);
 
   return (
     <div>
@@ -35,7 +39,6 @@ const UpdateReport = (props) => {
       />
     </div>
   );
-  
-}
+};
 
 export default withParams(UpdateReport);
