@@ -1,18 +1,22 @@
 import React from "react";
+import { useContext } from "react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   addPersonFetch,
   updatePersonFetch,
 } from "../component/API/useFetchPerson"; // dans l'objet useFetchPerson on prend addPersonFetch
+import { UserContext } from "../utils/UserContext";
 
 const UserForm = (props) => {
-  const [users, setUsers] = useState([]);
-  const [inputPseudo, setInputPseudo] = useState("");
-  const [inputLastName, setInputLastName] = useState("");
-  const [inputFirstName, setInputFirstName] = useState("");
-  const [inputPassword, setInputPassword] = useState("");
-  const [inputEmail, setInputEmail] = useState("");
+  const { user: admin, setUser: setAdmin, token } = useContext(UserContext);
+  const [inputPseudo, setInputPseudo] = useState(props.user.pseudo || "");
+  const [inputLastName, setInputLastName] = useState(props.user.lastName || "");
+  const [inputFirstName, setInputFirstName] = useState(
+    props.user.firstName || ""
+  );
+  const [inputPassword, setInputPassword] = useState(props.user.password || "");
+  const [inputEmail, setInputEmail] = useState(props.user.email || "");
   const navigate = useNavigate();
 
   const handlePressAdd = (event) => {
@@ -36,21 +40,33 @@ const UserForm = (props) => {
   const handlePressUpdate = (event) => {
     event.preventDefault();
     updatePersonFetch(
+      token,
       inputPseudo,
       inputLastName,
       inputFirstName,
       inputEmail
-    ).then((status) => {
-      console.log(status);
-      switch (status) {
-        case 201:
+    )
+      .then((status) => {
+        if (status === 200) {
           console.log("Update Réussi!");
-          navigate("/listUsers");
-          break;
-        default:
-          console.log(`Error ${status}`);
-      }
-    });
+
+          if (props.user.id === admin.id) {
+            setAdmin({
+              id: admin.id,
+              pseudo: inputPseudo,
+              lastName: inputLastName,
+              firstName: inputFirstName,
+              email: inputEmail,
+            });
+            navigate("/menuControle");
+          } else {
+            navigate("/listUsers");
+          }
+        }
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
   };
 
   const handlePressCancel = (event) => {
@@ -78,7 +94,7 @@ const UserForm = (props) => {
             <br />
             <input
               type="text"
-              defaultValue={props.isUpdate ? props.user.last_name : ""}
+              defaultValue={props.isUpdate ? props.user.lastName : ""}
               onChange={(event) => {
                 setInputLastName(event.target.value);
               }}
@@ -89,7 +105,7 @@ const UserForm = (props) => {
             <br />
             <input
               type="text"
-              defaultValue={props.isUpdate ? props.user.first_name : ""}
+              defaultValue={props.isUpdate ? props.user.firstName : ""}
               onChange={(event) => {
                 setInputFirstName(event.target.value);
               }}

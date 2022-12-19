@@ -1,6 +1,9 @@
 import React from "react";
 import Header from "../component/Header";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { UserContext } from "../utils/UserContext";
+import { useEffect } from "react";
 
 const MenuControle = () => {
   return (

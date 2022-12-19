@@ -34,7 +34,9 @@ const List = (props) => {
                       <IoMdEye size={20} color="black" />
                     </button>
                   </Link>
-                  <Link to={"/" + props.linkDelete + "/" + item.id}>
+                  <Link
+                    to={{ pathname: "/" + props.linkDelete + "/" + item.id }}
+                  >
                     <button className="btnList">
                       <IoMdTrash size={20} color="black" />
                     </button>
@@ -42,7 +44,7 @@ const List = (props) => {
                   {props.isUsersList ? (
                     <Link to={`/${props.linkUpdate}/${item.id}`}>
                       <button className="btnList">
-                        <IoMdCreate size={20} color="black" /> pasword
+                        <IoMdCreate size={20} color="black" />
                       </button>
                     </Link>
                   ) : (

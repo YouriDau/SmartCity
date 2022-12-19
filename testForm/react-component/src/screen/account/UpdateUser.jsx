@@ -7,24 +7,28 @@ import {
 } from "../../component/API/useFetchPerson";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
+import { useContext } from "react";
+import { UserContext } from "../../utils/UserContext";
 
 function withParams(Component) {
   return (props) => <Component {...props} params={useParams()} />;
 }
 
 const UpdateUser = (props) => {
+  const { admin } = useContext(UserContext);
+  const [user, setUser] = useState({});
   const id = parseInt(props.params.id);
-  const [user, setUser] = useState("");
 
   useEffect(() => {
-    console.log(id);
-    getPersonByIdFetch(id)
-      .then((user) => {
-        setUser(user);
-      })
-      .catch((error) => {
-        alert(error.message);
-      });
+    if (id) {
+      getPersonByIdFetch(id)
+        .then((user) => {
+          setUser(user);
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
+    }
   }, []);
 
   return (
@@ -36,7 +40,7 @@ const UpdateUser = (props) => {
         title={"Update user"}
         titleButton={"Save"}
         isUpdate={true}
-        user={user}
+        user={id ? user : admin}
       />
     </div>
   );

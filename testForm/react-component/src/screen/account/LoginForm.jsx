@@ -1,23 +1,35 @@
 import React from "react";
 import Header from "../../component/Header";
-import { loginFetch } from "../../component/API/useFetchPerson";
+import {
+  getCurrentUserFetch,
+  loginFetch,
+} from "../../component/API/useFetchPerson";
 import { Route, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useContext } from "react";
+import { UserContext } from "../../utils/UserContext";
 
 const LoginForm = () => {
   const [inputPseudo, setInputPseudo] = useState("");
   const [inputPassword, setInputPassword] = useState("");
   const navigate = useNavigate();
+  const { setUser, token, setToken } = useContext(UserContext);
 
   const handlePressLogin = (event) => {
     event.preventDefault();
-    console.log(inputPseudo);
     loginFetch(inputPseudo, inputPassword)
-      .then((result) => {
+      .then(({ status, token }) => {
         alert("Login success");
-        console.log(result.data);
-        localStorage.setItem("token", result.data);
-        navigate("/menuControle");
+        localStorage.setItem("token", token);
+        setToken(token);
+        getCurrentUserFetch(token)
+          .then(({ status, user }) => {
+            setUser(user);
+            navigate("/menuControle");
+          })
+          .catch((error) => {
+            alert(error.message);
+          });
       })
       .catch((error) => {
         alert(error.message);

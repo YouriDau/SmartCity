@@ -2,9 +2,14 @@ import axios from "axios";
 import { BASE_URL_API } from "../../config";
 import { errorMessage } from "../../utils/utils";
 
-const getCurrentUserFetch = async () => {
+const getCurrentUserFetch = async (token) => {
   try {
-    const response = await axios.get(`${BASE_URL_API}/person/current`);
+    const response = await axios({
+      url: `${BASE_URL_API}/person/current`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    });
     return { status: response.status, user: response.data };
   } catch (error) {
     const message = errorMessage(
@@ -71,7 +76,7 @@ const addPersonFetch = async (pseudo, lastName, firstName, email, password) => {
   }
 };
 
-const updatePersonFetch = async (pseudo, lastName, firstName, email) => {
+const updatePersonFetch = async (token, pseudo, lastName, firstName, email) => {
   try {
     console.log("test");
     const response = await axios({
@@ -82,6 +87,9 @@ const updatePersonFetch = async (pseudo, lastName, firstName, email) => {
         lastName,
         firstName,
         email,
+      },
+      headers: {
+        authorization: `Bearer ${token}`,
       },
     });
     return response.status;
@@ -128,7 +136,7 @@ const loginFetch = async (pseudo, password) => {
       },
     });
     // on recoit l'objet status et on prend seulement ce qui nous intéresse
-    return { status: response.status, data: response.data };
+    return { status: response.status, token: response.data };
   } catch (error) {
     const message = errorMessage(
       error.response.status,
