@@ -146,22 +146,7 @@ module.exports.getAllPersons = async (req, res) => {
   }
 };
 
-/**
- * @swagger
- * components :
- *  schemas:
- *    Login:
- *      type: object
- *      properties:
- *        pseudo:
- *          type: string
- *        password:
- *          type: string
- *          format: password
- *      required:
- *        - pseudo
- *        - password
- */
+
 
 module.exports.login = async (req, res) => {
   const { pseudo, password } = req.body;
@@ -216,13 +201,13 @@ module.exports.login = async (req, res) => {
  *                type: string
  *              lastName:
  *                type: string
- *               firstName:
- *                 type: string
- *               email:
- *                 type: string
- *               password:
- *                 type: string
- *                 format: password
+ *              firstName:
+ *                type: string
+ *              email:
+ *                type: string
+ *              password:
+ *                type: string
+ *                format: password
  */
 module.exports.postPerson = async (req, res) => {
   const { pseudo, lastName, firstName, email, password } = req.body;
@@ -295,10 +280,10 @@ module.exports.postPerson = async (req, res) => {
  *                type: string
  *              lastName:
  *                type: string
- *               firstName:
- *                 type: string
- *               email:
- *                 type: string
+ *              firstName:
+ *                type: string
+ *              email:
+ *                type: string
  */
 module.exports.updatePerson = async (req, res) => {
   // Comment gérer le cas du changement du mdp?
@@ -377,13 +362,7 @@ module.exports.updatePassword = async (req, res) => {
   }
 };
 
-/**
- * @swagger
- * components:
- *  responses:
- *    PersonneDeleted:
- *      description: la personne a été supprimé
- */
+
 module.exports.deletePersonById = async (req, res) => {
   const { id } = req.body;
   if (id === undefined) {
@@ -402,6 +381,13 @@ module.exports.deletePersonById = async (req, res) => {
   }
 };
 
+ /**
+ * @swagger
+ * components:
+ *  responses:
+ *    PersonneDeleted:
+ *      description: la personne a été supprimé
+ */
 module.exports.deletePerson = async (req, res) => {
   const { password } = req.body;
   if (password === undefined) {
