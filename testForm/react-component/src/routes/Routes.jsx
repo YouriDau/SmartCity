@@ -17,8 +17,14 @@ import DeleteReview from "../screen/review/DeleteReview";
 import MenuControle from "../screen/MenuControle";
 import DeleteToilet from "../screen/toilet/DeleteToilet";
 import UpdatePassword from "../screen/account/UpdatePassword";
+import { useState } from "react";
+import { createContext } from "react";
 
 export default function Router() {
+  const [user, setUser] = useState({});
+  const [token, setToken] = useState({});
+  const userContext = createContext();
+
   return (
     <BrowserRouter>
       <Routes>
