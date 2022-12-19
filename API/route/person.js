@@ -47,8 +47,8 @@ router.post("/login", PersonControleur.login);
  *      - Person
  *    requestBody:
  *      $ref: '#/components/requestBodies/PersonneAAjoute'
- *    responses: 
- *      201: 
+ *    responses:
+ *      201:
  *        $ref: '#/components/responses/PersonneAjoute'
  *      400:
  *        description: l'email et/ou le password est incorrect
@@ -86,14 +86,12 @@ router.put(
  */
 router.put("/", JWTMiddleware.identification, PersonControleur.updatePerson);
 
-
 router.delete(
   "/deleteUser",
   JWTMiddleware.identification,
   AuthoMiddleware.mustBeAdmin,
   PersonControleur.deletePersonById
 );
-
 
 router.delete("/", JWTMiddleware.identification, PersonControleur.deletePerson);
 

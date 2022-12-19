@@ -15,14 +15,15 @@ function withParams(Component) {
 }
 
 const UpdateUser = (props) => {
-  const { admin } = useContext(UserContext);
-  const [user, setUser] = useState({});
+  const { user: admin } = useContext(UserContext);
+  const [user, setUser] = useState(null);
   const id = parseInt(props.params.id);
 
   useEffect(() => {
     if (id) {
       getPersonByIdFetch(id)
         .then((user) => {
+          console.log(user);
           setUser(user);
         })
         .catch((error) => {
@@ -36,6 +37,7 @@ const UpdateUser = (props) => {
       <div className="header">
         <Header />
       </div>
+      {console.log(id)}
       <UserForm
         title={"Update user"}
         titleButton={"Save"}

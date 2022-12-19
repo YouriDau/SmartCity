@@ -19,6 +19,7 @@ module.exports.getCurrentUser = async (req, res) => {
     if (person !== undefined) {
       person.lastName = person.last_name;
       person.firstName = person.first_name;
+      person.role = req.session.authLevel;
       delete person.last_name;
       delete person.first_name;
       res.json(person);
@@ -145,8 +146,6 @@ module.exports.getAllPersons = async (req, res) => {
     client.release();
   }
 };
-
-
 
 module.exports.login = async (req, res) => {
   const { pseudo, password } = req.body;
@@ -362,7 +361,6 @@ module.exports.updatePassword = async (req, res) => {
   }
 };
 
-
 module.exports.deletePersonById = async (req, res) => {
   const { id } = req.body;
   if (id === undefined) {
@@ -381,7 +379,7 @@ module.exports.deletePersonById = async (req, res) => {
   }
 };
 
- /**
+/**
  * @swagger
  * components:
  *  responses:

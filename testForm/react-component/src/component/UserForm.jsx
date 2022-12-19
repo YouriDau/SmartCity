@@ -9,14 +9,20 @@ import {
 import { UserContext } from "../utils/UserContext";
 
 const UserForm = (props) => {
+  console.log(props.user);
   const { user: admin, setUser: setAdmin, token } = useContext(UserContext);
-  const [inputPseudo, setInputPseudo] = useState(props.user.pseudo || "");
-  const [inputLastName, setInputLastName] = useState(props.user.lastName || "");
-  const [inputFirstName, setInputFirstName] = useState(
-    props.user.firstName || ""
+
+  const [inputPseudo, setInputPseudo] = useState(props.user?.pseudo || "");
+  const [inputLastName, setInputLastName] = useState(
+    props.user?.lastName || ""
   );
-  const [inputPassword, setInputPassword] = useState(props.user.password || "");
-  const [inputEmail, setInputEmail] = useState(props.user.email || "");
+  const [inputFirstName, setInputFirstName] = useState(
+    props.user?.firstName || ""
+  );
+  const [inputPassword, setInputPassword] = useState(
+    props.user?.password || ""
+  );
+  const [inputEmail, setInputEmail] = useState(props.user?.email || "");
   const navigate = useNavigate();
 
   const handlePressAdd = (event) => {

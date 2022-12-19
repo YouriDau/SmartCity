@@ -13,13 +13,12 @@ const LoginForm = () => {
   const [inputPseudo, setInputPseudo] = useState("");
   const [inputPassword, setInputPassword] = useState("");
   const navigate = useNavigate();
-  const { setUser, token, setToken } = useContext(UserContext);
+  const { user, setUser, token, setToken } = useContext(UserContext);
 
   const handlePressLogin = (event) => {
     event.preventDefault();
     loginFetch(inputPseudo, inputPassword)
       .then(({ status, token }) => {
-        alert("Login success");
         localStorage.setItem("token", token);
         setToken(token);
         getCurrentUserFetch(token)
