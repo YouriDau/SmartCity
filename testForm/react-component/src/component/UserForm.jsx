@@ -121,9 +121,7 @@ const UserForm = (props) => {
               }}
             />
           </div>
-          <div className="divForm">
-            {/* <button onClick={(event) => this.props.handlePress(event)}><Link to={`/addToilet`}>{this.props.titleButton}</Link></button> */}
-            {/* <Link to={`/addToilet`}><button onClick={(event) => (this.props.isUpdate?handlePressUpdate(event):this.handlePressAdd(event) )}>{this.props.titleButton}</button></Link> */}
+          <div className="buttonDivForm">
             <button
               onClick={(event) =>
                 props.isUpdate

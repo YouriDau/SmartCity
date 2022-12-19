@@ -34,7 +34,7 @@ const UpdateUser = (props) => {
       </div>
       <UserForm
         title={"Update user"}
-        titleButton={"Save modifications"}
+        titleButton={"Save"}
         isUpdate={true}
         user={user}
       />
