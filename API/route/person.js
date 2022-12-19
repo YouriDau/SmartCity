@@ -18,12 +18,12 @@ router.get(
  *    tags:
  *      - Person
  *    parameters:
- *      name: id
- *      description: ID d'une personne
- *      in: path
- *      required: true
- *      schema:
- *        type: integer
+ *      - name: id
+ *        description: ID d'une personne
+ *        in: path
+ *        required: true
+ *        schema:
+ *          type: integer
  *    responses:
  *      200:
  *        $ref: '#/components/responses/PersonFound'
@@ -49,7 +49,7 @@ router.post("/login", PersonControleur.login);
  *      $ref: '#/components/requestBodies/PersonneAAjoute'
  *    responses: 
  *      201: 
- *        '#/components/requestBodies/PersonAjoute'
+ *        $ref: '#/components/responses/PersonneAjoute'
  *      400:
  *        description: l'email et/ou le password est incorrect
  *      409:
@@ -76,42 +76,25 @@ router.put(
  *      $ref: '#/components/requestBodies/PersonneAUpdate'
  *    responses:
  *      200:
- *        $ref: '#/components/responses/PersonneUpdated
+ *        $ref: '#/components/responses/PersonneUpdated'
  *      400:
- *        $ref: '#/components/responses/ErrorJWT
+ *        $ref: '#/components/responses/ErrorJWT'
  *      401:
- *        $ref: '#/components/responses/MissingJWT
+ *        $ref: '#/components/responses/MissingJWT'
  *      500:
  *        description: Erreur serveur
  */
 router.put("/", JWTMiddleware.identification, PersonControleur.updatePerson);
 
-/**
- * @swagger
- * /person:
- *  delete:
- *      tags:
- *        - Person
- *      security:
- *        - bearerAuth: []
- *      responses:
- *        200:
- *          $ref: '#/components/responses/PersonneDeleted'
- *        400:
- *          $ref: '#/components/responses/ErrorJWT'
- *        401:
- *          $ref: '#/components/responses/MissingJWT'
- *        403:
- *          $ref: '#/components/responses/mustBeManager'
- *        500:
- *          description: Erreur serveur     
- */
+
 router.delete(
   "/deleteUser",
   JWTMiddleware.identification,
   AuthoMiddleware.mustBeAdmin,
   PersonControleur.deletePersonById
 );
+
+
 router.delete("/", JWTMiddleware.identification, PersonControleur.deletePerson);
 
 module.exports = router;

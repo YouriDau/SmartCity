@@ -6,31 +6,32 @@ const router = new Router();
 
 router.get("/notDone", ReportControleur.getNotDoneReports);
 router.get("/all", ReportControleur.getAllReports);
+
 /**
- * @swagger
- * /report/{id}:
- * get:
- *  tags:
- *      - Report
- *  parameters:
- *      - name: id
- *        description: ID d'un report
- *        in: path
- *        required: true
- *        schema:
- *          type: integer
- *  responses:
- *      200:
- *          $ref: '#/components/responses/ReportFound'
- *      400:
- *          description : L'id du report n'est pas un nombre
- *      404:
- *          description: Report non trouvé
- *      500:
- *          description: Erreur serveur     
- * 
+* @swagger
+* /report/{id}:
+*  get:
+*   tags:
+*       - Report
+*   parameters:
+*       - name: id
+*         description: ID d'un report
+*         in: path
+*         required: true
+*         schema:
+*           type: integer
+*   responses:
+*       200:
+*           $ref: '#/components/responses/ReportFound'
+*       400:
+*           description : L'id du report n'est pas un nombre
+*       404:
+*           description: Report non trouvé
+*       500:
+*           description: Erreur serveur     
  */
 router.get("/:id", ReportControleur.getReport);
+
 /**
  * @swagger
  * /report:
@@ -49,7 +50,7 @@ router.get("/:id", ReportControleur.getReport);
  *          401:
  *              $ref: '#/components/responses/MissingJWT'
  *          404:
- *              --TODO--
+ *              description: Le reportId est undefined
  *          500:
  *              description: Erreur serveur
  */
@@ -75,19 +76,19 @@ router.post("/", JWTMiddleware.identification, ReportControleur.postReport);
  */
 router.put("/", ReportControleur.updateReport);
 
-/**
+ /**
  * @swagger
  * /report:
- * delete:
- *  tags:
- *      - Report
- *  responses:
- *      204: 
- *          $ref: '#/components/responses/ReportDeleted'
- *      400:
- *          description: ReportId est undefined
- *      500:
- *          description: Erreur serveur
+ *  delete:
+ *      tags:
+ *          - Report
+ *      responses:
+ *          204: 
+ *              $ref: '#/components/responses/ReportDeleted'
+ *          400:
+ *              description: ReportId est undefined
+ *          500:
+ *              description: Erreur serveur
  */
 router.delete("/", ReportControleur.deleteReport);
 

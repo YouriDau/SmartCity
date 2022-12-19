@@ -9,16 +9,17 @@ const ReportModele = require("../modele/reportDB");
  *      type: object
  *      properties:
  *        id: 
- * 
+ *          type: integer
  *        reason:
- *         
+ *          type: string
  *        date:
- * 
+ *          type: object
  *        isDone:
- * 
+ *          type: boolean
  *        userId:
- * 
+ *          type: integer
  *        toiletId: 
+ *          type: integer
  */
 
 /**
@@ -114,23 +115,23 @@ module.exports.getAllReports = async (req, res) => {
   }
 };
 
-/**
+ /**
  * @swagger
  * components:
- * responses:
- *  ReportAjoute:
- *    description: le report a été ajouté
- * requestBodies:
- *  ReportAAjoute:
- *    content:
- *      application/json:
- *        schema:
- *          type: object
- *          properties:
- *            reason:
- *              type: string
- *            toiletId:
- *              type: integer
+ *  responses:
+ *    ReportAjoute:
+ *      description: le report a été ajouté
+ *  requestBodies:
+ *    ReportAAjoute:
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              reason:
+ *                type: string
+ *              toiletId:
+ *                type: integer
  */
 module.exports.postReport = async (req, res) => {
   const { reason, toiletId } = req.body;
@@ -161,7 +162,7 @@ module.exports.postReport = async (req, res) => {
   }
 };
 
-/**
+ /**
  *@swagger
  *components:
  *  responses:
@@ -173,13 +174,13 @@ module.exports.postReport = async (req, res) => {
  *        application/json:
  *          schema:
  *            type: object
- *              properties:
- *                id:
- *                  type: integer
- *                reason:
- *                  type: string
- *                isDone: boolean
- * 
+ *            properties:
+ *              id:
+ *                type: integer
+ *              reason:
+ *                type: string
+ *              isDone: 
+ *                type: boolean
  */
 module.exports.updateReport = async (req, res) => {
   const { id, reason, isDone } = req.body;
@@ -199,7 +200,7 @@ module.exports.updateReport = async (req, res) => {
   }
 };
 
-/**
+ /**
  * @swagger
  * components:
  *  responses:
