@@ -65,12 +65,13 @@ const addReportFetch = async (reason) => {
   }
 };
 
-const updateReportFetch = async (reason, isDone) => {
+const updateReportFetch = async (id, reason, isDone) => {
   try {
     await axios({
       method: "put",
       url: `${BASE_URL_API}/report`,
       data: {
+        id,
         reason,
         isDone,
       },
@@ -79,7 +80,7 @@ const updateReportFetch = async (reason, isDone) => {
     const message = errorMessage(
       error.response.status,
       error.response.data,
-      "Account"
+      "Report"
     );
     throw new Error(message);
   }

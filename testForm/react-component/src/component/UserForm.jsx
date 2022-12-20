@@ -45,6 +45,7 @@ const UserForm = (props) => {
 
   const handlePressUpdate = (event) => {
     event.preventDefault();
+    console.log(inputPseudo);
     updatePersonFetch(
       token,
       inputPseudo,

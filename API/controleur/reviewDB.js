@@ -95,6 +95,24 @@ module.exports.postReview = async (req, res) => {
   }
 };
 
+module.exports.updateReview = async (req, res) => {
+  const { id, note, comment } = req.body;
+  if (id !== undefined && !isNaN(id)) {
+    const client = await pool.connect();
+    try {
+      await ReviewModele.updateReview(client, id, note, comment);
+      res.sendStatus(204);
+    } catch (error) {
+      console.error("updateReviewError", error);
+      res.sendStatus(500);
+    } finally {
+      client.release();
+    }
+  } else {
+    res.sendStatus(400);
+  }
+};
+
 module.exports.deleteReview = async (req, res) => {
   const { id } = req.body;
   if (!isNaN(id)) {
@@ -113,20 +131,3 @@ module.exports.deleteReview = async (req, res) => {
   }
 };
 
-module.exports.updateReview = async (req, res) => {
-  const { id, note, comment } = req.body;
-  if (id !== undefined && !isNaN(id)) {
-    const client = await pool.connect();
-    try {
-      await ReviewModele.updateReview(client, id, note, comment);
-      res.sendStatus(204);
-    } catch (error) {
-      console.error("updateReviewError", error);
-      res.sendStatus(500);
-    } finally {
-      client.release();
-    }
-  } else {
-    res.sendStatus(400);
-  }
-};

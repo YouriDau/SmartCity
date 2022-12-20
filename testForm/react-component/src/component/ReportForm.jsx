@@ -1,17 +1,21 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import ReactSlider from "react-slider";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { addReportFetch, updateReportFetch, getReportByIdFetch } from "../component/API/useFetchReport";
 
+function withParams(Component) {
+  return props => <Component {...props} params={useParams()} />;
+}
+
 const ReportForm = (props) => {
-  const [inputReport, setInputReport] = useState("");
-  const [isChecked, setIsChecked] = useState(props.currentUser?.isDone || false);
+  const [reason, setReason] = useState(props.currentReport?.reason || "");
+  const [isDone, setIsDone] = useState(props.currentUser?.isDone || false);
+  const id = parseInt(props.params.id);
   const navigate = useNavigate();
 
   const handlePressAdd = (event) => {
     event.preventDefault();
-    addReportFetch(inputReport)
+    addReportFetch(reason)
       .then((status) => {
         switch (status) {
           case 201:
@@ -28,7 +32,10 @@ const ReportForm = (props) => {
 
   const handlePressUpdate = (event) => {
     event.preventDefault();
-    updateReportFetch(inputReport, isChecked).then((status) => {
+    // console.log(reason);
+    // console.log(id);
+    // console.log(isDone);
+    updateReportFetch(id, reason, isDone).then((status) => {
       console.log(status);
       switch (status) {
         case 201:
@@ -54,7 +61,7 @@ const ReportForm = (props) => {
           <textarea
             defaultValue={props.isUpdate ? props.currentReport.reason : ""}
             onChange={(event) => {
-              setInputReport(inputReport);
+              setReason(event.target.value);
             }}
           />
           <br/>
@@ -63,10 +70,9 @@ const ReportForm = (props) => {
               <input 
                 id="reportDone" 
                 type="checkbox" 
-                checked={isChecked}  
+                checked={isDone}  
                 onChange={() => {
-                  console.log(isChecked);
-                  setIsChecked(!isChecked);
+                  setIsDone(!isDone);
                 }}
               />
               Is the report done ?
@@ -93,4 +99,4 @@ const ReportForm = (props) => {
   
 }
 
-export default ReportForm;
+export default withParams(ReportForm);

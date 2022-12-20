@@ -5,7 +5,8 @@ const AuthoMiddleware = require("../middleware/Authorization");
 const Router = require("express-promise-router");
 const router = new Router();
 
-router.get("/:toiletId", ReviewControleur.getReviewsByToiletId);
+router.get("/toiletId/:toiletId", ReviewControleur.getReviewsByToiletId);
+router.get("/reviewId/:id", ReviewControleur.getReview);
 router.post("/", JWTMiddleware.identification, ReviewControleur.postReview);
 router.put(
   "/",

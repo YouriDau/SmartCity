@@ -7,7 +7,7 @@ const getReviewsByToiletIdFetch = async (id) => {
     console.log(id);
     const response = await axios({
       method: "get",
-      url: `${BASE_URL_API}/review/${id}`,
+      url: `${BASE_URL_API}/review/toiletId/${id}`,
     });
     return response.data;
   } catch (error) {
@@ -19,6 +19,23 @@ const getReviewsByToiletIdFetch = async (id) => {
     throw new Error(message);
   }
 };
+
+const getReviewFetch = async (id) => {
+  try {
+    const response = await axios({
+      method: "get",
+      url: `${BASE_URL_API}/review/reviewId/${id}`,
+    });
+    return response.data;
+  } catch (error) {
+    const message = errorMessage(
+      error.response.status,
+      error.response.data,
+      "Account"
+    );
+    throw new Error(message);
+  }
+}
 
 const addReviewFetch = async (note, comment, toiletId) => {
   try {
@@ -43,6 +60,37 @@ const addReviewFetch = async (note, comment, toiletId) => {
   }
 };
 
+const updateReviewFetch = async (token, id, note, comment) => {
+  try {
+    //const token = await localStorage.getItem("token");
+    console.log(token);
+    console.log(id);
+    console.log(note);
+    console.log(comment);
+
+    const response = await axios({
+      method: "put",
+      url: `${BASE_URL_API}/review`,
+      data: {
+        id,
+        note, 
+        comment
+      },
+      headers: {
+        authorization: `Bearer ${token}`,
+      }
+    });
+    return response.status;
+  } catch (error) {
+    const message = errorMessage(
+      error.response.status,
+      error.response.data,
+      "Review"
+    );
+    throw new Error(message);
+  }
+} 
+
 const deleteReviewFetch = async (id) => {
   try {
     const response = await axios({
@@ -55,10 +103,10 @@ const deleteReviewFetch = async (id) => {
     const message = errorMessage(
       error.response.status,
       error.response.data,
-      "Account"
+      "Review"
     );
     throw new Error(message);
   }
 };
 
-export { getReviewsByToiletIdFetch, addReviewFetch, deleteReviewFetch };
+export { getReviewsByToiletIdFetch, getReviewFetch, addReviewFetch, updateReviewFetch, deleteReviewFetch };
