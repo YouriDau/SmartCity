@@ -18,12 +18,21 @@ import MenuControle from "../screen/MenuControle";
 import DeleteToilet from "../screen/toilet/DeleteToilet";
 import UpdatePassword from "../screen/account/UpdatePassword";
 import { UserContext } from "../utils/UserContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ProtectedRoute } from "./ProtectedRoute";
 
 export default function Router() {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState("");
+
+  useEffect(() => {
+    localStorage.getItem("token").then((currentToken) => {
+      if (currentToken !== null && currentToken !== undefined) {
+        token = currentToken;
+      }
+    });
+  }, []);
+
   return (
     <UserContext.Provider value={{ user, setUser, token, setToken }}>
       <BrowserRouter>
