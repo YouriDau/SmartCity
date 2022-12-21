@@ -31,19 +31,15 @@ export default function Router() {
     const currentToken = localStorage.getItem("token");
     if (currentToken !== null && currentToken !== undefined) {
       getCurrentUserFetch(currentToken)
-        .then((currentUser) => {
+        .then(({ status, user }) => {
           setToken(currentToken);
-          setUser(currentUser);
+          setUser(user);
         })
         .catch((error) => {
           alert(error.message);
         });
     }
   }, []);
-
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
 
   return (
     <UserContext.Provider value={{ user, setUser, token, setToken }}>
@@ -63,8 +59,8 @@ export default function Router() {
                 path={"/listReviews/:toiletId"}
                 element={<ListReviews />}
               />
-              <Route path={"/updateUser"} element={<UpdateUser />} />
               <Route path={"/updateUser/:id"} element={<UpdateUser />} />
+              <Route path={"/updateUser"} element={<UpdateUser />} />
               <Route path={"/updateReport/:id"} element={<UpdateReport />} />
               <Route path={"/updateReview/:id"} element={<UpdateReview />} />
               <Route

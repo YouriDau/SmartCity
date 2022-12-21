@@ -16,18 +16,18 @@ const UserForm = (props) => {
   const [inputPassword, setInputPassword] = useState("");
   const [inputEmail, setInputEmail] = useState("");
 
-  const { user: admin, setUser: setAdmin, token } = useContext(UserContext);
+  const {
+    user: admin,
+    setUser: setAdmin,
+    token,
+    setToken,
+  } = useContext(UserContext);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (props.isUpdate) {
       console.log(props);
-      let user;
-      if (props.user !== undefined && props.user !== null) {
-        user = props.user;
-      } else {
-        user = admin;
-      }
+      const user = props.user;
       setInputPseudo(user.pseudo);
       setInputLastName(user.lastName);
       setInputFirstName(user.firstName);
@@ -66,47 +66,37 @@ const UserForm = (props) => {
         inputFirstName,
         inputEmail
       )
-        .then((status) => {
-          if (status === 200) {
-            console.log("update current user réussi!");
+        .then(({ status, token }) => {
+          console.log("update current user réussi!");
 
-            if (props.user.id === admin.id) {
-              setAdmin({
-                id: admin.id,
-                pseudo: inputPseudo,
-                lastName: inputLastName,
-                firstName: inputFirstName,
-                email: inputEmail,
-              });
-              navigate("/");
-            } else {
-              navigate("/listUsers");
-            }
-          }
+          setAdmin({
+            id: admin.id,
+            pseudo: inputPseudo,
+            lastName: inputLastName,
+            firstName: inputFirstName,
+            email: inputEmail,
+          });
+          setToken(token);
+          navigate("/");
         })
         .catch((error) => {
           alert(error.message);
         });
     } else {
-      console.log("on est dans le else donc ce n'est pas le current user");
-      console.log(props.user.id);
-      console.log(inputPseudo);
-      console.log(inputFirstName);
-      // updatePersonByIdFetch(
-      //   token,
-      //   props.user.id,
-      //   inputPseudo,
-      //   inputLastName,
-      //   inputFirstName,
-      //   inputEmail
-      // )
-      //   .then((status) => {
-      //     console.log("Update réussi");
-      //     navigate("/listUsers");
-      //   })
-      //   .catch((error) => {
-      //     alert(error.message);
-      //   });
+      updatePersonByIdFetch(
+        token,
+        props.user.id,
+        inputPseudo,
+        inputLastName,
+        inputFirstName,
+        inputEmail
+      )
+        .then((status) => {
+          navigate("/");
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
     }
   };
 

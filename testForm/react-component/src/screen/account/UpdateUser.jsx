@@ -7,6 +7,8 @@ import {
 } from "../../component/API/useFetchPerson";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
+import { useContext } from "react";
+import { UserContext } from "../../utils/UserContext";
 
 function withParams(Component) {
   return (props) => <Component {...props} params={useParams()} />;
@@ -15,16 +17,20 @@ function withParams(Component) {
 const UpdateUser = (props) => {
   const [user, setUser] = useState(null);
   const id = parseInt(props.params.id);
+  const { user: admin } = useContext(UserContext);
 
   useEffect(() => {
-    console.log(id);
-    getPersonByIdFetch(id)
-      .then((user) => {
-        setUser(user);
-      })
-      .catch((error) => {
-        alert(error.message);
-      });
+    if (id !== undefined && id !== null && !isNaN(id)) {
+      getPersonByIdFetch(id)
+        .then((user) => {
+          setUser(user);
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
+    } else {
+      setUser(admin);
+    }
   }, [id]);
 
   return (

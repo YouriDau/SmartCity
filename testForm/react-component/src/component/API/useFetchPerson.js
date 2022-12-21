@@ -94,7 +94,7 @@ const updatePersonFetch = async (token, pseudo, lastName, firstName, email) => {
         authorization: `Bearer ${token}`,
       },
     });
-    return response.status;
+    return { status: response.status, token: response.data };
   } catch (error) {
     const message = errorMessage(
       error.response.status,
@@ -105,20 +105,20 @@ const updatePersonFetch = async (token, pseudo, lastName, firstName, email) => {
   }
 };
 
-const updatePersonByIdFetch = async (token, id, pseudo, lastName, firstName, email) => {
+const updatePersonByIdFetch = async (
+  token,
+  id,
+  pseudo,
+  lastName,
+  firstName,
+  email
+) => {
   try {
-    console.log("updatePersonByIdFetch");
-    console.log(id);
-    console.log(pseudo);
-    console.log(lastName);
-    console.log(firstName);
-    console.log(email);
-
     const response = await axios({
       method: "put",
       url: `${BASE_URL_API}/person/byId`,
       data: {
-        id, 
+        id,
         pseudo,
         lastName,
         firstName,
@@ -128,7 +128,6 @@ const updatePersonByIdFetch = async (token, id, pseudo, lastName, firstName, ema
         authorization: `Bearer ${token}`,
       },
     });
-    console.log(response.status);
     return response.status;
   } catch (error) {
     const message = errorMessage(
@@ -148,7 +147,7 @@ const updateAdminPasswordFetch = async (token, password, newPassword) => {
       url: `${BASE_URL_API}/person/password`,
       data: {
         password,
-        newPassword
+        newPassword,
       },
       headers: {
         authorization: `Bearer ${token}`,
@@ -163,7 +162,7 @@ const updateAdminPasswordFetch = async (token, password, newPassword) => {
     );
     throw new Error(message);
   }
-}
+};
 
 const deletePersonByIdFetch = async (id) => {
   try {

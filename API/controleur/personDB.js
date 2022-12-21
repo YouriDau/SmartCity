@@ -332,6 +332,7 @@ module.exports.updatePersonById = async (req, res) => {
   const { id, pseudo, lastName, firstName, email } = req.body;
 
   if (
+    id === undefined ||
     pseudo === undefined ||
     lastName === undefined ||
     firstName === undefined ||
@@ -351,7 +352,7 @@ module.exports.updatePersonById = async (req, res) => {
         firstName,
         email
       );
-      res.status(204);
+      res.sendStatus(204);
     } catch (error) {
       console.error("updatePersonByIdError", error);
       res.sendStatus(500);
