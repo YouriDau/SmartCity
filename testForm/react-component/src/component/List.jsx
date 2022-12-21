@@ -13,7 +13,7 @@ const List = (props) => {
   const navigate = useNavigate();
 
   const handlePressCancel = (event) => {
-    navigate("/menuControle");
+    navigate("/");
   };
 
   return (

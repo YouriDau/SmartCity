@@ -107,7 +107,7 @@ module.exports.getPersonById = async (req, res) => {
           lastName: person.last_name,
           firstName: person.first_name,
           email: person.email,
-          isAdmin: person.is_admin
+          isAdmin: person.is_admin,
         };
         res.json(newPerson);
       } else {
@@ -344,7 +344,12 @@ module.exports.updatePersonById = async (req, res) => {
     const client = await pool.connect();
     try {
       await PersonModele.updatePerson(
-        client, id, pseudo, lastName, firstName, email
+        client,
+        id,
+        pseudo,
+        lastName,
+        firstName,
+        email
       );
       res.status(204);
     } catch (error) {
@@ -354,7 +359,7 @@ module.exports.updatePersonById = async (req, res) => {
       client.release();
     }
   }
-}
+};
 
 module.exports.updatePassword = async (req, res) => {
   const { password, newPassword } = req.body;

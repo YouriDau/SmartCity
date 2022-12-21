@@ -9,7 +9,7 @@ const UpdatePassword = (props) => {
   const [inputCurrentPassword, setInputCurrentPassword] = useState("");
   const [inputNewPassword, setInputNewPassword] = useState("");
   const [inputConfirmNewPassword, setInputConfirmNewPassword] = useState("");
-  const {token} = useContext(UserContext);
+  const { token } = useContext(UserContext);
   const navigate = useNavigate();
 
   const handlePressSubmit = (event) => {
@@ -17,33 +17,29 @@ const UpdatePassword = (props) => {
     if (inputNewPassword != inputConfirmNewPassword) {
       alert("the two news passwords doesn't match");
     } else {
-      updateAdminPasswordFetch(
-        token,
-        inputCurrentPassword,
-        inputNewPassword
-      )
-      .then((status) => {
-        if (status === 204) {
-          console.log("Update Réussi!");
-          navigate("/menuControle");
-        }
-      })
-      .catch((error) => {
-        alert(error.message);
-      });
+      updateAdminPasswordFetch(token, inputCurrentPassword, inputNewPassword)
+        .then((status) => {
+          if (status === 204) {
+            console.log("Update Réussi!");
+            navigate("/");
+          }
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
     }
-  }
+  };
 
   const handlePressCancel = (event) => {
     event.preventDefault();
-    navigate("/menuControle");
-  }
+    navigate("/");
+  };
 
   return (
     <div className="form">
       {/* <h1>Change the user's password</h1> */}
       <h1>{props.title}</h1>
-      {props.adminPassword ? 
+      {props.adminPassword ? (
         <div>
           <label>Enter the current password</label>
           <br />
@@ -54,9 +50,9 @@ const UpdatePassword = (props) => {
             }}
           />
         </div>
-        :
+      ) : (
         ""
-      }
+      )}
       <div>
         <label>Enter the new password</label>
         <br />
@@ -85,7 +81,7 @@ const UpdatePassword = (props) => {
         >
           Submit
         </button>
-        <button 
+        <button
           onClick={(event) => {
             handlePressCancel(event);
           }}

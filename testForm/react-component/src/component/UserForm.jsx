@@ -78,7 +78,7 @@ const UserForm = (props) => {
                 firstName: inputFirstName,
                 email: inputEmail,
               });
-              navigate("/menuControle");
+              navigate("/");
             } else {
               navigate("/listUsers");
             }

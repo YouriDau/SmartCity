@@ -32,12 +32,14 @@ const UpdateUser = (props) => {
       <div className="header">
         <Header />
       </div>
-      <UserForm
-        title={"Update user"}
-        titleButton={"Save"}
-        isUpdate={true}
-        user={user}
-      />
+      {user !== null && (
+        <UserForm
+          title={"Update user"}
+          titleButton={"Save"}
+          isUpdate={true}
+          user={user}
+        />
+      )}
     </div>
   );
 };

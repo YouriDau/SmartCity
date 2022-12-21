@@ -9,7 +9,7 @@ const Header = () => {
         <Link to="/maps">
           <button className="headerBtn">maps</button>
         </Link>
-        <Link to="/menuControle">
+        <Link to="/">
           <button className="headerBtn">Controle panel</button>
         </Link>
       </div>

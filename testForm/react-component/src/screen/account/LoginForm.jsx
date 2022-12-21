@@ -21,10 +21,11 @@ const LoginForm = () => {
       .then(({ status, token }) => {
         localStorage.setItem("token", token);
         setToken(token);
+        console.log(token);
         getCurrentUserFetch(token)
           .then(({ status, user }) => {
             setUser(user);
-            navigate("/menuControle");
+            navigate("/");
           })
           .catch((error) => {
             alert(error.message);

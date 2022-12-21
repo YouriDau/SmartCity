@@ -21,7 +21,6 @@ import UpdateUserPassword from "../screen/account/UpdateUserPassword";
 import UsersPanel from "../screen/UsersPanel";
 import { UserContext } from "../utils/UserContext";
 import { useEffect, useState } from "react";
-import { ProtectedRoute } from "./ProtectedRoute";
 import { getCurrentUserFetch } from "../component/API/useFetchPerson";
 
 export default function Router() {
@@ -31,11 +30,10 @@ export default function Router() {
   useEffect(() => {
     const currentToken = localStorage.getItem("token");
     if (currentToken !== null && currentToken !== undefined) {
-      setToken(currentToken);
       getCurrentUserFetch(currentToken)
         .then((currentUser) => {
+          setToken(currentToken);
           setUser(currentUser);
-          console.log(currentUser);
         })
         .catch((error) => {
           alert(error.message);
@@ -43,175 +41,51 @@ export default function Router() {
     }
   }, []);
 
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
+
   return (
     <UserContext.Provider value={{ user, setUser, token, setToken }}>
       <BrowserRouter>
         <Routes>
-          <Route
-            path={"/addUser"}
-            element={
-              <ProtectedRoute user={user}>
-                <AddUser />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path={"/addToilet"}
-            element={
-              <ProtectedRoute user={user}>
-                <AddToilet />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path={"/addReport"}
-            element={
-              <ProtectedRoute user={user}>
-                <AddReport />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path={"/addReview/:toiletId"}
-            element={
-              <ProtectedRoute user={user}>
-                <AddReview />
-              </ProtectedRoute>
-            }
-          />
+          {user === null && <Route path={"/"} element={<Login />} />}
+          {user !== null && (
+            <>
+              <Route path={"/addUser"} element={<AddUser />} />
+              <Route path={"/addToilet"} element={<AddToilet />} />
+              <Route path={"/addReport"} element={<AddReport />} />
+              <Route path={"/addReview/:toiletId"} element={<AddReview />} />
 
-          <Route
-            path={"/listUsers"}
-            element={
-              <ProtectedRoute user={user}>
-                <ListUsers />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path={"/listReports"}
-            element={
-              <ProtectedRoute user={user}>
-                <ListReports />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path={"/listReviews/:toiletId"}
-            element={
-              <ProtectedRoute user={user}>
-                <ListReviews />
-              </ProtectedRoute>
-            }
-          />
+              <Route path={"/listUsers"} element={<ListUsers />} />
+              <Route path={"/listReports"} element={<ListReports />} />
+              <Route
+                path={"/listReviews/:toiletId"}
+                element={<ListReviews />}
+              />
+              <Route path={"/updateUser"} element={<UpdateUser />} />
+              <Route path={"/updateUser/:id"} element={<UpdateUser />} />
+              <Route path={"/updateReport/:id"} element={<UpdateReport />} />
+              <Route path={"/updateReview/:id"} element={<UpdateReview />} />
+              <Route
+                path={"/updateAdminPassword"}
+                element={<UpdateAdminPassword />}
+              />
+              <Route
+                path={"/updateUserPassword"}
+                element={<UpdateUserPassword />}
+              />
 
-          <Route
-            path={"/updateUser"}
-            element={
-              <ProtectedRoute user={user}>
-                <UpdateUser />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path={"/updateUser/:id"}
-            element={
-              <ProtectedRoute user={user}>
-                <UpdateUser />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path={"/updateReport/:id"}
-            element={
-              <ProtectedRoute user={user}>
-                <UpdateReport />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path={"/updateReview/:id"}
-            element={
-              <ProtectedRoute user={user}>
-                <UpdateReview />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path={"/updateAdminPassword"}
-            element={
-              <ProtectedRoute user={user}>
-                <UpdateAdminPassword />
-              </ProtectedRoute>
-            }
-          />
-          <Route 
-            path={"/updateUserPassword"}
-            element={
-              <ProtectedRoute user={user}>
-                <UpdateUserPassword />
-              </ProtectedRoute>
-            }
-          />
+              <Route path={"/deleteUser/:id"} element={<DeleteUser />} />
+              <Route path={"/deleteReport/:id"} element={<DeleteReport />} />
+              <Route path={"/deleteReview/:id"} element={<DeleteReview />} />
+              <Route path={"/deleteToilet/:id"} element={<DeleteToilet />} />
 
-          <Route
-            path={"/deleteUser/:id"}
-            element={
-              <ProtectedRoute user={user}>
-                <DeleteUser />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path={"/deleteReport/:id"}
-            element={
-              <ProtectedRoute user={user}>
-                <DeleteReport />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path={"/deleteReview/:id"}
-            element={
-              <ProtectedRoute user={user}>
-                <DeleteReview />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path={"/deleteToilet/:id"}
-            element={
-              <ProtectedRoute user={user}>
-                <DeleteToilet />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
-            path={"/maps"}
-            element={
-              <ProtectedRoute user={user}>
-                <Maps />{" "}
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path={"/menuControle"}
-            element={
-              <ProtectedRoute user={user}>
-                <MenuControle />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path={"/usersPanel"}
-            element={
-              <ProtectedRoute user={user}>
-                <UsersPanel />
-              </ProtectedRoute>
-            }
-          />
-          <Route path={"/"} element={<Login />} />
+              <Route path={"/maps"} element={<Maps />} />
+              <Route path={"/usersPanel"} element={<UsersPanel />} />
+              <Route path={"/"} element={<MenuControle />} />
+            </>
+          )}
         </Routes>
       </BrowserRouter>
     </UserContext.Provider>
