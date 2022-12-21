@@ -1,19 +1,10 @@
 import React from "react";
 import Header from "../../component/Header";
 import ToiletForm from "../../component/ToiletForm";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const AddToilet = () => {
-  const navigate = useNavigate();
-
-  const handlePressAdd = (event) => {
-    event.preventDefault();
-    console.log("Add toilet");
-  }
-
-  const handlePressCancel = (event) => {
-    navigate("/maps");
-  }
+  const { state: location } = useLocation();
 
   return (
     <div class="form">
@@ -23,12 +14,10 @@ const AddToilet = () => {
       <ToiletForm
         title={"Add a toilet"}
         titleButton={"Submit"}
-        handlePressAdd={handlePressAdd}
-        handlePressCancel={handlePressCancel}
+        coordinate={location.coordinate}
       />
     </div>
   );
-}
-
+};
 
 export default AddToilet;

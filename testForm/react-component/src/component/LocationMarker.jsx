@@ -9,6 +9,7 @@ const LocationMarker = (props) => {
   useEffect(() => {
     map.on("click", (e) => {
       setLocation(e.latlng);
+      props.setLocation(e.latlng);
     });
   }, [map]);
 

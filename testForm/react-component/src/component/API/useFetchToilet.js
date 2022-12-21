@@ -34,4 +34,31 @@ const deleteToiletFetch = async (id) => {
   }
 };
 
-export { getAllToiletsFetch, deleteToiletFetch };
+const addToiletFetch = async (
+  token,
+  latitude,
+  longitude,
+  isReducedMobility,
+  isPaid
+) => {
+  try {
+    const response = await axios({
+      method: "post",
+      url: `${BASE_URL_API}/toilet`,
+      data: { latitude, longitude, isReducedMobility, isPaid },
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    });
+    return { status: response.status, toiletId: response.data };
+  } catch (error) {
+    const message = errorMessage(
+      error.response.status,
+      error.response.data,
+      "Account"
+    );
+    throw new Error(message);
+  }
+};
+
+export { getAllToiletsFetch, deleteToiletFetch, addToiletFetch };

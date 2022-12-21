@@ -33,6 +33,7 @@ h1 {
 }*/
 
 #header {
+  position: sticky;
   display: flex;
   background-color: deepskyblue;
   margin-top: 0;
@@ -131,10 +132,14 @@ form {
   bottom: 0;
 }
 
-#mapAddButton {
+.mapButtons {
   position: absolute;
   bottom: 0;
   z-index: 999;
+  width: 100%;
+}
+.mapButton:hover {
+  cursor: pointer;
 }
 
 #menuControle {
