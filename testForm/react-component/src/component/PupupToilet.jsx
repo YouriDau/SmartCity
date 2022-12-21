@@ -41,9 +41,19 @@ const PopupToilet = (props) => {
         <p className="popupReviewText">Reviews</p>
         <div className="popupReviewContainer">
           <Link to={`/addReview/${props.toiletId}`}>
-            <IoIosAddCircle size={ICONS_SIZE} color="blue"></IoIosAddCircle>
+            <IoIosAddCircle size={ICONS_SIZE} color="blue" />
           </Link>
           <Link to={`/listReviews/${props.toiletId}`}>
+            <IoIosList size={ICONS_SIZE} color="blue" />
+          </Link>
+        </div>
+
+        <p className="popupReviewText">Reports</p>
+        <div className="popupReviewContainer">
+          <Link to={`/addReport/${props.toiletId}`}>
+            <IoIosAddCircle size={ICONS_SIZE} color="blue" />
+          </Link>
+          <Link to={`/listReports/${props.toiletId}`}>
             <IoIosList size={ICONS_SIZE} color="blue" />
           </Link>
         </div>

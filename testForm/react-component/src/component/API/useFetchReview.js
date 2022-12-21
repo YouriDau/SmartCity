@@ -35,9 +35,12 @@ const getReviewFetch = async (id) => {
     );
     throw new Error(message);
   }
-}
+};
 
-const addReviewFetch = async (note, comment, toiletId) => {
+const addReviewFetch = async (token, toiletId, note, comment) => {
+  console.log(toiletId);
+  console.log(note);
+  console.log(comment);
   try {
     const response = await axios({
       method: "post",
@@ -46,10 +49,12 @@ const addReviewFetch = async (note, comment, toiletId) => {
         note,
         comment,
         toiletId,
-        userId: 1,
+      },
+      headers: {
+        authorization: `Bearer ${token}`,
       },
     });
-    return response.status;
+    return { status: response.status, id: response.data };
   } catch (error) {
     const message = errorMessage(
       error.response.status,
@@ -73,12 +78,12 @@ const updateReviewFetch = async (token, id, note, comment) => {
       url: `${BASE_URL_API}/review`,
       data: {
         id,
-        note, 
-        comment
+        note,
+        comment,
       },
       headers: {
         authorization: `Bearer ${token}`,
-      }
+      },
     });
     return response.status;
   } catch (error) {
@@ -89,7 +94,7 @@ const updateReviewFetch = async (token, id, note, comment) => {
     );
     throw new Error(message);
   }
-} 
+};
 
 const deleteReviewFetch = async (id) => {
   try {
@@ -109,4 +114,10 @@ const deleteReviewFetch = async (id) => {
   }
 };
 
-export { getReviewsByToiletIdFetch, getReviewFetch, addReviewFetch, updateReviewFetch, deleteReviewFetch };
+export {
+  getReviewsByToiletIdFetch,
+  getReviewFetch,
+  addReviewFetch,
+  updateReviewFetch,
+  deleteReviewFetch,
+};

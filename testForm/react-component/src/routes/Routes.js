@@ -50,11 +50,14 @@ export default function Router() {
             <>
               <Route path={"/addUser"} element={<AddUser />} />
               <Route path={"/addToilet"} element={<AddToilet />} />
-              <Route path={"/addReport"} element={<AddReport />} />
+              <Route path={"/addReport/:toiletId"} element={<AddReport />} />
               <Route path={"/addReview/:toiletId"} element={<AddReview />} />
 
               <Route path={"/listUsers"} element={<ListUsers />} />
-              <Route path={"/listReports"} element={<ListReports />} />
+              <Route
+                path={"/listReports/:toiletId"}
+                element={<ListReports />}
+              />
               <Route
                 path={"/listReviews/:toiletId"}
                 element={<ListReviews />}
