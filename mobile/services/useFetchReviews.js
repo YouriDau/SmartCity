@@ -11,7 +11,7 @@ export default function useFetchReviews() {
     try {
       const response = await axios({
         method: "get",
-        url: `${BASE_URL_API}/review/${toiletId}`,
+        url: `${BASE_URL_API}/review/toiletId/${toiletId}`,
       });
       return response.data;
     } catch (error) {

@@ -5,26 +5,36 @@ import { useNavigate } from "react-router-dom";
 import {
   addPersonFetch,
   updatePersonFetch,
-  updatePersonByIdFetch
+  updatePersonByIdFetch,
 } from "../component/API/useFetchPerson"; // dans l'objet useFetchPerson on prend addPersonFetch
 import { UserContext } from "../utils/UserContext";
 
 const UserForm = (props) => {
-  console.log(props.user);
-  const { user: admin, setUser: setAdmin, token } = useContext(UserContext);
+  const [inputPseudo, setInputPseudo] = useState("");
+  const [inputLastName, setInputLastName] = useState("");
+  const [inputFirstName, setInputFirstName] = useState("");
+  const [inputPassword, setInputPassword] = useState("");
+  const [inputEmail, setInputEmail] = useState("");
 
-  const [inputPseudo, setInputPseudo] = useState(props.user?.pseudo || "");
-  const [inputLastName, setInputLastName] = useState(
-    props.user?.lastName || ""
-  );
-  const [inputFirstName, setInputFirstName] = useState(
-    props.user?.firstName || ""
-  );
-  const [inputPassword, setInputPassword] = useState(
-    props.user?.password || ""
-  );
-  const [inputEmail, setInputEmail] = useState(props.user?.email || "");
+  const { user: admin, setUser: setAdmin, token } = useContext(UserContext);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (props.isUpdate) {
+      console.log(props);
+      let user;
+      if (props.user !== undefined && props.user !== null) {
+        user = props.user;
+      } else {
+        user = admin;
+      }
+      setInputPseudo(user.pseudo);
+      setInputLastName(user.lastName);
+      setInputFirstName(user.firstName);
+      setInputPassword(user.inputPassword);
+      setInputEmail(user.email);
+    }
+  }, []);
 
   const handlePressAdd = (event) => {
     event.preventDefault();
@@ -46,9 +56,9 @@ const UserForm = (props) => {
 
   const handlePressUpdate = (event) => {
     event.preventDefault();
-    console.log(inputPseudo);
     if (props.user.id === admin.id) {
-      updatePersonFetch( // permet de modifier le current user
+      updatePersonFetch(
+        // permet de modifier le current user
         token,
         // props.user.id,
         inputPseudo,
@@ -58,9 +68,8 @@ const UserForm = (props) => {
       )
         .then((status) => {
           if (status === 200) {
-            console.log("Update Réussi!");
-            console.log("isAdmin :" + props.user.is_admin);
-  
+            console.log("update current user réussi!");
+
             if (props.user.id === admin.id) {
               setAdmin({
                 id: admin.id,
@@ -79,25 +88,26 @@ const UserForm = (props) => {
           alert(error.message);
         });
     } else {
-      console.log("on est dans le else donc ce n'est pas un admin");
-      //console.log(props.user.id);
-        updatePersonByIdFetch(
-          token, 
-          props.user.id,
-          inputPseudo,
-          inputLastName,
-          inputFirstName,
-          inputEmail
-        ).then((status) => {
-          
-            console.log("Update réussi");
-            navigate("/listUsers");
-          
-        }).catch((error) => {
-          alert(error.message);
-        });
+      console.log("on est dans le else donc ce n'est pas le current user");
+      console.log(props.user.id);
+      console.log(inputPseudo);
+      console.log(inputFirstName);
+      // updatePersonByIdFetch(
+      //   token,
+      //   props.user.id,
+      //   inputPseudo,
+      //   inputLastName,
+      //   inputFirstName,
+      //   inputEmail
+      // )
+      //   .then((status) => {
+      //     console.log("Update réussi");
+      //     navigate("/listUsers");
+      //   })
+      //   .catch((error) => {
+      //     alert(error.message);
+      //   });
     }
-    
   };
 
   const handlePressCancel = (event) => {
@@ -114,7 +124,7 @@ const UserForm = (props) => {
             <br />
             <input
               type="text"
-              defaultValue={props.isUpdate ? props.user?.pseudo : ""}
+              defaultValue={props.isUpdate ? inputPseudo : ""}
               onChange={(event) => {
                 setInputPseudo(event.target.value);
               }}
@@ -125,7 +135,7 @@ const UserForm = (props) => {
             <br />
             <input
               type="text"
-              defaultValue={props.isUpdate ? props.user?.lastName : ""}
+              defaultValue={props.isUpdate ? inputLastName : ""}
               onChange={(event) => {
                 setInputLastName(event.target.value);
               }}
@@ -136,7 +146,7 @@ const UserForm = (props) => {
             <br />
             <input
               type="text"
-              defaultValue={props.isUpdate ? props.user?.firstName : ""}
+              defaultValue={props.isUpdate ? inputFirstName : ""}
               onChange={(event) => {
                 setInputFirstName(event.target.value);
               }}
@@ -162,7 +172,7 @@ const UserForm = (props) => {
             <br />
             <input
               type="text"
-              defaultValue={props.isUpdate ? props.user?.email : ""}
+              defaultValue={props.isUpdate ? inputEmail : ""}
               onChange={(event) => {
                 setInputEmail(event.target.value);
               }}

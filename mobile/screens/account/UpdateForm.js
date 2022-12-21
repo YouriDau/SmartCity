@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../../redux/selectors";
 import { validAccount } from "../../business/account";
 import { setToken } from "../../redux/actions/token";
+import { setUser } from "../../redux/actions/account";
 
 const UpdateForm = ({ navigation }) => {
   const [pseudo, setPseudo] = useState("");
@@ -33,18 +34,16 @@ const UpdateForm = ({ navigation }) => {
     if (accountAlert !== undefined) {
       Alert.alert(accountAlert);
     } else {
-      updatePersonFetch(pseudo, lastName, firstName, email)
-        .then((response) => {
-          if (response.status === 200) {
-            Alert.alert(ACCOUNT_MODIFY_SUCCESS);
-            AsyncStorage.setItem("token", response.token);
-            dispatch(setToken(response.token));
-            navigation.navigate("Maps");
-          }
-        })
-        .catch((error) => {
-          Alert.alert(error.message);
-        });
+      updatePersonFetch(pseudo, lastName, firstName, email).then((response) => {
+        if (response.status === 200) {
+          Alert.alert(ACCOUNT_MODIFY_SUCCESS);
+          AsyncStorage.setItem("token", response.token);
+          dispatch(setToken(response.token));
+          console.log(pseudo);
+          dispatch(setUser(user.id, pseudo, lastName, firstName, email));
+          navigation.navigate("Maps");
+        }
+      });
     }
   };
 
