@@ -67,7 +67,7 @@ const UserForm = (props) => {
         inputEmail
       )
         .then(({ status, token }) => {
-          console.log("update current user réussi!");
+          alert(`The user ${inputPseudo} has been successfully modify!`);
 
           setAdmin({
             id: admin.id,
@@ -92,7 +92,8 @@ const UserForm = (props) => {
         inputEmail
       )
         .then((status) => {
-          navigate("/");
+          alert("Your account has been successfully modify!");
+          navigate("/listUsers");
         })
         .catch((error) => {
           alert(error.message);
