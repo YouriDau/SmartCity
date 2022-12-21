@@ -63,7 +63,6 @@ const addPersonFetch = async (pseudo, lastName, firstName, email, password) => {
         email,
         password,
       },
-      a,
     });
     console.log(response.status);
     return response.status;
