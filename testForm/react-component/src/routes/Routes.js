@@ -20,17 +20,25 @@ import UpdatePassword from "../screen/account/UpdatePassword";
 import { UserContext } from "../utils/UserContext";
 import { useEffect, useState } from "react";
 import { ProtectedRoute } from "./ProtectedRoute";
+import { getCurrentUserFetch } from "../component/API/useFetchPerson";
 
 export default function Router() {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState("");
 
   useEffect(() => {
-    localStorage.getItem("token").then((currentToken) => {
-      if (currentToken !== null && currentToken !== undefined) {
-        token = currentToken;
-      }
-    });
+    const currentToken = localStorage.getItem("token");
+    if (currentToken !== null && currentToken !== undefined) {
+      setToken(currentToken);
+      getCurrentUserFetch(currentToken)
+        .then((currentUser) => {
+          setUser(currentUser);
+          console.log(currentUser);
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
+    }
   }, []);
 
   return (
