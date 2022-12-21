@@ -1,6 +1,7 @@
 import axios from "axios";
 import { BASE_URL_API } from "../../config";
 import { errorMessage } from "../../utils/utils";
+//test
 
 const getCurrentUserFetch = async (token) => {
   try {
