@@ -16,7 +16,9 @@ import Maps from "../screen/Maps";
 import DeleteReview from "../screen/review/DeleteReview";
 import MenuControle from "../screen/MenuControle";
 import DeleteToilet from "../screen/toilet/DeleteToilet";
-import UpdatePassword from "../screen/account/UpdatePassword";
+import UpdateAdminPassword from "../screen/account/UpdateAdminPassword";
+import UpdateUserPassword from "../screen/account/UpdateUserPassword";
+import UsersPanel from "../screen/UsersPanel";
 import { UserContext } from "../utils/UserContext";
 import { useEffect, useState } from "react";
 import { ProtectedRoute } from "./ProtectedRoute";
@@ -136,10 +138,18 @@ export default function Router() {
             }
           />
           <Route
-            path={"/updatePassword"}
+            path={"/updateAdminPassword"}
             element={
               <ProtectedRoute user={user}>
-                <UpdatePassword />
+                <UpdateAdminPassword />
+              </ProtectedRoute>
+            }
+          />
+          <Route 
+            path={"/updateUserPassword"}
+            element={
+              <ProtectedRoute user={user}>
+                <UpdateUserPassword />
               </ProtectedRoute>
             }
           />
@@ -190,6 +200,14 @@ export default function Router() {
             element={
               <ProtectedRoute user={user}>
                 <MenuControle />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={"/usersPanel"}
+            element={
+              <ProtectedRoute user={user}>
+                <UsersPanel />
               </ProtectedRoute>
             }
           />

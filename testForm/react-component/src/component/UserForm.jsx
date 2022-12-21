@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import {
   addPersonFetch,
   updatePersonFetch,
+  updatePersonByIdFetch
 } from "../component/API/useFetchPerson"; // dans l'objet useFetchPerson on prend addPersonFetch
 import { UserContext } from "../utils/UserContext";
 
@@ -36,7 +37,7 @@ const UserForm = (props) => {
     )
       .then((status) => {
         alert("Account successfully added");
-        navigate("/listUsers");
+        navigate("/usersPanel");
       })
       .catch((error) => {
         alert(error.message);
@@ -46,34 +47,57 @@ const UserForm = (props) => {
   const handlePressUpdate = (event) => {
     event.preventDefault();
     console.log(inputPseudo);
-    updatePersonFetch(
-      token,
-      inputPseudo,
-      inputLastName,
-      inputFirstName,
-      inputEmail
-    )
-      .then((status) => {
-        if (status === 200) {
-          console.log("Update Réussi!");
-
-          if (props.user.id === admin.id) {
-            setAdmin({
-              id: admin.id,
-              pseudo: inputPseudo,
-              lastName: inputLastName,
-              firstName: inputFirstName,
-              email: inputEmail,
-            });
-            navigate("/menuControle");
-          } else {
-            navigate("/listUsers");
+    if (props.user.id === admin.id) {
+      updatePersonFetch( // permet de modifier le current user
+        token,
+        // props.user.id,
+        inputPseudo,
+        inputLastName,
+        inputFirstName,
+        inputEmail
+      )
+        .then((status) => {
+          if (status === 200) {
+            console.log("Update Réussi!");
+            console.log("isAdmin :" + props.user.is_admin);
+  
+            if (props.user.id === admin.id) {
+              setAdmin({
+                id: admin.id,
+                pseudo: inputPseudo,
+                lastName: inputLastName,
+                firstName: inputFirstName,
+                email: inputEmail,
+              });
+              navigate("/menuControle");
+            } else {
+              navigate("/listUsers");
+            }
           }
-        }
-      })
-      .catch((error) => {
-        alert(error.message);
-      });
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
+    } else {
+      console.log("on est dans le else donc ce n'est pas un admin");
+      //console.log(props.user.id);
+        updatePersonByIdFetch(
+          token, 
+          props.user.id,
+          inputPseudo,
+          inputLastName,
+          inputFirstName,
+          inputEmail
+        ).then((status) => {
+          
+            console.log("Update réussi");
+            navigate("/listUsers");
+          
+        }).catch((error) => {
+          alert(error.message);
+        });
+    }
+    
   };
 
   const handlePressCancel = (event) => {
@@ -90,7 +114,7 @@ const UserForm = (props) => {
             <br />
             <input
               type="text"
-              defaultValue={props.isUpdate ? props.user.pseudo : ""}
+              defaultValue={props.isUpdate ? props.user?.pseudo : ""}
               onChange={(event) => {
                 setInputPseudo(event.target.value);
               }}
@@ -101,7 +125,7 @@ const UserForm = (props) => {
             <br />
             <input
               type="text"
-              defaultValue={props.isUpdate ? props.user.lastName : ""}
+              defaultValue={props.isUpdate ? props.user?.lastName : ""}
               onChange={(event) => {
                 setInputLastName(event.target.value);
               }}
@@ -112,7 +136,7 @@ const UserForm = (props) => {
             <br />
             <input
               type="text"
-              defaultValue={props.isUpdate ? props.user.firstName : ""}
+              defaultValue={props.isUpdate ? props.user?.firstName : ""}
               onChange={(event) => {
                 setInputFirstName(event.target.value);
               }}
@@ -138,7 +162,7 @@ const UserForm = (props) => {
             <br />
             <input
               type="text"
-              defaultValue={props.isUpdate ? props.user.email : ""}
+              defaultValue={props.isUpdate ? props.user?.email : ""}
               onChange={(event) => {
                 setInputEmail(event.target.value);
               }}

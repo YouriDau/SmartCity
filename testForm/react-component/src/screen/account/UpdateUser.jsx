@@ -23,21 +23,20 @@ const UpdateUser = (props) => {
     if (id) {
       getPersonByIdFetch(id)
         .then((user) => {
-          console.log(user);
+          console.log(user.isAdmin);
           setUser(user);
         })
         .catch((error) => {
           alert(error.message);
         });
     }
-  }, []);
+  }, [id]);
 
   return (
     <div className="form">
       <div className="header">
         <Header />
       </div>
-      {console.log(id)}
       <UserForm
         title={"Update user"}
         titleButton={"Save"}

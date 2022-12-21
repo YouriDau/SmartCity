@@ -150,6 +150,19 @@ form {
   margin-top: 50px;
 }
 
+#usersPanel {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  height: 250px;
+  width: 300px;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -50px;
+}
+
 .linkMenu {
   display: flex;
   border: 1px solid black;

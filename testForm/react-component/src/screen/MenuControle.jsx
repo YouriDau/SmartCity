@@ -6,21 +6,22 @@ import { UserContext } from "../utils/UserContext";
 import { useEffect } from "react";
 
 const MenuControle = () => {
+
   return (
     <div>
       <Header />
       <h1>Controle panel</h1>
       <div id="menuControle">
-        <Link to={"/listUsers"} className="linkMenu">
+        <Link to={"/usersPanel"} className="linkMenu">
           <div className="divMenu">
             <p>users</p>
           </div>
         </Link>
-        <Link className="linkMenu">
+        {/* <Link className="linkMenu">
           <div className="divMenu">
             <p>reviews</p>
           </div>
-        </Link>
+        </Link> */}
         <Link to={"/maps"} className="linkMenu">
           <div className="divMenu">
             <p>toilets</p>
@@ -34,6 +35,11 @@ const MenuControle = () => {
         <Link to={"/updateUser"} className="linkMenu">
           <div className="divMenu">
             <p>my account</p>
+          </div>
+        </Link>
+        <Link to={"/updateAdminPassword"} className="linkMenu">
+          <div className="divMenu">
+            <p>Change my password</p>
           </div>
         </Link>
       </div>

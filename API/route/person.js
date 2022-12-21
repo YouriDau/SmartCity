@@ -64,6 +64,8 @@ router.put(
   PersonControleur.updatePassword
 );
 
+router.put("/byId", JWTMiddleware.identification, PersonControleur.updatePersonById);
+
 /**
  * @swagger
  * /person:

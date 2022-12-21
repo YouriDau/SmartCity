@@ -8,7 +8,7 @@ module.exports.getAllPersons = async (client) => {
 
 module.exports.getPersonById = async (client, id) => {
   return await client.query(
-    "SELECT id, pseudo, last_name, first_name, email FROM person WHERE id=$1 LIMIT 1",
+    "SELECT id, pseudo, last_name, first_name, email, is_admin FROM person WHERE id=$1 LIMIT 1",
     [id]
   );
 };

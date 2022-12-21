@@ -39,6 +39,7 @@ const getAllPersonsFetch = async () => {
 const getPersonByIdFetch = async (id) => {
   try {
     const response = await axios.get(`${BASE_URL_API}/person/${id}`);
+    //console.log("response.data : " + response.data);
     return response.data;
   } catch (error) {
     const message = errorMessage(
@@ -79,7 +80,7 @@ const addPersonFetch = async (pseudo, lastName, firstName, email, password) => {
 
 const updatePersonFetch = async (token, pseudo, lastName, firstName, email) => {
   try {
-    console.log("test");
+    console.log("updatePersonFetch");
     const response = await axios({
       method: "put",
       url: `${BASE_URL_API}/person`,
@@ -103,6 +104,66 @@ const updatePersonFetch = async (token, pseudo, lastName, firstName, email) => {
     throw new Error(message);
   }
 };
+
+const updatePersonByIdFetch = async (token, id, pseudo, lastName, firstName, email) => {
+  try {
+    console.log("updatePersonByIdFetch");
+    console.log(id);
+    console.log(pseudo);
+    console.log(lastName);
+    console.log(firstName);
+    console.log(email);
+
+    const response = await axios({
+      method: "put",
+      url: `${BASE_URL_API}/person/byId`,
+      data: {
+        id, 
+        pseudo,
+        lastName,
+        firstName,
+        email,
+      },
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    });
+    console.log(response.status);
+    return response.status;
+  } catch (error) {
+    const message = errorMessage(
+      error.response.status,
+      error.response.data,
+      "Account"
+    );
+    throw new Error(message);
+  }
+};
+
+// modif
+const updateAdminPasswordFetch = async (token, password, newPassword) => {
+  try {
+    const response = await axios({
+      method: "put",
+      url: `${BASE_URL_API}/person/password`,
+      data: {
+        password,
+        newPassword
+      },
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    });
+    return response.status;
+  } catch (error) {
+    const message = errorMessage(
+      error.response.status,
+      error.response.data,
+      "Account"
+    );
+    throw new Error(message);
+  }
+}
 
 const deletePersonByIdFetch = async (id) => {
   try {
@@ -154,6 +215,8 @@ export {
   getPersonByIdFetch,
   addPersonFetch,
   updatePersonFetch,
+  updatePersonByIdFetch,
+  updateAdminPasswordFetch,
   deletePersonByIdFetch,
   loginFetch,
 };

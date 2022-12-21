@@ -56,6 +56,12 @@ npm install react-redux
 // Creation
 
 // Installation dépendances
+      // initialiser package.json
+      npm init
+
+      // express
+      npm install -s express
+      
 
       // map
       npm i react-leaflet

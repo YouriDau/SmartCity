@@ -107,6 +107,7 @@ module.exports.getPersonById = async (req, res) => {
           lastName: person.last_name,
           firstName: person.first_name,
           email: person.email,
+          isAdmin: person.is_admin
         };
         res.json(newPerson);
       } else {
@@ -327,6 +328,34 @@ module.exports.updatePerson = async (req, res) => {
   }
 };
 
+module.exports.updatePersonById = async (req, res) => {
+  const { id, pseudo, lastName, firstName, email } = req.body;
+
+  if (
+    pseudo === undefined ||
+    lastName === undefined ||
+    firstName === undefined ||
+    email === undefined
+  ) {
+    res
+      .status(400)
+      .json("id or pseudo or lastName or firstName or email is undefined!");
+  } else {
+    const client = await pool.connect();
+    try {
+      await PersonModele.updatePerson(
+        client, id, pseudo, lastName, firstName, email
+      );
+      res.status(204);
+    } catch (error) {
+      console.error("updatePersonByIdError", error);
+      res.sendStatus(500);
+    } finally {
+      client.release();
+    }
+  }
+}
+
 module.exports.updatePassword = async (req, res) => {
   const { password, newPassword } = req.body;
   if (password !== undefined && newPassword !== undefined) {
@@ -360,6 +389,16 @@ module.exports.updatePassword = async (req, res) => {
     res.status(400).json("one of the passwords is undefined!");
   }
 };
+
+/*module.exports.updateAdminPassword = async (req, res) => {
+  const { newPassword } = req.body;
+  if (newPassword != undefined) {
+    const client = await pool.connect();
+    try {
+
+    }
+  }
+}*/
 
 module.exports.deletePersonById = async (req, res) => {
   const { id } = req.body;
