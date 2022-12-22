@@ -1,11 +1,11 @@
 import axios from "axios";
 import { BASE_URL_API } from "../../config";
-import { errorMessage } from "../../utils/utils";
+import { callWithRetry, errorMessage } from "../../utils/utils";
 //test
 
 const getCurrentUserFetch = async (token) => {
   try {
-    const response = await axios({
+    const response = await callWithRetry(axios, {
       url: `${BASE_URL_API}/person/current`,
       headers: {
         authorization: `Bearer ${token}`,
@@ -170,7 +170,7 @@ const updateUserPasswordFetch = async (token, id, newPassword) => {
       url: `${BASE_URL_API}/person/userPassword`,
       data: {
         id,
-        newPassword
+        newPassword,
       },
       headers: {
         authorization: `Bearer ${token}`,
@@ -185,7 +185,7 @@ const updateUserPasswordFetch = async (token, id, newPassword) => {
     );
     throw new Error(message);
   }
-}
+};
 
 const deletePersonByIdFetch = async (id) => {
   try {

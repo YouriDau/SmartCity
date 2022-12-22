@@ -6,7 +6,6 @@ import { UserContext } from "../utils/UserContext";
 import { useEffect } from "react";
 
 const MenuControle = () => {
-
   return (
     <div>
       <Header />
@@ -32,6 +31,7 @@ const MenuControle = () => {
             <p>my account</p>
           </div>
         </Link>
+        <button className="linkMenu">Disconnect</button>
         {/* <Link to={"/updateAdminPassword"} className="linkMenu">
           <div className="divMenu">
             <p>Change my password</p>

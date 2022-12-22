@@ -1,4 +1,4 @@
-export function errorMessage(statusCode, errorMessage, subject) {
+export const errorMessage = (statusCode, errorMessage, subject) => {
   let message = "Error, ";
   switch (statusCode) {
     case 400:
@@ -21,4 +21,19 @@ export function errorMessage(statusCode, errorMessage, subject) {
       break;
   }
   return message;
-}
+};
+
+export const callWithRetry = async (nbTry = 0, fn, args) => {
+  try {
+    return await fn(args);
+  } catch (e) {
+    console.log(e);
+
+    if (nbTry > 3) {
+      throw Error("Error, something went wrong");
+    }
+    setTimeout(() => {
+      callWithRetry(nbTry + 1, fn, args);
+    }, 10 ** nbTry);
+  }
+};
