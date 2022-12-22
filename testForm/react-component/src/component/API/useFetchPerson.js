@@ -164,7 +164,6 @@ const updateCurrentUserPasswordFetch = async (token, password, newPassword) => {
 };
 
 const updateUserPasswordFetch = async (token, id, newPassword) => {
-  console.log(id);
   try {
     const response = await axios({
       method: "put",
@@ -177,7 +176,7 @@ const updateUserPasswordFetch = async (token, id, newPassword) => {
         authorization: `Bearer ${token}`,
       },
     });
-    return response.data;
+    return response.status;
   } catch (error) {
     const message = errorMessage(
       error.response.status,

@@ -362,7 +362,7 @@ module.exports.updatePersonById = async (req, res) => {
   }
 };
 
-module.exports.updatePassword = async (req, res) => {
+module.exports.updateCurrentUserPassword = async (req, res) => {
   const { password, newPassword } = req.body;
   if (password !== undefined && newPassword !== undefined) {
     const client = await pool.connect();
@@ -398,16 +398,9 @@ module.exports.updatePassword = async (req, res) => {
 
 module.exports.updateUserPassword = async (req, res) => {
   const { id, newPassword } = req.body;
-  console.log(id);
   if (newPassword != undefined) {
     const client = await pool.connect();
     try {
-      const { rows } = await PersonModele.getPersonById(
-        client,
-        id
-      );
-      const user = rows[0];
-
       const newPasswordHashed = await getHash(newPassword);
       await PersonModele.updatePassword(
         client, 

@@ -61,7 +61,7 @@ router.post("/", PersonControleur.postPerson);
 router.put(
   "/currentUserPassword",
   JWTMiddleware.identification,
-  PersonControleur.updatePassword
+  PersonControleur.updateCurrentUserPassword
 );
 
 router.put(

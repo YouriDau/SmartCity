@@ -22,7 +22,7 @@ const UpdatePassword = (props) => {
           updateCurrentUserPasswordFetch(token, inputCurrentPassword, inputNewPassword)
           .then((status) => {
             if (status === 204) {
-              console.log("Update Réussi!");
+              alert("Your password has been successfuly modified");
               navigate("/");
             }
           })
@@ -30,11 +30,12 @@ const UpdatePassword = (props) => {
             alert(error.message);
           });
         } else {
+          console.log("on passe dans le else");
             updateUserPasswordFetch(token, props.id, inputNewPassword) 
             .then((status) => {
               if (status === 204) {
-                console.log("Update Réussi!");
-                navigate("/");
+                alert("The user's password has been successfuly modified");
+                navigate("/usersPanel");
               }
             })
             .catch((error) => {

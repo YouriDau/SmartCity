@@ -70,7 +70,7 @@ export default function Router() {
                 element={<UpdateAdminPassword />}
               />
               <Route
-                path={"/updateUserPassword/id"}
+                path={"/updateUserPassword/:id"}
                 element={<UpdateUserPassword />}
               />
               <Route path={"/updateReport/:id"} element={<UpdateReport />} />
