@@ -91,12 +91,15 @@ const updateReviewFetch = async (token, id, note, comment) => {
   }
 };
 
-const deleteReviewFetch = async (id) => {
+const deleteReviewFetch = async (token, id) => {
   try {
     const response = await axios({
       method: "delete",
       url: `${BASE_URL_API}/review`,
       data: { id },
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
     });
     return response.status;
   } catch (error) {

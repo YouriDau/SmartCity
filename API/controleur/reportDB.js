@@ -8,7 +8,7 @@ const ReportModele = require("../modele/reportDB");
  *    Report:
  *      type: object
  *      properties:
- *        id: 
+ *        id:
  *          type: integer
  *        reason:
  *          type: string
@@ -18,7 +18,7 @@ const ReportModele = require("../modele/reportDB");
  *          type: boolean
  *        userId:
  *          type: integer
- *        toiletId: 
+ *        toiletId:
  *          type: integer
  */
 
@@ -65,7 +65,7 @@ module.exports.getNotDoneReports = async (req, res) => {
       const reports = allReports.map((report) => {
         return {
           id: report.id,
-          isDone: report.is_done,
+          reason: report.reason,
           toiletId: report.toilet_id,
           date: report.date.toLocaleDateString("fr", {
             hour: "numeric",
@@ -94,6 +94,7 @@ module.exports.getAllReports = async (req, res) => {
       const reports = allReports.map((report) => {
         return {
           id: report.id,
+          reason: report.reason,
           isDone: report.is_done,
           toiletId: report.toilet_id,
           date: report.date.toLocaleDateString("fr", {
@@ -115,7 +116,7 @@ module.exports.getAllReports = async (req, res) => {
   }
 };
 
- /**
+/**
  * @swagger
  * components:
  *  responses:
@@ -162,7 +163,7 @@ module.exports.postReport = async (req, res) => {
   }
 };
 
- /**
+/**
  *@swagger
  *components:
  *  responses:
@@ -179,7 +180,7 @@ module.exports.postReport = async (req, res) => {
  *                type: integer
  *              reason:
  *                type: string
- *              isDone: 
+ *              isDone:
  *                type: boolean
  */
 module.exports.updateReport = async (req, res) => {
@@ -200,12 +201,12 @@ module.exports.updateReport = async (req, res) => {
   }
 };
 
- /**
+/**
  * @swagger
  * components:
  *  responses:
  *    ReportDeleted:
- *      description: le report a été supprimé 
+ *      description: le report a été supprimé
  */
 module.exports.deleteReport = async (req, res) => {
   const { id } = req.body;

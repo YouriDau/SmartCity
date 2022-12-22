@@ -5,8 +5,6 @@ import { getToken } from "../redux/selectors";
 import { errorMessage } from "../utils/utils";
 
 export default function useFetchReviews() {
-  const token = useSelector(getToken);
-
   const getReviewsFetch = async (toiletId) => {
     try {
       const response = await axios({
@@ -24,7 +22,7 @@ export default function useFetchReviews() {
     }
   };
 
-  const addReviewFetch = async (note, comment, toiletId) => {
+  const addReviewFetch = async (token, note, comment, toiletId) => {
     try {
       const response = await axios({
         method: "post",
@@ -49,7 +47,7 @@ export default function useFetchReviews() {
     }
   };
 
-  const deleteReviewFetch = async (id) => {
+  const deleteReviewFetch = async (token, id) => {
     try {
       const response = await axios({
         method: "delete",
@@ -72,7 +70,7 @@ export default function useFetchReviews() {
     }
   };
 
-  const updateReviewFetch = async (id, note, comment) => {
+  const updateReviewFetch = async (token, id, note, comment) => {
     try {
       const response = await axios({
         method: "put", // put et pas patch car remplace pas le userId ni l'id

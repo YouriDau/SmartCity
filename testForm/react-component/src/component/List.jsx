@@ -24,26 +24,21 @@ const List = (props) => {
         return (
           <div key={item.id} className="list">
             <div>
-              {props.isUsersList ? (
-                <>
-                  <p className="userInfo">id: {item.id}</p>
-                  <p className="userInfo">{item.pseudo}</p>
-                </>
-              ) : (
-                <>
-                  <p className="userInfo">id: {item.id}</p>
-                  <p className="userInfo">{item.comment}</p>
-                  <div className="listStar">
-                    <p className="userInfo">note: {item.note}</p>
-                    <IoIosStar
-                      size={20}
-                      color="orange"
-                      className="starSymbol"
-                    />
-                  </div>
-                </>
+              <p className="userInfo">id: {item.id}</p>
+              <p className="userInfo">{item.pseudo}</p>
+              <p className="userInfo">{item.comment}</p>
+              {item.note && (
+                <div className="listStar">
+                  <p className="userInfo">note: {item.note}</p>
+                  <IoIosStar size={20} color="orange" className="starSymbol" />
+                </div>
               )}
             </div>
+            <p className="userInfo">{item.reason}</p>
+            {item.isDone !== undefined && (
+              <p className="userInfo">{item.isDone ? "done" : "not done"}</p>
+            )}
+
             <div className="userListBtns">
               <Link to={"/" + props.linkSeeMore + "/" + item.id}>
                 <button className="btnList">
@@ -74,13 +69,12 @@ const List = (props) => {
   };
 
   return (
-    <div className="container">
+    <div className="container" style={{}}>
       <h1>{props.title}</h1>
-      <div>
-        <div className="listTable">{showContent()}</div>
-      </div>
-      <div>
+      <div className="listTable">{showContent()}</div>
+      <div className="bottomBtns">
         <button
+          className=""
           onClick={(event) => {
             handlePressCancel(event);
           }}

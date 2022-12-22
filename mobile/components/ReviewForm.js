@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addReview, updateReview } from "../redux/actions/review";
 import useFetchReviews from "../services/useFetchReviews";
 import { REVIEW_ADD_SUCCESS, REVIEW_MODIFY_SUCCESS } from "../config";
-import { getUser } from "../redux/selectors";
+import { getToken, getUser } from "../redux/selectors";
 
 const PLACEHOLDER = "Enter your review here";
 const NOTE_MIN = 1;
@@ -18,6 +18,7 @@ const ReviewForm = ({ isUpdate, navigation, toiletId, review }) => {
   const [comment, setComment] = useState(review?.comment || "");
   const title = isUpdate ? "Update review " + review.id : "Add Review";
   const user = useSelector(getUser);
+  const token = useSelector(getToken);
 
   const dispatch = useDispatch();
   const { addReviewFetch, updateReviewFetch } = useFetchReviews();
@@ -30,7 +31,7 @@ const ReviewForm = ({ isUpdate, navigation, toiletId, review }) => {
     if (comment === "") {
       Alert.alert("Please enter a comment");
     } else {
-      addReviewFetch(note, comment, toiletId)
+      addReviewFetch(token, note, comment, toiletId)
         .then(({ status, data }) => {
           if (status === 201) {
             dispatch(addReview(data, note, comment, toiletId, user.id));
@@ -48,7 +49,7 @@ const ReviewForm = ({ isUpdate, navigation, toiletId, review }) => {
     if (comment === "") {
       Alert.alert("Please enter a comment");
     } else {
-      updateReviewFetch(review.id, note, comment)
+      updateReviewFetch(token, review.id, note, comment)
         .then((status) => {
           if (status === 204) {
             Alert.alert(REVIEW_MODIFY_SUCCESS);

@@ -1,13 +1,14 @@
 import { View, Text, StyleSheet, Alert } from "react-native";
 import Title from "../../components/Title";
 import Button from "../../components/Button";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteReview } from "../../redux/actions/review";
 import useFetchReviews from "../../services/useFetchReviews";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getToken } from "../../redux/selectors";
 
 const DeleteForm = ({ navigation, route }) => {
   const id = route.params.id;
+  const token = useSelector(getToken);
   const dispatch = useDispatch();
   const { deleteReviewFetch } = useFetchReviews();
 
@@ -16,7 +17,7 @@ const DeleteForm = ({ navigation, route }) => {
   };
 
   const handlePressDelete = () => {
-    deleteReviewFetch(id)
+    deleteReviewFetch(token, id)
       .then((status) => {
         if (status === 204) {
           Alert.alert("Success", "Delete with success!");

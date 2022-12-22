@@ -7,7 +7,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { ACCOUNT_MODIFY_SUCCESS } from "../../config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser } from "../../redux/selectors";
+import { getToken, getUser } from "../../redux/selectors";
 import { validAccount } from "../../business/account";
 import { setToken } from "../../redux/actions/token";
 import { setUser } from "../../redux/actions/account";
@@ -17,10 +17,11 @@ const UpdateForm = ({ navigation }) => {
   const [lastName, setLastName] = useState("");
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
+  const user = useSelector(getUser);
+  const token = useSelector(getToken);
 
   const { updatePersonFetch } = useFetchPerson();
   const dispatch = useDispatch();
-  const user = useSelector(getUser);
 
   useEffect(() => {
     setPseudo(user.pseudo);
@@ -34,16 +35,17 @@ const UpdateForm = ({ navigation }) => {
     if (accountAlert !== undefined) {
       Alert.alert(accountAlert);
     } else {
-      updatePersonFetch(pseudo, lastName, firstName, email).then((response) => {
-        if (response.status === 200) {
-          Alert.alert(ACCOUNT_MODIFY_SUCCESS);
-          AsyncStorage.setItem("token", response.token);
-          dispatch(setToken(response.token));
-          console.log(pseudo);
-          dispatch(setUser(user.id, pseudo, lastName, firstName, email));
-          navigation.navigate("Maps");
+      updatePersonFetch(token, pseudo, lastName, firstName, email).then(
+        (response) => {
+          if (response.status === 200) {
+            Alert.alert(ACCOUNT_MODIFY_SUCCESS);
+            AsyncStorage.setItem("token", response.token);
+            dispatch(setToken(response.token));
+            dispatch(setUser(user.id, pseudo, lastName, firstName, email));
+            navigation.navigate("Maps");
+          }
         }
-      });
+      );
     }
   };
 

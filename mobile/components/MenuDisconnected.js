@@ -8,16 +8,37 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setToken } from "../redux/actions/token";
 import useFetchPerson from "../services/useFetchPerson";
+import { Alert } from "react-native";
+import { setUser } from "../redux/actions/account";
 
 const MenuDisconnected = ({ navigation }) => {
   const Drawer = createDrawerNavigator();
+  const { getCurrentUserFetch } = useFetchPerson();
   const dispatch = useDispatch();
 
   useEffect(() => {
     AsyncStorage.getItem("token").then((token) => {
-      if (token) {
+      if (token !== null) {
         dispatch(setToken(token));
-        navigation.navigate("MenuConnected");
+        getCurrentUserFetch(token)
+          .then(({ status, user }) => {
+            dispatch(
+              setUser(
+                user.id,
+                user.pseudo,
+                user.lastName,
+                user.firstName,
+                user.email
+              )
+            );
+            navigation.navigate("MenuConnected");
+          })
+          .catch((error) => {
+            dispatch.setToken("");
+            AsyncStorage.removeItem("token").then(() => {
+              Alert.alert(error.message);
+            });
+          });
       }
     });
   }, []);

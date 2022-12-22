@@ -3,10 +3,12 @@ import CheckBox from "expo-checkbox";
 import Title from "../../components/Title";
 import Button from "../../components/Button";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addMapMarker } from "../../redux/actions/maps";
+import { getToken } from "../../redux/selectors";
 
 import useFetchToilet from "../../services/useFetchToilets";
+import { useContext } from "react";
 
 const { addToiletFetch } = useFetchToilet();
 
@@ -14,6 +16,7 @@ const AddToilet = ({ navigation, route }) => {
   const [isPaid, setIsPaid] = useState(false);
   const [isReducedMobility, setIsReducedMobility] = useState(false);
   const { newCoordinate } = route.params;
+  const token = useSelector(getToken);
 
   const dispatch = useDispatch();
 
@@ -23,6 +26,7 @@ const AddToilet = ({ navigation, route }) => {
 
   const handlePressSubmit = () => {
     addToiletFetch(
+      token,
       newCoordinate.latitude,
       newCoordinate.longitude,
       isPaid,
@@ -30,7 +34,6 @@ const AddToilet = ({ navigation, route }) => {
     )
       .then(({ status, data }) => {
         if (status === 201) {
-          console.log(data);
           dispatch(
             addMapMarker(
               data,

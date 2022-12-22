@@ -26,7 +26,6 @@ const UserForm = (props) => {
 
   useEffect(() => {
     if (props.isUpdate) {
-      console.log(props);
       const user = props.user;
       setInputPseudo(user.pseudo);
       setInputLastName(user.lastName);
@@ -110,7 +109,7 @@ const UserForm = (props) => {
         navigate("/uusersPanel");
       }
     } else {
-      navigate("/usersPanel");
+      navigate("/userChoices");
     }
   };
 

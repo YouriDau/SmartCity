@@ -22,33 +22,6 @@ const MenuConnected = ({ navigation }) => {
   const dispatch = useDispatch();
   const { getCurrentUserFetch } = useFetchPerson();
 
-  useEffect(() => {
-    getCurrentUserFetch()
-      .then(({ user }) => {
-        dispatch(
-          setUser(
-            user.id,
-            user.pseudo,
-            user.lastName,
-            user.firstName,
-            user.email
-          )
-        );
-        AsyncStorage.getItem("token").then((token) => {
-          dispatch(setToken(token));
-        });
-      })
-      .catch((error) => {
-        if (error.message === "Error, login needed!") {
-          AsyncStorage.removeItem("token");
-          dispatch(setToken(""));
-          navigation.navigate("Login");
-        } else {
-          Alert.alert(error.message);
-        }
-      });
-  }, []);
-
   return (
     <Drawer.Navigator
       initialRouteName="Maps"

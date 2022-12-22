@@ -9,11 +9,10 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../utils/UserContext";
 
 const ReviewForm = (props) => {
-  console.log(props);
   const [note, setNote] = useState(props.currentReview?.note || 1);
   const [comment, setComment] = useState(props.currentReview?.comment || "");
   const toiletId = parseInt(props.toiletId);
-  const id = parseInt(props.currentReview.id);
+  const id = parseInt(props.currentReview?.id);
 
   const { token } = useContext(UserContext);
   const navigate = useNavigate();

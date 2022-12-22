@@ -2,6 +2,23 @@ import axios from "axios";
 import { BASE_URL_API } from "../../config";
 import { errorMessage } from "../../utils/utils";
 
+const getToiletFetch = async (id) => {
+  try {
+    const response = await axios({
+      method: "get",
+      url: `${BASE_URL_API}/toilet/${id}`,
+    });
+    return response.data;
+  } catch (error) {
+    const message = errorMessage(
+      error.response.status,
+      error.response.data,
+      "Account"
+    );
+    throw new Error(message);
+  }
+};
+
 const getAllToiletsFetch = async () => {
   try {
     const response = await axios.get(`${BASE_URL_API}/toilet`);
@@ -64,4 +81,30 @@ const addToiletFetch = async (
   }
 };
 
-export { getAllToiletsFetch, deleteToiletFetch, addToiletFetch };
+const updateToiletFetch = async (
+  token,
+  toiletId,
+  isPaid,
+  isReducedMobility
+) => {
+  await axios({
+    method: "patch",
+    url: `${BASE_URL_API}/toilet`,
+    data: {
+      id: toiletId,
+      isPaid,
+      isReducedMobility,
+    },
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export {
+  getToiletFetch,
+  getAllToiletsFetch,
+  deleteToiletFetch,
+  addToiletFetch,
+  updateToiletFetch,
+};

@@ -17,6 +17,7 @@ const DeleteReport = (props) => {
     deleteReportFetch(id)
       .then((status) => {
         alert("Success, delete report successfully!");
+        navigate("/maps");
       })
       .catch((error) => {
         alert(error.message);
@@ -25,7 +26,7 @@ const DeleteReport = (props) => {
 
   const handlePressCancel = (event) => {
     event.preventDefault();
-    navigate("/listReports");
+    navigate("/reportChoices");
   };
 
   return (

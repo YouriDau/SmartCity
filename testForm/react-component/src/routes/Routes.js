@@ -7,7 +7,7 @@ import ListUsers from "../screen/account/ListUsers";
 import UpdateUser from "../screen/account/UpdateUser";
 import DeleteUser from "../screen/account/DeleteUser";
 import Login from "../screen/account/LoginForm";
-import ListReports from "../screen/report/ListReports";
+import AllReports from "../screen/report/AllReports";
 import UpdateReport from "../screen/report/UpdateReport";
 import UpdateReview from "../screen/review/UpdateReview";
 import DeleteReport from "../screen/report/DeleteReport";
@@ -25,6 +25,7 @@ import { getCurrentUserFetch } from "../component/API/useFetchPerson";
 import UserChoices from "../screen/account/UserChoices";
 import ReportChoices from "../screen/report/ReportChoices";
 import AdminChoices from "../screen/account/AdminChoices";
+import AllReportsNotDone from "../screen/report/AllReportsNotDone";
 
 export default function Router() {
   const [user, setUser] = useState(null);
@@ -55,18 +56,19 @@ export default function Router() {
               <Route path={"/addToilet"} element={<AddToilet />} />
               <Route path={"/addReport/:toiletId"} element={<AddReport />} />
               <Route path={"/addReview/:toiletId"} element={<AddReview />} />
-
               <Route path={"/listUsers"} element={<ListUsers />} />
+              <Route path={"/listReports/all"} element={<AllReports />} />
               <Route
-                path={"/listReports/:toiletId"}
-                element={<ListReports />}
+                path={"/listReports/notDone"}
+                element={<AllReportsNotDone />}
               />
               <Route
                 path={"/listReviews/:toiletId"}
                 element={<ListReviews />}
               />
               <Route path={"/updateUser/:id"} element={<UpdateUser />} />
-              <Route path={"/updateUser"} element={<UpdateUser />} /> {/*j'ai enlevé le slash après si jamais ca bug*/}
+              <Route path={"/updateUser"} element={<UpdateUser />} />{" "}
+              {/*j'ai enlevé le slash après si jamais ca bug*/}
               <Route
                 path={"/updateAdminPassword"}
                 element={<UpdateAdminPassword />}
@@ -78,12 +80,10 @@ export default function Router() {
               <Route path={"/updateReport/:id"} element={<UpdateReport />} />
               <Route path={"/updateReview/:id"} element={<UpdateReview />} />
               <Route path={"/updateToilet/:id"} element={<UpdateToilet />} />
-
               <Route path={"/deleteUser/:id"} element={<DeleteUser />} />
               <Route path={"/deleteReport/:id"} element={<DeleteReport />} />
               <Route path={"/deleteReview/:id"} element={<DeleteReview />} />
               <Route path={"/deleteToilet/:id"} element={<DeleteToilet />} />
-
               <Route path={"/maps"} element={<Maps />} />
               <Route path={"/userChoices"} element={<UserChoices />} />
               <Route path={"/reportChoices"} element={<ReportChoices />} />

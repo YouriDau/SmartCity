@@ -13,7 +13,12 @@ module.exports.getToilet = async (req, res) => {
       const { rows } = await ToiletModele.getToilet(client, id);
       const toilet = rows[0];
       if (toilet !== undefined) {
-        res.json(toilet);
+        const newToilet = {
+          id: toilet.id,
+          isPaid: toilet.is_paid,
+          isReducedMobility: toilet.is_reduced_mobility,
+        };
+        res.json(newToilet);
       } else {
         res.sendStatus(404);
       }

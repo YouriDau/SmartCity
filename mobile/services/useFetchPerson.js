@@ -6,8 +6,6 @@ import { getToken } from "../redux/selectors";
 import { errorMessage } from "../utils/utils";
 
 export default function useFetchPerson() {
-  const token = useSelector(getToken);
-
   const addPersonFetch = async (
     pseudo,
     lastName,
@@ -27,7 +25,7 @@ export default function useFetchPerson() {
           password,
         },
       });
-      return response.status;
+      return { status: response.status, id: response.data };
     } catch (error) {
       const message = errorMessage(
         error.response.status,
@@ -38,7 +36,7 @@ export default function useFetchPerson() {
     }
   };
 
-  const deletePersonFetch = async (password) => {
+  const deletePersonFetch = async (token, password) => {
     try {
       const response = await axios({
         method: "delete",
@@ -61,7 +59,13 @@ export default function useFetchPerson() {
     }
   };
 
-  const updatePersonFetch = async (pseudo, lastName, firstName, email) => {
+  const updatePersonFetch = async (
+    token,
+    pseudo,
+    lastName,
+    firstName,
+    email
+  ) => {
     try {
       const response = await axios({
         method: "put",
@@ -88,11 +92,11 @@ export default function useFetchPerson() {
     }
   };
 
-  const updatePasswordFetch = async (currentPassword, newPassword) => {
+  const updatePasswordFetch = async (token, currentPassword, newPassword) => {
     try {
       const response = await axios({
         method: "put",
-        url: `${BASE_URL_API}/person/password`,
+        url: `${BASE_URL_API}/person/currentUserPassword`,
         data: {
           password: currentPassword,
           newPassword,
@@ -133,7 +137,7 @@ export default function useFetchPerson() {
     }
   };
 
-  const getCurrentUserFetch = async () => {
+  const getCurrentUserFetch = async (token) => {
     try {
       const response = await axios({
         method: "get",

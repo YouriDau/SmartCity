@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { StyleSheet, Text, View, TextInput, Alert } from "react-native";
+import { useSelector } from "react-redux";
 import Button from "../../components/Button";
 import Title from "../../components/Title";
+import { getToken } from "../../redux/selectors";
 import useFetchPerson from "../../services/useFetchPerson";
 
 const UpdatePassword = ({ navigation }) => {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [newPasswordConfirm, setNewPasswordConfirm] = useState("");
+  const token = useSelector(getToken);
 
   const { updatePasswordFetch } = useFetchPerson();
 
@@ -17,10 +20,13 @@ const UpdatePassword = ({ navigation }) => {
     if (newPassword !== newPasswordConfirm) {
       Alert.alert("The first password is not the same as the second one!");
     } else {
-      updatePasswordFetch(currentPassword, newPasswordConfirm)
+      updatePasswordFetch(token, currentPassword, newPasswordConfirm)
         .then((status) => {
           if (status === 204) {
             Alert.alert("Success, your password has been successfully modify");
+            setCurrentPassword("");
+            setNewPassword("");
+            setNewPasswordConfirm("");
             navigation.navigate("Maps");
           }
         })

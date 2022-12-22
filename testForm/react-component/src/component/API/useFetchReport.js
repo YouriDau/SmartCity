@@ -44,17 +44,21 @@ const getReportByIdFetch = async (id) => {
   }
 };
 
-const addReportFetch = async (reason) => {
+const addReportFetch = async (token, reason, toiletId) => {
   try {
-    await axios({
+    const response = await axios({
       method: "post",
       url: `${BASE_URL_API}/report`,
       data: {
         reason,
-        userId: 1,
-        toiletId: 1,
+        toiletId,
+      },
+      headers: {
+        authorization: `Bearer ${token}`,
       },
     });
+
+    return response.data;
   } catch (error) {
     const message = errorMessage(
       error.response.status,

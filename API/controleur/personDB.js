@@ -232,7 +232,7 @@ module.exports.postPerson = async (req, res) => {
             const emailExist = await PersonModele.emailExist(client, email);
             if (!emailExist) {
               const passwordHashed = await getHash(password);
-              await PersonModele.postPerson(
+              const { rows } = await PersonModele.postPerson(
                 client,
                 pseudo,
                 lastName,
@@ -240,7 +240,7 @@ module.exports.postPerson = async (req, res) => {
                 email,
                 passwordHashed
               );
-              res.sendStatus(201);
+              res.status(201).json(rows[0]);
             } else {
               res.status(409).json("email already exist!");
             }
@@ -402,22 +402,18 @@ module.exports.updateUserPassword = async (req, res) => {
     const client = await pool.connect();
     try {
       const newPasswordHashed = await getHash(newPassword);
-      await PersonModele.updatePassword(
-        client, 
-        id,
-        newPasswordHashed
-      );
+      await PersonModele.updatePassword(client, id, newPasswordHashed);
       res.sendStatus(204);
-    }  catch (error) {
+    } catch (error) {
       console.error("updatePasswordError", error);
       res.sendStatus(500);
     } finally {
       client.release();
-    } 
+    }
   } else {
     res.status(400).json("one of the passwords is undefined!");
   }
-}
+};
 
 module.exports.deletePersonById = async (req, res) => {
   const { id } = req.body;

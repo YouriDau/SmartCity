@@ -1,20 +1,28 @@
 import React from "react";
 import Header from "../../component/Header";
 import ReportForm from "../../component/ReportForm";
+import { useParams } from "react-router-dom";
 
-const AddReport = () => {
+function withParams(Component) {
+  return (props) => <Component {...props} params={useParams()} />;
+}
+
+const AddReport = (props) => {
+  const toiletId = parseInt(props.params.toiletId);
+
   return (
     <div className="form">
       <div className="header">
         <Header />
       </div>
       <ReportForm
-        title={"Add a report about this toilet"}
+        title={`Add report toilet ${toiletId}`}
         titleButton={"Report"}
         isUpdate={false}
+        toiletId={toiletId}
       />
     </div>
   );
 };
 
-export default AddReport;
+export default withParams(AddReport);

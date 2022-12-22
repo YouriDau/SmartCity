@@ -6,7 +6,7 @@ module.exports.getHash = (string) => bcrypt.hash(string, saltRounds);
 module.exports.compareHash = (string, hash) => bcrypt.compare(string, hash);
 
 module.exports.emailValidate = (email) => {
-  const regex = new RegExp("^[a-zA-Z0-9_.]+@[a-z]+.[a-z]{2,4}$");
+  const regex = new RegExp("^[a-zA-Z0-9_.]+@[a-z]+\\.[a-z]{2,4}$");
   return regex.test(email);
 };
 

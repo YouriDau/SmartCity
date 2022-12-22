@@ -4,17 +4,15 @@ import { useEffect } from "react";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../utils/UserContext";
-import { addToiletFetch } from "./API/useFetchToilet";
+import { addToiletFetch, updateToiletFetch } from "./API/useFetchToilet";
 
 const ToiletForm = (props) => {
-  const [isPaid, setIsPaid] = useState(false);
-  const [isReducedMobility, setIsReducedMobility] = useState(false);
+  const [isPaid, setIsPaid] = useState(props.toilet?.isPaid || false);
+  const [isReducedMobility, setIsReducedMobility] = useState(
+    props.toilet?.isReducedMobility || false
+  );
   const { token } = useContext(UserContext);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    console.log(isPaid);
-  }, [isPaid]);
 
   const handlePressAdd = (event) => {
     event.preventDefault();
@@ -38,6 +36,16 @@ const ToiletForm = (props) => {
 
   const handlePressUpdate = (event) => {
     event.preventDefault();
+    console.log(isPaid);
+    console.log(isReducedMobility);
+    updateToiletFetch(token, props.toilet.id, isPaid, isReducedMobility)
+      .then(() => {
+        alert(`The toilet ${props.toilet.id} has been successfully modify!`);
+        navigate("/maps");
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
   };
 
   const handlePressCancel = (event) => {
@@ -52,7 +60,7 @@ const ToiletForm = (props) => {
         <p>
           Is the toilet paid ?
           <input
-            defaultValue={isPaid}
+            checked={isPaid}
             type="checkbox"
             onChange={(e) => {
               setIsPaid(e.target.checked);
@@ -64,7 +72,7 @@ const ToiletForm = (props) => {
         <p>
           Is the toilet for reduce mobility people ?
           <input
-            defaultValue={isReducedMobility}
+            checked={isReducedMobility}
             type="checkbox"
             onChange={(e) => {
               setIsReducedMobility(e.target.checked);
@@ -75,7 +83,9 @@ const ToiletForm = (props) => {
       <div>
         <button
           style={{ backgroundColor: "green" }}
-          onClick={(event) => handlePressAdd(event)}
+          onClick={(event) => {
+            props.isUpdate ? handlePressUpdate(event) : handlePressAdd(event);
+          }}
         >
           {props.titleButton}
         </button>

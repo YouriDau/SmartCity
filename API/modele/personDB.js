@@ -29,7 +29,8 @@ module.exports.postPerson = async (
 ) => {
   return await client.query(
     `INSERT INTO person(pseudo, last_name, first_name, email, is_admin, password)
-     VALUES ($1,$2,$3,$4,$5,$6)`,
+     VALUES ($1,$2,$3,$4,$5,$6)
+     RETURNING id`,
     [pseudo, lastName, firstName, email, false, password]
   );
 };

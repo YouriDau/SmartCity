@@ -5,9 +5,7 @@ import { getToken } from "../redux/selectors";
 import { errorMessage } from "../utils/utils";
 
 export default function useFetchReport() {
-  const token = useSelector(getToken);
-
-  const addReportFetch = async (reason, toiletId) => {
+  const addReportFetch = async (token, reason, toiletId) => {
     try {
       const response = await axios({
         method: "post",

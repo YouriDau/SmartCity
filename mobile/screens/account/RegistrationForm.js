@@ -14,8 +14,8 @@ const PLACEHOLDERS = {
   pseudo: "Your pseudo here",
   lastName: "Your last name here",
   firstName: "Your first name here",
-  password: "Your password here",
   email: "Your email here",
+  password: "Your password here",
 };
 
 const RegistrationForm = ({ navigation }) => {
@@ -25,8 +25,8 @@ const RegistrationForm = ({ navigation }) => {
   const [pseudo, setPseudo] = useState("");
   const [lastName, setLastName] = useState("");
   const [firstName, setFirstName] = useState("");
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
 
   const handlePressRegister = () => {
     const accountAlert = validAccount(
@@ -40,14 +40,12 @@ const RegistrationForm = ({ navigation }) => {
       Alert.alert(accountAlert);
     } else {
       addPersonFetch(pseudo, lastName, firstName, email, password)
-        .then((status) => {
-          if (status === 201) {
-            Alert.alert(
-              "Success",
-              "Congratulation, your account was successfully created!"
-            );
-            dispatch(setUser(pseudo, lastName, firstName, email));
-          }
+        .then(({ status, id }) => {
+          Alert.alert(
+            "Success",
+            "Congratulation, your account was successfully created!"
+          );
+          dispatch(setUser(id, pseudo, lastName, firstName, email));
         })
         .then(() => {
           loginFetch(pseudo, password)

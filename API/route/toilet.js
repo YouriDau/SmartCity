@@ -7,7 +7,7 @@ const router = new Router();
 
 router.get("/:id", ToiletControleur.getToilet);
 router.get("/", ToiletControleur.getToiletsAndLocation);
-router.post("/", ToiletControleur.postToilet);
+router.post("/", JWTMiddleware.identification, ToiletControleur.postToilet);
 router.patch(
   "/",
   JWTMiddleware.identification,

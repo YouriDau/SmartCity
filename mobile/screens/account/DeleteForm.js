@@ -11,12 +11,14 @@ import {
   PASSWORD_INPUT_EMPTY,
 } from "../../config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "../../redux/actions/token";
+import { getToken } from "../../redux/selectors";
 
 const DeleteForm = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [isChecked, setIsChecked] = useState(false);
+  const token = useSelector(getToken);
   const dispatch = useDispatch();
 
   const { deletePersonFetch } = useFetchPerson();
@@ -28,7 +30,7 @@ const DeleteForm = ({ navigation }) => {
   const handlePressDelete = () => {
     if (password !== "") {
       if (isChecked) {
-        deletePersonFetch(password)
+        deletePersonFetch(token, password)
           .then((status) => {
             if (status === 204) {
               Alert.alert(ACCOUNT_DELETE_SUCCESS);
@@ -38,9 +40,6 @@ const DeleteForm = ({ navigation }) => {
             }
           })
           .catch((error) => {
-            if (error.message === "Error, login needed!") {
-              console.log("test");
-            }
             Alert.alert(error.message);
           });
       } else {

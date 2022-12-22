@@ -21,6 +21,7 @@ export default function useFetchToilet() {
   };
 
   const addToiletFetch = async (
+    token,
     latitude,
     longitude,
     isPaid,
@@ -31,6 +32,9 @@ export default function useFetchToilet() {
         method: "post",
         url: `${BASE_URL_API}/toilet`,
         data: { latitude, longitude, isPaid, isReducedMobility },
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
       });
       return { status: response.status, data: response.data };
     } catch (error) {

@@ -6,11 +6,11 @@ import ChoicesPanel from "../../component/ChoicesPanel";
 const ReportChoices = () => {
   return (
     <div>
-      <ChoicesPanel 
-        choice1={"All reports"} 
+      <ChoicesPanel
+        choice1={"All reports"}
         choice2={"Reports not done"}
-        redirectionChoice1={"listUsers"}
-        redirectionChoice2={"addUser"}
+        redirectionChoice1={"listReports/all"}
+        redirectionChoice2={"listReports/notDone"}
       />
     </div>
   );

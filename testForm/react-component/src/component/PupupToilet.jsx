@@ -13,10 +13,6 @@ import {
 const ICONS_SIZE = 30;
 
 const PopupToilet = (props) => {
-  const navigate = useNavigate();
-
-  const handlePressAddReview = () => {};
-
   return (
     <Popup>
       <h1>Toilet {props.toiletId}</h1>
@@ -62,9 +58,6 @@ const PopupToilet = (props) => {
         <div className="popupSubContainer">
           <Link to={`/addReport/${props.toiletId}`}>
             <IoIosAddCircle size={ICONS_SIZE} color="blue" />
-          </Link>
-          <Link to={`/listReports/${props.toiletId}`}>
-            <IoIosList size={ICONS_SIZE} color="blue" />
           </Link>
         </div>
       </div>
