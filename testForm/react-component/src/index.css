@@ -162,7 +162,7 @@ form {
   margin-top: 50px;
 }
 
-#usersPanel {
+#choicePanel {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

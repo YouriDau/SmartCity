@@ -18,11 +18,13 @@ import MenuControle from "../screen/MenuControle";
 import DeleteToilet from "../screen/toilet/DeleteToilet";
 import UpdateAdminPassword from "../screen/account/UpdateAdminPassword";
 import UpdateUserPassword from "../screen/account/UpdateUserPassword";
-import UsersPanel from "../screen/UsersPanel";
 import UpdateToilet from "../screen/toilet/UpdateToilet";
 import { UserContext } from "../utils/UserContext";
 import { useEffect, useState } from "react";
 import { getCurrentUserFetch } from "../component/API/useFetchPerson";
+import UserChoices from "../screen/account/UserChoices";
+import ReportChoices from "../screen/report/ReportChoices";
+import AdminChoices from "../screen/account/AdminChoices";
 
 export default function Router() {
   const [user, setUser] = useState(null);
@@ -64,7 +66,7 @@ export default function Router() {
                 element={<ListReviews />}
               />
               <Route path={"/updateUser/:id"} element={<UpdateUser />} />
-              <Route path={"/updateUser/"} element={<UpdateUser />} />
+              <Route path={"/updateUser"} element={<UpdateUser />} /> {/*j'ai enlevé le slash après si jamais ca bug*/}
               <Route
                 path={"/updateAdminPassword"}
                 element={<UpdateAdminPassword />}
@@ -83,7 +85,9 @@ export default function Router() {
               <Route path={"/deleteToilet/:id"} element={<DeleteToilet />} />
 
               <Route path={"/maps"} element={<Maps />} />
-              <Route path={"/usersPanel"} element={<UsersPanel />} />
+              <Route path={"/userChoices"} element={<UserChoices />} />
+              <Route path={"/reportChoices"} element={<ReportChoices />} />
+              <Route path={"/adminChoices"} element={<AdminChoices />} />
               <Route path={"/"} element={<MenuControle />} />
             </>
           )}
