@@ -6,6 +6,11 @@ import { UserContext } from "../utils/UserContext";
 import { useEffect } from "react";
 
 const MenuControle = () => {
+
+  const handlePressDisconnect = (event) => {
+
+  }
+
   return (
     <div>
       <Header />
@@ -31,12 +36,11 @@ const MenuControle = () => {
             <p>my account</p>
           </div>
         </Link>
-        <button className="linkMenu">Disconnect</button>
-        {/* <Link to={"/updateAdminPassword"} className="linkMenu">
+        <button className="linkMenu" onClick={(event) => handlePressDisconnect(event)}>
           <div className="divMenu">
-            <p>Change my password</p>
+            Disconnect
           </div>
-        </Link> */}
+        </button>
       </div>
     </div>
   );

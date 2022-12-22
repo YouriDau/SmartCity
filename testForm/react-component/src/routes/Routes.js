@@ -67,7 +67,7 @@ export default function Router() {
                 element={<ListReviews />}
               />
               <Route path={"/updateUser/:id"} element={<UpdateUser />} />
-              <Route path={"/updateUser"} element={<UpdateUser />} />{" "}
+              <Route path={"/updateUser"} element={<UpdateUser />} />
               {/*j'ai enlevé le slash après si jamais ca bug*/}
               <Route
                 path={"/updateAdminPassword"}
