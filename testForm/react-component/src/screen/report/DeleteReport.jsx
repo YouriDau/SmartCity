@@ -17,7 +17,7 @@ const DeleteReport = (props) => {
     deleteReportFetch(id)
       .then((status) => {
         alert("Success, delete report successfully!");
-        navigate("/maps");
+        navigate("/reportChoices");
       })
       .catch((error) => {
         alert(error.message);
