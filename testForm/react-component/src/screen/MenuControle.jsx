@@ -6,10 +6,13 @@ import { UserContext } from "../utils/UserContext";
 import { useEffect } from "react";
 
 const MenuControle = () => {
-
+  const { setUser, setToken } = useContext(UserContext);
   const handlePressDisconnect = (event) => {
-
-  }
+    localStorage.removeItem("token");
+    setUser(null);
+    setToken("");
+    alert("You are disconnected");
+  };
 
   return (
     <div>
@@ -36,9 +39,12 @@ const MenuControle = () => {
             <p>my account</p>
           </div>
         </Link>
-        <button className="linkMenu" onClick={(event) => handlePressDisconnect(event)}>
+        <button
+          className="linkMenu"
+          onClick={(event) => handlePressDisconnect(event)}
+        >
           <div className="divMenu">
-            Disconnect
+            <p>Disconnect</p>
           </div>
         </button>
       </div>

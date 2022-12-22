@@ -21,7 +21,6 @@ const List = (props) => {
   const showContent = () => {
     if (props.tab !== undefined && props.tab.length > 0) {
       return props.tab.map((item) => {
-        console.log(item);
         return (
           <div key={item.id} className="list">
             <div>

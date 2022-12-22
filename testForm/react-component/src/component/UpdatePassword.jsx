@@ -4,7 +4,10 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { UserContext } from "../utils/UserContext";
-import { updateCurrentUserPasswordFetch, updateUserPasswordFetch } from "./API/useFetchPerson";
+import {
+  updateCurrentUserPasswordFetch,
+  updateUserPasswordFetch,
+} from "./API/useFetchPerson";
 
 const UpdatePassword = (props) => {
   const [inputCurrentPassword, setInputCurrentPassword] = useState("");
@@ -18,8 +21,12 @@ const UpdatePassword = (props) => {
     if (inputNewPassword != inputConfirmNewPassword) {
       alert("the two news passwords doesn't match");
     } else {
-        if (props.currentUserPassword) {
-          updateCurrentUserPasswordFetch(token, inputCurrentPassword, inputNewPassword)
+      if (props.currentUserPassword) {
+        updateCurrentUserPasswordFetch(
+          token,
+          inputCurrentPassword,
+          inputNewPassword
+        )
           .then((status) => {
             if (status === 204) {
               alert("Your password has been successfuly modified");
@@ -29,19 +36,18 @@ const UpdatePassword = (props) => {
           .catch((error) => {
             alert(error.message);
           });
-        } else {
-          console.log("on passe dans le else");
-            updateUserPasswordFetch(token, props.id, inputNewPassword) 
-            .then((status) => {
-              if (status === 204) {
-                alert("The user's password has been successfuly modified");
-                navigate("/usersPanel");
-              }
-            })
-            .catch((error) => {
-              alert(error.message);
-            });
-        }
+      } else {
+        updateUserPasswordFetch(token, props.id, inputNewPassword)
+          .then((status) => {
+            if (status === 204) {
+              alert("The user's password has been successfuly modified");
+              navigate("/usersPanel");
+            }
+          })
+          .catch((error) => {
+            alert(error.message);
+          });
+      }
     }
   };
 

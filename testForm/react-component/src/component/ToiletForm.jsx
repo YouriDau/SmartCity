@@ -36,8 +36,6 @@ const ToiletForm = (props) => {
 
   const handlePressUpdate = (event) => {
     event.preventDefault();
-    console.log(isPaid);
-    console.log(isReducedMobility);
     updateToiletFetch(token, props.toilet.id, isPaid, isReducedMobility)
       .then(() => {
         alert(`The toilet ${props.toilet.id} has been successfully modify!`);

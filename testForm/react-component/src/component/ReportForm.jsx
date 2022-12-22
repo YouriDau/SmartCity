@@ -30,12 +30,9 @@ const ReportForm = (props) => {
 
   const handlePressUpdate = (event) => {
     event.preventDefault();
-    // console.log(reason);
-    // console.log(id);
-    // console.log(isDone);
     updateReportFetch(id, reason, isDone)
       .then((status) => {
-        console.log("Update Réussi!");
+        alert(`The review ${id} has been successfully modify`);
         navigate("/reportChoices");
       })
       .catch((error) => {

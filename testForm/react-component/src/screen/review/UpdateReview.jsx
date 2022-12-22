@@ -10,10 +10,6 @@ function withParams(Component) {
 }
 
 const UpdateReview = (props) => {
-  // const handlePressUpdate = (event) => {
-  //   event.preventDefault();
-  //   console.log("Update review");
-  // };
   const id = parseInt(props.params.id);
   const [review, setReview] = useState(null);
 
@@ -38,7 +34,6 @@ const UpdateReview = (props) => {
         <ReviewForm
           title={"Update this review"}
           titleButton={"Save"}
-          //handlePress={handlePressUpdate}
           isUpdate={true}
           currentReview={review}
         />

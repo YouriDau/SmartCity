@@ -1,6 +1,17 @@
 import axios from "axios";
+import axiosRetry from "axios-retry";
 import { BASE_URL_API } from "../../config";
 import { errorMessage } from "../../utils/utils";
+
+axiosRetry(axios, {
+  retries: 3,
+  retryDelay: (retryCount) => {
+    return retryCount * 2000;
+  },
+  retryCondition: (error) => {
+    return error.response.status === 500;
+  },
+});
 
 const getCurrentUserFetch = async (token) => {
   try {
@@ -38,7 +49,6 @@ const getAllPersonsFetch = async () => {
 const getPersonByIdFetch = async (id) => {
   try {
     const response = await axios.get(`${BASE_URL_API}/person/${id}`);
-    //console.log("response.data : " + response.data);
     return response.data;
   } catch (error) {
     const message = errorMessage(
@@ -52,8 +62,6 @@ const getPersonByIdFetch = async (id) => {
 
 const addPersonFetch = async (pseudo, lastName, firstName, email, password) => {
   try {
-    console.log(password);
-    console.log(pseudo);
     const response = await axios({
       method: "post",
       url: `${BASE_URL_API}/person`,
@@ -65,7 +73,6 @@ const addPersonFetch = async (pseudo, lastName, firstName, email, password) => {
         password,
       },
     });
-    console.log(response.status);
     return response.status;
   } catch (error) {
     const message = errorMessage(
@@ -79,7 +86,6 @@ const addPersonFetch = async (pseudo, lastName, firstName, email, password) => {
 
 const updatePersonFetch = async (token, pseudo, lastName, firstName, email) => {
   try {
-    console.log("updatePersonFetch");
     const response = await axios({
       method: "put",
       url: `${BASE_URL_API}/person`,

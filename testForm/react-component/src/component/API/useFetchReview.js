@@ -1,6 +1,17 @@
 import axios from "axios";
+import axiosRetry from "axios-retry";
 import { BASE_URL_API } from "../../config";
 import { errorMessage } from "../../utils/utils";
+
+axiosRetry(axios, {
+  retries: 3,
+  retryDelay: (retryCount) => {
+    return retryCount * 2000;
+  },
+  retryCondition: (error) => {
+    return error.response.status === 500;
+  },
+});
 
 const getReviewsByToiletIdFetch = async (id) => {
   try {
@@ -63,11 +74,6 @@ const addReviewFetch = async (token, toiletId, note, comment) => {
 
 const updateReviewFetch = async (token, id, note, comment) => {
   try {
-    console.log(token);
-    console.log(id);
-    console.log(note);
-    console.log(comment);
-
     const response = await axios({
       method: "put",
       url: `${BASE_URL_API}/review`,

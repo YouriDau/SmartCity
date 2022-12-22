@@ -4,12 +4,12 @@ DROP TABLE IF EXISTS person CASCADE;
 CREATE TABLE person
     (
     id serial primary key,
-    pseudo varchar(250) unique not null,
-    last_name varchar(250) not null,
-    first_name varchar(250) not null,
-    email varchar(250) unique not null,
+    pseudo varchar(30) unique not null,
+    last_name varchar(30) not null,
+    first_name varchar(30) not null,
+    email varchar(50) unique not null,
     is_admin boolean not null,
-    password varchar not null
+    password varchar(50) not null
     );
 
 DROP TABLE IF EXISTS toilet CASCADE;
