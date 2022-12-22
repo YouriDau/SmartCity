@@ -129,7 +129,7 @@ form {
   padding-left: 10px;
 }
 
-.popupReviewContainer {
+.popupSubContainer {
   display: flex;
   justify-content: space-around;
 }

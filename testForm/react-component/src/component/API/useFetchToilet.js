@@ -16,12 +16,15 @@ const getAllToiletsFetch = async () => {
   }
 };
 
-const deleteToiletFetch = async (id) => {
+const deleteToiletFetch = async (token, id) => {
   try {
     const response = await axios({
       method: "delete",
       url: `${BASE_URL_API}/toilet`,
       data: { id },
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
     });
     return response.status;
   } catch (error) {

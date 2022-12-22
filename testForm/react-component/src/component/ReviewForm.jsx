@@ -9,10 +9,11 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../utils/UserContext";
 
 const ReviewForm = (props) => {
-  const [comment, setComment] = useState(props.currentReview?.comment || "");
+  console.log(props);
   const [note, setNote] = useState(props.currentReview?.note || 1);
+  const [comment, setComment] = useState(props.currentReview?.comment || "");
   const toiletId = parseInt(props.toiletId);
-  const id = parseInt(props.id);
+  const id = parseInt(props.currentReview.id);
 
   const { token } = useContext(UserContext);
   const navigate = useNavigate();
@@ -31,19 +32,14 @@ const ReviewForm = (props) => {
 
   const handlePressUpdate = (event) => {
     event.preventDefault();
-    //console.log(comment);
-    //console.log(note);
-    //console.log(id);
-    updateReviewFetch(token, id, note, comment).then((status) => {
-      console.log(status);
-      switch (status) {
-        case 204:
-          console.log("Update Réussi!");
-          break;
-        default:
-          console.log(`Error ${status}`);
-      }
-    });
+    updateReviewFetch(token, id, note, comment)
+      .then((status) => {
+        alert(`The review ${id} has been successfully modify!`);
+        navigate("/maps");
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
   };
 
   const handlePressCancel = (event) => {
@@ -58,7 +54,11 @@ const ReviewForm = (props) => {
       <form>
         <div>
           <label>Rate the toilet : </label>
-          <select name="note" onChange={(event) => setNote(event.target.value)}>
+          <select
+            name="note"
+            value={note}
+            onChange={(event) => setNote(event.target.value)}
+          >
             <option value={1}>1</option>
             <option value={2}>2</option>
             <option value={3}>3</option>
@@ -70,7 +70,7 @@ const ReviewForm = (props) => {
           <br />
           <label>Tell us why :</label>
           <textarea
-            defaultValue={props.isUpdate ? props.currentReview.comment : ""}
+            defaultValue={comment}
             onChange={(event) => {
               setComment(event.target.value);
             }}

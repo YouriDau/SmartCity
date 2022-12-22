@@ -14,70 +14,71 @@ import {
 const List = (props) => {
   const navigate = useNavigate();
 
-  const handlePressCancel = (event) => {
-    navigate("/");
+  const handlePressCancel = () => {
+    navigate(props.linkBack);
+  };
+
+  const showContent = () => {
+    if (props.tab !== undefined && props.tab.length > 0) {
+      return props.tab.map((item) => {
+        return (
+          <div key={item.id} className="list">
+            <div>
+              {props.isUsersList ? (
+                <>
+                  <p className="userInfo">id: {item.id}</p>
+                  <p className="userInfo">{item.pseudo}</p>
+                </>
+              ) : (
+                <>
+                  <p className="userInfo">id: {item.id}</p>
+                  <p className="userInfo">{item.comment}</p>
+                  <div className="listStar">
+                    <p className="userInfo">note: {item.note}</p>
+                    <IoIosStar
+                      size={20}
+                      color="orange"
+                      className="starSymbol"
+                    />
+                  </div>
+                </>
+              )}
+            </div>
+            <div className="userListBtns">
+              <Link to={"/" + props.linkSeeMore + "/" + item.id}>
+                <button className="btnList">
+                  <IoMdEye size={20} color="black" />
+                </button>
+              </Link>
+              <Link to={{ pathname: "/" + props.linkDelete + "/" + item.id }}>
+                <button className="btnList">
+                  <IoMdTrash size={20} color="black" />
+                </button>
+              </Link>
+              {props.isUsersList ? (
+                <Link to={`/${props.linkUpdate}/${item.id}`}>
+                  <button className="btnList">
+                    <IoMdCreate size={20} color="black" />
+                  </button>
+                </Link>
+              ) : (
+                ""
+              )}
+            </div>
+          </div>
+        );
+      });
+    } else {
+      return <p>The list est empty</p>;
+    }
   };
 
   return (
     <div className="container">
       <h1>{props.title}</h1>
       <div>
-        <div className="listTable">
-          {props.tab.map((item) => {
-            return (
-              <div key={item.id} className="list">
-                <div>
-                  {props.isUsersList ? (
-                    <>
-                      <p className="userInfo">id: {item.id}</p>
-                      <p className="userInfo">{item.pseudo}</p>
-                    </>
-                  ) : (
-                    <>
-                      <p className="userInfo">id: {item.id}</p>
-                      <p className="userInfo">{item.comment}</p>
-                      <div className="listStar">
-                        <p className="userInfo">note: {item.note}</p>
-                        <IoIosStar
-                          size={20}
-                          color="orange"
-                          className="starSymbol"
-                        />
-                      </div>
-                    </>
-                  )}
-
-                  {console.log(props)}
-                </div>
-                <div className="userListBtns">
-                  <Link to={"/" + props.linkSeeMore + "/" + item.id}>
-                    <button className="btnList">
-                      <IoMdEye size={20} color="black" />
-                    </button>
-                  </Link>
-                  <Link
-                    to={{ pathname: "/" + props.linkDelete + "/" + item.id }}
-                  >
-                    <button className="btnList">
-                      <IoMdTrash size={20} color="black" />
-                    </button>
-                  </Link>
-                  {props.isUsersList ? (
-                    <Link to={`/${props.linkUpdate}/${item.id}`}>
-                      <button className="btnList">
-                        <IoMdLock size={20} color="black" />
-                      </button>
-                    </Link>
-                  ) : (
-                    ""
-                  )}
-                </div>
-              </div>
-            );
-          })}
-        </div>
+        <div className="listTable">{showContent()}</div>
       </div>
-
       <div>
         <button
           onClick={(event) => {

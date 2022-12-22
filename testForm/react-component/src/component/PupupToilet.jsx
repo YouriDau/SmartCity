@@ -5,9 +5,9 @@ import {
   IoIosCheckmarkCircleOutline, // check circle
   IoIosCloseCircleOutline, // close circle
   IoIosAddCircle, // add circle
-  IoIosRemoveCircle, // remove circle
   IoIosList, // list
   IoIosTrash, // trash
+  IoMdCreate, // update
 } from "react-icons/io";
 
 const ICONS_SIZE = 30;
@@ -19,10 +19,16 @@ const PopupToilet = (props) => {
 
   return (
     <Popup>
-      <h1>Toilet {props.toiletId}</h1>{" "}
-      <Link to={`/deleteToilet/${props.toiletId}`}>
-        <IoIosTrash size={ICONS_SIZE} color="blue" />
-      </Link>
+      <h1>Toilet {props.toiletId}</h1>
+      <div className="popupSubContainer">
+        <Link to={`/deleteToilet/${props.toiletId}`}>
+          <IoIosTrash size={ICONS_SIZE} color="red" />
+        </Link>
+        <Link to={`/updateToilet/${props.toiletId}`}>
+          <IoMdCreate size={ICONS_SIZE} color="orange" />
+        </Link>
+      </div>
+
       <div className="toiletOptions">
         <div className="options">
           {props.isPaid ? (
@@ -42,8 +48,8 @@ const PopupToilet = (props) => {
         </div>
       </div>
       <div className="popupSubcontent">
-        <p className="popupReviewText">Reviews</p>
-        <div className="popupReviewContainer">
+        <p className="popupText">Reviews</p>
+        <div className="popupSubContainer">
           <Link to={`/addReview/${props.toiletId}`}>
             <IoIosAddCircle size={ICONS_SIZE} color="blue" />
           </Link>
@@ -52,8 +58,8 @@ const PopupToilet = (props) => {
           </Link>
         </div>
 
-        <p className="popupReviewText">Reports</p>
-        <div className="popupReviewContainer">
+        <p className="popupText">Reports</p>
+        <div className="popupSubContainer">
           <Link to={`/addReport/${props.toiletId}`}>
             <IoIosAddCircle size={ICONS_SIZE} color="blue" />
           </Link>

@@ -4,7 +4,6 @@ import { errorMessage } from "../../utils/utils";
 
 const getReviewsByToiletIdFetch = async (id) => {
   try {
-    console.log(id);
     const response = await axios({
       method: "get",
       url: `${BASE_URL_API}/review/toiletId/${id}`,
@@ -38,9 +37,6 @@ const getReviewFetch = async (id) => {
 };
 
 const addReviewFetch = async (token, toiletId, note, comment) => {
-  console.log(toiletId);
-  console.log(note);
-  console.log(comment);
   try {
     const response = await axios({
       method: "post",
@@ -67,7 +63,6 @@ const addReviewFetch = async (token, toiletId, note, comment) => {
 
 const updateReviewFetch = async (token, id, note, comment) => {
   try {
-    //const token = await localStorage.getItem("token");
     console.log(token);
     console.log(id);
     console.log(note);

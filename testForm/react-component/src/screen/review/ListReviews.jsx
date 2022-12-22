@@ -30,13 +30,15 @@ const ListReviews = (props) => {
       <Header />
       <div>
         <List
-          title={"List of reviews for this toilet"}
+          title={`Reviews for toilet ${toiletId}`}
           tab={reviews}
           name={"review"}
           parameter={"id"}
           linkSeeMore={`updateReview`}
           linkDelete={`deleteReview`}
+          linkBack={`/maps`}
           isUsersList={false}
+          toiletId={toiletId}
         />
       </div>
     </div>

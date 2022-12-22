@@ -1,13 +1,19 @@
 import React from "react";
 import Header from "../../component/Header";
 import ToiletForm from "../../component/ToiletForm";
+import { useParams } from "react-router-dom";
 
-const UpdateToilet = () => { 
+function withParams(Component) {
+  return (props) => <Component {...props} params={useParams()} />;
+}
+
+const UpdateToilet = (props) => {
+  const id = parseInt(props.params.id);
 
   const handlePressUpdate = (event) => {
     event.preventDefault();
     console.log("Update toilet");
-  }
+  };
 
   return (
     <div class="form">
@@ -21,7 +27,6 @@ const UpdateToilet = () => {
       />
     </div>
   );
-  
-}
+};
 
-export default UpdateToilet;
+export default withParams(UpdateToilet);

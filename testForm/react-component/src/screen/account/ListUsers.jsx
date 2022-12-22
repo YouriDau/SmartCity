@@ -25,6 +25,7 @@ const ListUsers = () => {
         linkSeeMore={`updateUser`}
         linkDelete={`deleteUser`}
         linkUpdate={`updateUserPassword`}
+        linkBack={"/usersPanel"}
         isUsersList={true}
       />
     </div>

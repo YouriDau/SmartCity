@@ -53,10 +53,10 @@ const Maps = () => {
       return (
         <div className="mapButtons">
           <a className="mapButton" onClick={handlePressCancelAddToilet}>
-            <IoIosCloseCircle size={60} />
+            <IoIosCloseCircle size={60} color="red" />
           </a>
           <a className="mapButton" onClick={handlePressAddToiletSecond}>
-            <IoIosAddCircle size={60} />
+            <IoIosAddCircle size={60} color="green" />
           </a>
         </div>
       );

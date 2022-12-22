@@ -1,6 +1,8 @@
 const pool = require("../modele/database");
 const ToiletModele = require("../modele/toiletDB");
 const LocationModele = require("../modele/toiletLocationDB");
+const ReviewModele = require("../modele/reviewDB");
+const ReportModele = require("../modele/reportDB");
 
 module.exports.getToilet = async (req, res) => {
   const client = await pool.connect();
@@ -114,7 +116,6 @@ module.exports.updateToilet = async (req, res) => {
   }
 };
 
-// à terminer pour supprimer toutes les reviews/reports associés (plus les id dans personnes)
 module.exports.deleteToilet = async (req, res) => {
   const { id } = req.body;
   if (!isNaN(id)) {
@@ -122,11 +123,13 @@ module.exports.deleteToilet = async (req, res) => {
     try {
       client.query("START TRANSACTION");
       await LocationModele.deleteLocation(client, id);
-
+      await ReviewModele.deleteReviewByToiletId(client, id);
+      await ReportModele.deleteReportByToiletId(client, id);
       await ToiletModele.deleteToilet(client, id);
       client.query("COMMIT TRANSACTION");
       res.sendStatus(204);
     } catch (error) {
+      await client.query("ROLLBACK TRANSACTION");
       console.error("deleteToiletError", error);
       res.sendStatus(500);
     } finally {

@@ -15,30 +15,34 @@ const UpdateReview = (props) => {
   //   console.log("Update review");
   // };
   const id = parseInt(props.params.id);
-  const [review, setReview] = useState("");
+  const [review, setReview] = useState(null);
 
   useEffect(() => {
-    getReviewFetch(id)
-      .then((review) => {
-        setReview(review);
-      })
-      .catch((error) => {
-        alert(error.message);
-      });
-  }, []);
+    if (id !== undefined && id !== null && !isNaN(id)) {
+      getReviewFetch(id)
+        .then((review) => {
+          setReview(review);
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
+    }
+  }, [id]);
 
   return (
     <div className="form">
       <div className="header">
         <Header />
       </div>
-      <ReviewForm
-        title={"Update this review"}
-        titleButton={"Save"}
-        //handlePress={handlePressUpdate}
-        isUpdate={true}
-        currentReview={review}
-      />
+      {review !== null && (
+        <ReviewForm
+          title={"Update this review"}
+          titleButton={"Save"}
+          //handlePress={handlePressUpdate}
+          isUpdate={true}
+          currentReview={review}
+        />
+      )}
     </div>
   );
 };

@@ -19,6 +19,7 @@ import DeleteToilet from "../screen/toilet/DeleteToilet";
 import UpdateAdminPassword from "../screen/account/UpdateAdminPassword";
 import UpdateUserPassword from "../screen/account/UpdateUserPassword";
 import UsersPanel from "../screen/UsersPanel";
+import UpdateToilet from "../screen/toilet/UpdateToilet";
 import { UserContext } from "../utils/UserContext";
 import { useEffect, useState } from "react";
 import { getCurrentUserFetch } from "../component/API/useFetchPerson";
@@ -63,17 +64,18 @@ export default function Router() {
                 element={<ListReviews />}
               />
               <Route path={"/updateUser/:id"} element={<UpdateUser />} />
-              <Route path={"/updateUser"} element={<UpdateUser />} />
-              <Route path={"/updateReport/:id"} element={<UpdateReport />} />
-              <Route path={"/updateReview/:id"} element={<UpdateReview />} />
+              <Route path={"/updateUser/"} element={<UpdateUser />} />
               <Route
                 path={"/updateAdminPassword"}
                 element={<UpdateAdminPassword />}
               />
               <Route
-                path={"/updateUserPassword/:id"}
+                path={"/updateUserPassword/id"}
                 element={<UpdateUserPassword />}
               />
+              <Route path={"/updateReport/:id"} element={<UpdateReport />} />
+              <Route path={"/updateReview/:id"} element={<UpdateReview />} />
+              <Route path={"/updateToilet/:id"} element={<UpdateToilet />} />
 
               <Route path={"/deleteUser/:id"} element={<DeleteUser />} />
               <Route path={"/deleteReport/:id"} element={<DeleteReport />} />
