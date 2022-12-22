@@ -139,12 +139,11 @@ const updatePersonByIdFetch = async (
   }
 };
 
-// modif
-const updateAdminPasswordFetch = async (token, password, newPassword) => {
+const updateCurrentUserPasswordFetch = async (token, password, newPassword) => {
   try {
     const response = await axios({
       method: "put",
-      url: `${BASE_URL_API}/person/password`,
+      url: `${BASE_URL_API}/person/currentUserPassword`,
       data: {
         password,
         newPassword,
@@ -163,6 +162,31 @@ const updateAdminPasswordFetch = async (token, password, newPassword) => {
     throw new Error(message);
   }
 };
+
+const updateUserPasswordFetch = async (token, id, newPassword) => {
+  console.log(id);
+  try {
+    const response = await axios({
+      method: "put",
+      url: `${BASE_URL_API}/person/userPassword`,
+      data: {
+        id,
+        newPassword
+      },
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    const message = errorMessage(
+      error.response.status,
+      error.response.data,
+      "Account"
+    );
+    throw new Error(message);
+  }
+}
 
 const deletePersonByIdFetch = async (id) => {
   try {
@@ -215,7 +239,8 @@ export {
   addPersonFetch,
   updatePersonFetch,
   updatePersonByIdFetch,
-  updateAdminPasswordFetch,
+  updateCurrentUserPasswordFetch,
+  updateUserPasswordFetch,
   deletePersonByIdFetch,
   loginFetch,
 };

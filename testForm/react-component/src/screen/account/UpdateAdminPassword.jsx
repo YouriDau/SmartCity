@@ -6,7 +6,7 @@ const UpdateAdminPassword = () => {
         <div>
             <UpdatePassword
                 title={"Change your password"}
-                adminPassword={true}
+                currentUserPassword={true}
             />
         </div>
     );

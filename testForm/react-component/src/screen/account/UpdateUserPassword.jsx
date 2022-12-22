@@ -1,15 +1,22 @@
 import React from "react";
 import UpdatePassword from "../../component/UpdatePassword";
+import { useParams } from "react-router-dom";
 
-const UpdateUserPassword = () => {
+function withParams(Component) {
+    return props => <Component {...props} params={useParams()} />;
+  }
+
+const UpdateUserPassword = (props) => {
+    const id = parseInt(props.params.id);
     return (
         <div>
             <UpdatePassword
                 title={"Change the user's password"}
-                adminPassword={false}
+                currentUserPassword={false}
+                id={id}
             />
         </div>
     );
 }
 
-export default UpdateUserPassword;
+export default withParams(UpdateUserPassword);

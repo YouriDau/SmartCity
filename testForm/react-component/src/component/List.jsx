@@ -5,6 +5,7 @@ import {
   IoMdTrash, // trash
   IoMdCreate, // update
   IoIosStar, // star
+  IoMdLock, // lock
 } from "react-icons/io";
 //import { getAllPersonsFetch } from "../component/API/useFetchPerson";
 //import UpdateUser from "../screen/account/UpdateUser";
@@ -64,7 +65,7 @@ const List = (props) => {
                   {props.isUsersList ? (
                     <Link to={`/${props.linkUpdate}/${item.id}`}>
                       <button className="btnList">
-                        <IoMdCreate size={20} color="black" />
+                        <IoMdLock size={20} color="black" />
                       </button>
                     </Link>
                   ) : (

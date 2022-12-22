@@ -59,10 +59,16 @@ router.post("/login", PersonControleur.login);
  */
 router.post("/", PersonControleur.postPerson);
 router.put(
-  "/password",
+  "/currentUserPassword",
   JWTMiddleware.identification,
   PersonControleur.updatePassword
 );
+
+router.put(
+  "/userPassword",
+  JWTMiddleware.identification,
+  PersonControleur.updateUserPassword
+)
 
 router.put(
   "/byId",

@@ -396,15 +396,35 @@ module.exports.updatePassword = async (req, res) => {
   }
 };
 
-/*module.exports.updateAdminPassword = async (req, res) => {
-  const { newPassword } = req.body;
+module.exports.updateUserPassword = async (req, res) => {
+  const { id, newPassword } = req.body;
+  console.log(id);
   if (newPassword != undefined) {
     const client = await pool.connect();
     try {
+      const { rows } = await PersonModele.getPersonById(
+        client,
+        id
+      );
+      const user = rows[0];
 
-    }
+      const newPasswordHashed = await getHash(newPassword);
+      await PersonModele.updatePassword(
+        client, 
+        id,
+        newPasswordHashed
+      );
+      res.sendStatus(204);
+    }  catch (error) {
+      console.error("updatePasswordError", error);
+      res.sendStatus(500);
+    } finally {
+      client.release();
+    } 
+  } else {
+    res.status(400).json("one of the passwords is undefined!");
   }
-}*/
+}
 
 module.exports.deletePersonById = async (req, res) => {
   const { id } = req.body;

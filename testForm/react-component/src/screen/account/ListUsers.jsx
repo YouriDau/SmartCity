@@ -24,7 +24,7 @@ const ListUsers = () => {
         parameter={"id"}
         linkSeeMore={`updateUser`}
         linkDelete={`deleteUser`}
-        linkUpdate={`updateUser`}
+        linkUpdate={`updateUserPassword`}
         isUsersList={true}
       />
     </div>

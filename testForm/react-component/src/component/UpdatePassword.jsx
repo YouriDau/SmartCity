@@ -1,9 +1,10 @@
 import React from "react";
 import { useContext } from "react";
+import { useEffect } from "react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { UserContext } from "../utils/UserContext";
-import { updateAdminPasswordFetch } from "./API/useFetchPerson";
+import { updateCurrentUserPasswordFetch, updateUserPasswordFetch } from "./API/useFetchPerson";
 
 const UpdatePassword = (props) => {
   const [inputCurrentPassword, setInputCurrentPassword] = useState("");
@@ -17,16 +18,29 @@ const UpdatePassword = (props) => {
     if (inputNewPassword != inputConfirmNewPassword) {
       alert("the two news passwords doesn't match");
     } else {
-      updateAdminPasswordFetch(token, inputCurrentPassword, inputNewPassword)
-        .then((status) => {
-          if (status === 204) {
-            console.log("Update Réussi!");
-            navigate("/");
-          }
-        })
-        .catch((error) => {
-          alert(error.message);
-        });
+        if (props.currentUserPassword) {
+          updateCurrentUserPasswordFetch(token, inputCurrentPassword, inputNewPassword)
+          .then((status) => {
+            if (status === 204) {
+              console.log("Update Réussi!");
+              navigate("/");
+            }
+          })
+          .catch((error) => {
+            alert(error.message);
+          });
+        } else {
+            updateUserPasswordFetch(token, props.id, inputNewPassword) 
+            .then((status) => {
+              if (status === 204) {
+                console.log("Update Réussi!");
+                navigate("/");
+              }
+            })
+            .catch((error) => {
+              alert(error.message);
+            });
+        }
     }
   };
 
@@ -37,9 +51,8 @@ const UpdatePassword = (props) => {
 
   return (
     <div className="form">
-      {/* <h1>Change the user's password</h1> */}
       <h1>{props.title}</h1>
-      {props.adminPassword ? (
+      {props.currentUserPassword ? (
         <div>
           <label>Enter the current password</label>
           <br />
