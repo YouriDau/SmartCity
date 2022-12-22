@@ -102,10 +102,15 @@ const UserForm = (props) => {
   };
 
   const handlePressCancel = (event) => {
-    if (props.user.id === admin.id) {
-      navigate("/");
+    event.preventDefault();
+    if (props.isUpdate) {
+      if (props.user.id === admin.id) {
+        navigate("/");
+      } else {
+        navigate("/uusersPanel");
+      }
     } else {
-      navigate("/listUsers");
+      navigate("/usersPanel");
     }
   };
 
