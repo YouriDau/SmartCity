@@ -16,6 +16,7 @@ const AddReview = (props) => {
       <div className="header">
         <Header />
       </div>
+      {console.log(toiletId)}
       {!isNaN(toiletId) && (
         <ReviewForm
           title={"Add a review"}

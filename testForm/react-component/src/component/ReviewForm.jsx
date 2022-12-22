@@ -9,10 +9,10 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../utils/UserContext";
 
 const ReviewForm = (props) => {
-  const toiletId = parseInt(props.toiletId);
-  const id = parseInt(props.params.id);
   const [comment, setComment] = useState(props.currentReview?.comment || "");
   const [note, setNote] = useState(props.currentReview?.note || 1);
+  const toiletId = parseInt(props.toiletId);
+  const id = parseInt(props.id);
 
   const { token } = useContext(UserContext);
   const navigate = useNavigate();
@@ -52,7 +52,9 @@ const ReviewForm = (props) => {
 
   return (
     <div>
-      <h1>{props.title}</h1>
+      <h1>
+        {props.title} {props.currentReview?.id}
+      </h1>
       <form>
         <div>
           <label>Rate the toilet : </label>

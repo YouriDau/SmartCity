@@ -4,6 +4,7 @@ import {
   IoMdEye, // see more
   IoMdTrash, // trash
   IoMdCreate, // update
+  IoIosStar, // star
 } from "react-icons/io";
 //import { getAllPersonsFetch } from "../component/API/useFetchPerson";
 //import UpdateUser from "../screen/account/UpdateUser";
@@ -20,13 +21,32 @@ const List = (props) => {
     <div className="container">
       <h1>{props.title}</h1>
       <div>
-        <table>
+        <div className="listTable">
           {props.tab.map((item) => {
             return (
-              <div className="list">
+              <div key={item.id} className="list">
                 <div>
-                  <p className="userInfo">id: {item.id}</p>
-                  <p className="userInfo">{item.pseudo}</p>
+                  {props.isUsersList ? (
+                    <>
+                      <p className="userInfo">id: {item.id}</p>
+                      <p className="userInfo">{item.pseudo}</p>
+                    </>
+                  ) : (
+                    <>
+                      <p className="userInfo">id: {item.id}</p>
+                      <p className="userInfo">{item.comment}</p>
+                      <div className="listStar">
+                        <p className="userInfo">note: {item.note}</p>
+                        <IoIosStar
+                          size={20}
+                          color="orange"
+                          className="starSymbol"
+                        />
+                      </div>
+                    </>
+                  )}
+
+                  {console.log(props)}
                 </div>
                 <div className="userListBtns">
                   <Link to={"/" + props.linkSeeMore + "/" + item.id}>
@@ -54,7 +74,7 @@ const List = (props) => {
               </div>
             );
           })}
-        </table>
+        </div>
       </div>
 
       <div>

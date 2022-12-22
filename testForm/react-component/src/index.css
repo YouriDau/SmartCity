@@ -96,6 +96,13 @@ form {
   margin-bottom: 10px;
   border-radius: 10px;
 }
+.listStar {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.starSymbol {
+}
 .userInfo {
   margin: 8px 0;
 }

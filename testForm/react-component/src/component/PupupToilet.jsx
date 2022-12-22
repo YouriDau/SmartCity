@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Popup } from "react-leaflet";
 import {
   IoIosCheckmarkCircleOutline, // check circle
@@ -13,6 +13,10 @@ import {
 const ICONS_SIZE = 30;
 
 const PopupToilet = (props) => {
+  const navigate = useNavigate();
+
+  const handlePressAddReview = () => {};
+
   return (
     <Popup>
       <h1>Toilet {props.toiletId}</h1>{" "}
