@@ -1,11 +1,10 @@
 import axios from "axios";
 import { BASE_URL_API } from "../../config";
-import { callWithRetry, errorMessage } from "../../utils/utils";
-//test
+import { errorMessage } from "../../utils/utils";
 
 const getCurrentUserFetch = async (token) => {
   try {
-    const response = await callWithRetry(axios, {
+    const response = await axios({
       url: `${BASE_URL_API}/person/current`,
       headers: {
         authorization: `Bearer ${token}`,
