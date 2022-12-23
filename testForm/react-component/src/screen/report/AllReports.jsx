@@ -39,7 +39,6 @@ const AllReports = () => {
   return (
     <div>
       <Header />
-      {console.log(reports)}
       <SearchBar
         defaultValue="Enter the toilet id here"
         callback={changeValuesToShow}
