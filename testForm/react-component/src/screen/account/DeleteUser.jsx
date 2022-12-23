@@ -5,6 +5,8 @@ import { deletePersonByIdFetch } from "../../component/API/useFetchPerson";
 //import {connect} from 'react-redux';
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
+import { useContext } from "react";
+import { UserContext } from "../../utils/UserContext";
 
 function withParams(Component) {
   return (props) => <Component {...props} params={useParams()} />;
@@ -12,14 +14,23 @@ function withParams(Component) {
 
 const DeleteUser = (props) => {
   const id = parseInt(props.params.id);
+  const { user, setUser, setToken } = useContext(UserContext);
   const navigate = useNavigate();
 
   const handlePressDelete = (event) => {
     event.preventDefault();
     deletePersonByIdFetch(id)
       .then((status) => {
-        alert("Success, the user has been successfully deleted");
-        navigate("/listUsers");
+        if (id === user.id) {
+          localStorage.removeItem("token");
+          setUser(null);
+          setToken("");
+          alert("You are disconnected");
+          navigate("/");
+        } else {
+          alert("Success, the user has been successfully deleted");
+          navigate("/listUsers");
+        }
       })
       .catch((error) => {
         alert(error.message);

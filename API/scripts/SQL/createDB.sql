@@ -9,7 +9,7 @@ CREATE TABLE person
     first_name varchar(30) not null,
     email varchar(50) unique not null,
     is_admin boolean not null,
-    password varchar(50) not null
+    password varchar not null
     );
 
 DROP TABLE IF EXISTS toilet CASCADE;

@@ -9,6 +9,12 @@ import useFetchPerson from "../../services/useFetchPerson";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { validAccount } from "../../business/account";
 import { setToken } from "../../redux/actions/token";
+import {
+  MAX_LENGTH_EMAIL,
+  MAX_LENGTH_FIRSTNAME,
+  MAX_LENGTH_LASTNAME,
+  MAX_LENGTH_PSEUDO,
+} from "../../config";
 
 const PLACEHOLDERS = {
   pseudo: "Your pseudo here",
@@ -80,6 +86,7 @@ const RegistrationForm = ({ navigation }) => {
           placeholder={PLACEHOLDERS.pseudo}
           onChangeText={setPseudo}
           value={pseudo}
+          maxLength={MAX_LENGTH_PSEUDO}
           autoFocus
         />
 
@@ -89,6 +96,7 @@ const RegistrationForm = ({ navigation }) => {
           placeholder={PLACEHOLDERS.lastName}
           onChangeText={setLastName}
           value={lastName}
+          maxLength={MAX_LENGTH_LASTNAME}
         />
 
         <Text style={styles.inputText}>First name</Text>
@@ -97,6 +105,7 @@ const RegistrationForm = ({ navigation }) => {
           placeholder={PLACEHOLDERS.firstName}
           onChangeText={setFirstName}
           value={firstName}
+          maxLength={MAX_LENGTH_FIRSTNAME}
         />
 
         <Text style={styles.inputText}>Email</Text>
@@ -106,6 +115,7 @@ const RegistrationForm = ({ navigation }) => {
           keyboardType={"email-address"}
           onChangeText={setEmail}
           value={email}
+          maxLength={MAX_LENGTH_EMAIL}
         />
 
         <Text style={styles.inputText}>Password</Text>

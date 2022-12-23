@@ -32,8 +32,6 @@ const UpdateReport = (props) => {
       <ReportForm
         title={"Update this report"}
         titleButton={"Save"}
-        isReport={true}
-        // handlePress={handlePressUpdate}
         isUpdate={true}
         currentReport={report}
       />

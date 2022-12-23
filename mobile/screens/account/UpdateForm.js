@@ -4,7 +4,13 @@ import Button from "../../components/Button";
 import Title from "../../components/Title";
 import useFetchPerson from "../../services/useFetchPerson";
 import { ScrollView } from "react-native-gesture-handler";
-import { ACCOUNT_MODIFY_SUCCESS } from "../../config";
+import {
+  ACCOUNT_MODIFY_SUCCESS,
+  MAX_LENGTH_PSEUDO,
+  MAX_LENGTH_EMAIL,
+  MAX_LENGTH_FIRSTNAME,
+  MAX_LENGTH_LASTNAME,
+} from "../../config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch, useSelector } from "react-redux";
 import { getToken, getUser } from "../../redux/selectors";
@@ -63,6 +69,7 @@ const UpdateForm = ({ navigation }) => {
           value={pseudo}
           onChangeText={setPseudo}
           autoFocus
+          maxLength={MAX_LENGTH_PSEUDO}
         />
 
         <Text style={styles.inputText}>Last name</Text>
@@ -70,6 +77,7 @@ const UpdateForm = ({ navigation }) => {
           style={styles.input}
           value={lastName}
           onChangeText={setLastName}
+          maxLength={MAX_LENGTH_LASTNAME}
         />
 
         <Text style={styles.inputText}>First name</Text>
@@ -77,6 +85,7 @@ const UpdateForm = ({ navigation }) => {
           style={styles.input}
           value={firstName}
           onChangeText={setFirstName}
+          maxLength={MAX_LENGTH_FIRSTNAME}
         />
 
         <Text style={styles.inputText}>Email</Text>
@@ -85,6 +94,7 @@ const UpdateForm = ({ navigation }) => {
           keyboardType={"email-address"}
           value={email}
           onChangeText={setEmail}
+          maxLength={MAX_LENGTH_EMAIL}
         />
       </ScrollView>
       <View style={styles.buttons}>

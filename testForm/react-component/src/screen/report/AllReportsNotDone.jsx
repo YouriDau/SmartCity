@@ -22,7 +22,7 @@ const AllReportsNotDone = () => {
       <Header />
       {reports.length > 0 ? (
         <List
-          title={"All reports"}
+          title={"Not done reports"}
           tab={reports}
           name={"report"}
           parameter={"id"}

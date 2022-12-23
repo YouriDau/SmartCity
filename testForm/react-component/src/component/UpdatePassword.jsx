@@ -53,7 +53,11 @@ const UpdatePassword = (props) => {
 
   const handlePressCancel = (event) => {
     event.preventDefault();
-    navigate("/");
+    if (props.isAdmin) {
+      navigate("/adminChoices");
+    } else {
+      navigate("/listUsers");
+    }
   };
 
   return (

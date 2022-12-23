@@ -14,7 +14,9 @@ const UpdatePassword = ({ navigation }) => {
 
   const { updatePasswordFetch } = useFetchPerson();
 
-  const handlePressCancel = () => {};
+  const handlePressCancel = () => {
+    navigation.goBack();
+  };
 
   const handlePressUpdate = () => {
     if (newPassword !== newPasswordConfirm) {
@@ -39,11 +41,12 @@ const UpdatePassword = ({ navigation }) => {
     <View style={styles.container}>
       <Title text={"Modify password"} />
       <View style={styles.form}>
-        <Text style={styles.inputText}>Current password</Text>
+        <Text style={styles.inputText} secureTextEntry>
+          Current password
+        </Text>
         <TextInput
           style={styles.input}
           value={currentPassword}
-          keyboardType={"visible-password"}
           onChangeText={setCurrentPassword}
           secureTextEntry
           autoFocus

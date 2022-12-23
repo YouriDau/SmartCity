@@ -38,6 +38,7 @@ const UpdateUser = (props) => {
       <div className="header">
         <Header />
       </div>
+      {console.log(admin)}
       {user !== null && (
         <UserForm
           title={"Update user"}

@@ -6,7 +6,7 @@ import Title from "../../components/Title";
 import Button from "../../components/Button";
 import useFetchPerson from "../../services/useFetchPerson";
 
-import { LOGIN_NOT_FOUND } from "../../config";
+import { LOGIN_NOT_FOUND, MAX_LENGTH_PSEUDO } from "../../config";
 import { setToken } from "../../redux/actions/token";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/actions/account";
@@ -56,6 +56,7 @@ const LoginForm = ({ navigation }) => {
           style={styles.input}
           placeholder={PLACEHOLDERS.pseudo}
           onChangeText={setPseudo}
+          maxLength={MAX_LENGTH_PSEUDO}
         />
 
         <Text style={styles.inputText}>Password</Text>

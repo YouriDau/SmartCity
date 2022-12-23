@@ -7,6 +7,7 @@ import { useEffect } from "react";
 
 const MenuControle = () => {
   const { setUser, setToken } = useContext(UserContext);
+
   const handlePressDisconnect = (event) => {
     localStorage.removeItem("token");
     setUser(null);

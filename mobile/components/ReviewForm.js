@@ -6,7 +6,11 @@ import Button from "./Button";
 import { useDispatch, useSelector } from "react-redux";
 import { addReview, updateReview } from "../redux/actions/review";
 import useFetchReviews from "../services/useFetchReviews";
-import { REVIEW_ADD_SUCCESS, REVIEW_MODIFY_SUCCESS } from "../config";
+import {
+  MAX_LENGTH_COMMENT,
+  REVIEW_ADD_SUCCESS,
+  REVIEW_MODIFY_SUCCESS,
+} from "../config";
 import { getToken, getUser } from "../redux/selectors";
 
 const PLACEHOLDER = "Enter your review here";
@@ -97,11 +101,11 @@ const ReviewForm = ({ isUpdate, navigation, toiletId, review }) => {
           <TextInput
             style={styles.input}
             multiline
-            maxLength={300}
             placeholder={PLACEHOLDER}
             scrollEnabled={true}
             value={comment}
             onChangeText={setComment}
+            maxLength={MAX_LENGTH_COMMENT}
           />
         </View>
       </View>

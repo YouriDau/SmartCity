@@ -46,7 +46,7 @@ const UserForm = (props) => {
     )
       .then((status) => {
         alert("Account successfully added");
-        navigate("/usersPanel");
+        navigate("/userChoices");
       })
       .catch((error) => {
         alert(error.message);
@@ -104,9 +104,9 @@ const UserForm = (props) => {
     event.preventDefault();
     if (props.isUpdate) {
       if (props.user.id === admin.id) {
-        navigate("/");
+        navigate("/adminChoices");
       } else {
-        navigate("/uusersPanel");
+        navigate("/listUsers");
       }
     } else {
       navigate("/userChoices");

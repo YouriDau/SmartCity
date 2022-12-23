@@ -3,7 +3,11 @@ import { View, TextInput, Text, StyleSheet, Alert } from "react-native";
 import { useSelector } from "react-redux";
 import Button from "../../components/Button";
 import Title from "../../components/Title";
-import { REASON_INPUT_EMPTY, REPORT_ADD_SUCCESS } from "../../config";
+import {
+  MAX_LENGTH_REASON,
+  REASON_INPUT_EMPTY,
+  REPORT_ADD_SUCCESS,
+} from "../../config";
 import { getToken } from "../../redux/selectors";
 import useFetchReport from "../../services/useFetchReport";
 
@@ -45,10 +49,10 @@ const AddForm = ({ navigation, route }) => {
         <TextInput
           style={styles.input}
           multiline
-          maxLength={250}
           placeholder={PLACEHOLDER}
           scrollEnabled={true}
           onChangeText={setReason}
+          maxLength={MAX_LENGTH_REASON}
         />
       </View>
 

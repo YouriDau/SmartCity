@@ -34,7 +34,7 @@ const MenuDisconnected = ({ navigation }) => {
             navigation.navigate("MenuConnected");
           })
           .catch((error) => {
-            dispatch.setToken("");
+            dispatch(setToken(""));
             AsyncStorage.removeItem("token").then(() => {
               Alert.alert(error.message);
             });

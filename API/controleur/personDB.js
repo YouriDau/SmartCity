@@ -20,8 +20,8 @@ module.exports.getCurrentUser = async (req, res) => {
       const newPerson = {
         id: person.id,
         pseudo: person.pseudo,
-        lastName: person.lastName,
-        firstName: person.firstName,
+        lastName: person.last_name,
+        firstName: person.first_name,
         email: person.email,
         role: req.session.authLevel,
       };
@@ -386,7 +386,7 @@ module.exports.updateCurrentUserPassword = async (req, res) => {
         );
         res.sendStatus(204);
       } else {
-        res.status(400).json("you didn't entered the correct user password");
+        res.status(400).json("you didn't enter the correct user password");
       }
     } catch (error) {
       console.error("updatePasswordError", error);

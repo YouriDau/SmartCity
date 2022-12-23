@@ -41,10 +41,10 @@ const ReportForm = (props) => {
   };
 
   const handlePressCancel = (event) => {
-    if (toiletId !== undefined && toiletId !== null) {
-      navigate("/maps");
-    } else {
+    if (props.isUpdate) {
       navigate("/reportChoices");
+    } else {
+      navigate("/maps");
     }
   };
 

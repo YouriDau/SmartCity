@@ -6,9 +6,9 @@ import ChoicesPanel from "../../component/ChoicesPanel";
 const AdminChoices = () => {
   return (
     <div>
-      <ChoicesPanel 
-        choice1={"Change my password"} 
-        choice2={"Change my others informations"}
+      <ChoicesPanel
+        choice1={"Change my password"}
+        choice2={"Change my account"}
         redirectionChoice1={"updateAdminPassword"}
         redirectionChoice2={"updateUser"}
       />
