@@ -12,19 +12,21 @@ import { UserContext } from "../../utils/UserContext";
 const LoginForm = () => {
   const [inputPseudo, setInputPseudo] = useState("");
   const [inputPassword, setInputPassword] = useState("");
-  const navigate = useNavigate();
-  const { user, setUser, token, setToken } = useContext(UserContext);
+  const { setUser, setToken } = useContext(UserContext);
 
   const handlePressLogin = (event) => {
     event.preventDefault();
     loginFetch(inputPseudo, inputPassword)
-      .then(({ status, token }) => {
-        localStorage.setItem("token", token);
-        setToken(token);
+      .then(({ token }) => {
         getCurrentUserFetch(token)
-          .then(({ status, user }) => {
-            setUser(user);
-            navigate("/");
+          .then(({ user }) => {
+            if (user.role === "admin") {
+              localStorage.setItem("token", token);
+              setToken(token);
+              setUser(user);
+            } else {
+              alert("You need to be an admin!");
+            }
           })
           .catch((error) => {
             alert(error.message);

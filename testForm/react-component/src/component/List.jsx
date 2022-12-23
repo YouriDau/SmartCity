@@ -7,7 +7,7 @@ import {
   IoIosStar, // star
   IoMdLock, // lock
 } from "react-icons/io";
-import SearchBarUser from "./SearchBarUser";
+import SearchBarUser from "./SearchBar";
 //import { getAllPersonsFetch } from "../component/API/useFetchPerson";
 //import UpdateUser from "../screen/account/UpdateUser";
 //import DeleteUser from "../screen/account/DeleteUser";

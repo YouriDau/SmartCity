@@ -4,7 +4,7 @@ import Header from "../../component/Header";
 import { getAllPersonsFetch } from "../../component/API/useFetchPerson";
 import { useState } from "react";
 import { useEffect } from "react";
-import SearchBarUser from "../../component/SearchBarUser";
+import SearchBar from "../../component/SearchBar";
 
 const ListUsers = (props) => {
   const [persons, setPersons] = useState([]);
@@ -17,23 +17,31 @@ const ListUsers = (props) => {
   }, []);
 
   useEffect(() => {
-    if(props !== prevProps) {
-      setPersonsToShow(persons);
-    }
+    setPersonsToShow(persons);
   }, [persons]);
 
   const changeValuesToShow = (userName) => {
-    const usersToShow = persons;
-    const afterFiltering = usersToShow.filter(user => {
-      return user.pseudo.includes(userName);
-    });
-    setPersonsToShow(afterFiltering);
-  }
+    if (userName) {
+      const usersToShow = persons;
+      const afterFiltering = usersToShow.filter((user) => {
+        return user.pseudo.includes(userName);
+      });
+      setPersonsToShow(afterFiltering);
+    } else {
+      setPersonsToShow(persons);
+    }
+  };
 
   return (
     <div>
       <Header />
-      <SearchBarUser callback={(searchValue) => changeValuesToShow(searchValue)}/>
+      <div>
+        <SearchBar
+          defaultValue="Enter the pseudo here"
+          callback={(searchValue) => changeValuesToShow(searchValue)}
+        />
+      </div>
+
       <List
         title={"List of users"}
         tab={personsToShow}

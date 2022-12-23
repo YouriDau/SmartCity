@@ -17,12 +17,15 @@ module.exports.getCurrentUser = async (req, res) => {
     const { rows: persons } = await PersonModele.getPersonById(client, userId);
     const person = persons[0];
     if (person !== undefined) {
-      person.lastName = person.last_name;
-      person.firstName = person.first_name;
-      person.role = req.session.authLevel;
-      delete person.last_name;
-      delete person.first_name;
-      res.json(person);
+      const newPerson = {
+        id: person.id,
+        pseudo: person.pseudo,
+        lastName: person.lastName,
+        firstName: person.firstName,
+        email: person.email,
+        role: req.session.authLevel,
+      };
+      res.json(newPerson);
     } else {
       res.sendStatus(404);
     }
