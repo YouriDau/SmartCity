@@ -4,9 +4,11 @@ import Header from "../../component/Header";
 import { getAllPersonsFetch } from "../../component/API/useFetchPerson";
 import { useState } from "react";
 import { useEffect } from "react";
+import SearchBarUser from "../../component/SearchBarUser";
 
-const ListUsers = () => {
+const ListUsers = (props) => {
   const [persons, setPersons] = useState([]);
+  const [personsToShow, setPersonsToShow] = useState(persons);
 
   useEffect(() => {
     getAllPersonsFetch().then((persons) => {
@@ -14,12 +16,27 @@ const ListUsers = () => {
     });
   }, []);
 
+  useEffect(() => {
+    if(props !== prevProps) {
+      setPersonsToShow(persons);
+    }
+  }, [persons]);
+
+  const changeValuesToShow = (userName) => {
+    const usersToShow = persons;
+    const afterFiltering = usersToShow.filter(user => {
+      return user.pseudo.includes(userName);
+    });
+    setPersonsToShow(afterFiltering);
+  }
+
   return (
     <div>
       <Header />
+      <SearchBarUser callback={(searchValue) => changeValuesToShow(searchValue)}/>
       <List
         title={"List of users"}
-        tab={persons}
+        tab={personsToShow}
         name={"user"}
         parameter={"id"}
         linkSeeMore={`updateUser`}

@@ -7,6 +7,7 @@ import {
   IoIosStar, // star
   IoMdLock, // lock
 } from "react-icons/io";
+import SearchBarUser from "./SearchBarUser";
 //import { getAllPersonsFetch } from "../component/API/useFetchPerson";
 //import UpdateUser from "../screen/account/UpdateUser";
 //import DeleteUser from "../screen/account/DeleteUser";
@@ -64,7 +65,7 @@ const List = (props) => {
         );
       });
     } else {
-      return <p>The list est empty</p>;
+      return <p>The list is empty</p>;
     }
   };
 
